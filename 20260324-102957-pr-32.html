@@ -435,8 +435,8 @@ h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1
 
 <p>The outer <code>v-else</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L102">line 102</a>) fires only when <code>ready</code> is <code>false</code>. The inner <code>v-if="!ready"</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L103">line 103</a>) is therefore always <code>true</code>, making the <code>v-else</code> at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L107">line 107</a> permanently unreachable. The old code had a three-state enum that made the inner condition meaningful; now with a boolean, the structure is misleading. A TODO acknowledges this, but simplifying the branch would reduce confusion.</p>
 
-<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L97-L115">pkg/rancher-desktop/components/Images.vue</a></div>
-<pre class="language-markup" data-start="97" data-line="102-109"><code>        &lt;/template&gt;
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L99-L114">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-markup" data-start="99" data-line="102-109"><code>        &lt;/template&gt;
       &lt;/Card&gt;
     &lt;/div&gt;
     &lt;div v-else&gt;
@@ -462,8 +462,8 @@ import { defineComponent, PropType } from 'vue';</code></pre>
 
 <p>The Volumes and Containers pages use <code>mapTypedGetters('container-engine', ['supportsNamespaces'])</code> from the store. Images hardcodes it as a data property. When the store getter starts returning <code>true</code> (per the TODO at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L60"><code>container-engine.ts:60</code></a>), Images will be the only page that does not pick up the change.</p>
 
-<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L27-L41">pkg/rancher-desktop/pages/Images.vue</a></div>
-<pre class="language-typescript" data-start="27" data-line="32-36"><code>import { defined } from '@pkg/utils/typeUtils';
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L28-L37">pkg/rancher-desktop/pages/Images.vue</a></div>
+<pre class="language-typescript" data-start="28" data-line="32-36"><code>import { defined } from '@pkg/utils/typeUtils';
 
 export default defineComponent({
   components: { Images },
@@ -509,8 +509,8 @@ export default defineComponent({
 
 <p>A new <code>Intl.NumberFormat</code> is constructed for every row on every render. With a large image list this allocation adds up.</p>
 
-<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L57-L72">pkg/rancher-desktop/components/Images.vue</a></div>
-<pre class="language-markup" data-start="57" data-line="62-67"><code>        &lt;template #col:id=&quot;{ row }:{ row: RowItem }&quot;&gt;
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L51-L71">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-markup" data-start="51" data-line="62-67"><code>        &lt;template #col:id=&quot;{ row }:{ row: RowItem }&quot;&gt;
           &lt;td&gt;
             &lt;span v-tooltip=&quot;{ content: row.shortId ? row.id : undefined }&quot;&gt;
               {{ row.shortId ?? row.id }}
@@ -564,8 +564,8 @@ export default defineComponent({
 
 <p>If <code>state.namespaces</code> is <code>undefined</code> (before the watcher populates it), <code>state.namespaces?.some(...)</code> returns <code>undefined</code>, and <code>!undefined</code> is <code>true</code>. The action throws a false error. This is currently unreachable because <code>supportsNamespaces</code> is hardcoded to <code>false</code>, but it becomes a real bug once namespaces are enabled.</p>
 
-<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L72-L86">pkg/rancher-desktop/store/container-engine.ts</a></div>
-<pre class="language-typescript" data-start="72" data-line="77-80"><code>  SET_ERROR(state, payload?) {
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L70-L82">pkg/rancher-desktop/store/container-engine.ts</a></div>
+<pre class="language-typescript" data-start="70" data-line="77-80"><code>  SET_ERROR(state, payload?) {
     state.error = payload;
   },
 } satisfies MutationsType&lt;ContainerEngineState&gt;;
