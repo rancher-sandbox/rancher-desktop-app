@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260324-102957-pr-32</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+  </style>
+</head>
+<body>
+  <main>
+
+<h1>Deep Review: 20260324-102957-pr-32</h1>
+
+<table class="meta-table">
+<tr><td>Date</td><td>2026-03-24 10:29</td></tr>
+<tr><td>Round</td><td>1</td></tr>
+<tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+<tr><td>PR</td><td><a class="gh-ref" href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/32" data-title="images: convert to RDD API" data-state="open" data-type="pr">#32</a> &mdash; images: convert to RDD API</td></tr>
+<tr><td>Branch</td><td><code>mook-as/rdd-api/store-images</code></td></tr>
+<tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/6b6ca2e52198146be991e50248f2ab7367d3c1d5"><code>6b6ca2e52</code></a> images: convert to RDD API</td></tr>
+<tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.6, <span class="pill pill-codex">Codex</span> GPT 5.4, <span class="pill pill-gemini">Gemini</span> 3.1 Pro</td></tr>
+<tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; one sorting bug and a few error-handling gaps need attention; the rest are minor</td></tr>
+<tr><td>Wall-clock time</td><td><code>20 min 15 s</code></td></tr>
+</table>
+
+<hr>
+
+<h2 id="executive-summary">Executive Summary<a class="pilcrow" href="#executive-summary">&para;</a></h2>
+
+<div class="card card-neutral">
+<p>This PR migrates the Images page from the legacy IPC-based image manager to the RDD (Rancher Desktop Daemon) Kubernetes-style API, following the pattern established by the Volumes and Namespaces conversions. It adds image resource definitions and watch infrastructure to the <code>container-engine</code> store, reworks image parsing and display in the component, and wires delete/push actions through the generated RDD client. The PR description acknowledges that "lots of things are expected to be broken" and that image pulling does not yet work.</p>
+<p>The review found one clear bug (stale sort column reference), several error-handling gaps, and a handful of dead-code and consistency issues.</p>
+</div>
+
+<hr>
+
+<h2 id="critical-issues" class="section-critical">Critical Issues<a class="pilcrow" href="#critical-issues">&para;</a></h2>
+
+<div class="card card-critical">
+<div class="finding-title" id="critical-1"><span class="finding-num">1.</span> Stale <code>default-sort-by</code> references a renamed column <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span><a class="pilcrow" href="#critical-1">&para;</a></div>
+
+<p>The header column was renamed from <code>imageName</code> to <code>name</code> (line 218), but <code>default-sort-by</code> still references <code>"imageName"</code>. The SortableTable sorting logic looks for a header whose <code>name</code> matches <code>sortBy</code>; no header is named <code>"imageName"</code>, so the sort falls through to a default of <code>['nameSort', 'id']</code>. Because these rows lack a <code>nameSort</code> property, the table sorts by <code>id</code> on initial load instead of by image name.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L10-L20">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-markup" data-start="10" data-line="15"><code>      &lt;SortableTable
+        ref=&quot;imagesTable&quot;
+        class=&quot;imagesTable&quot;
+        data-test=&quot;imagesTableRows&quot;
+        key-field=&quot;_key&quot;
+        default-sort-by=&quot;imageName&quot;
+        :headers=&quot;headers&quot;
+        :rows=&quot;rows&quot;
+        no-rows-key=&quot;images.sortableTables.noRows&quot;
+        :table-actions=&quot;true&quot;
+        :paging=&quot;true&quot;</code></pre>
+
+<p class="fix-label">Fix:</p>
+<pre class="language-diff"><code>- default-sort-by="imageName"
++ default-sort-by="name"</code></pre>
+</div>
+
+<hr>
+
+<h2 id="important-issues" class="section-important">Important Issues<a class="pilcrow" href="#important-issues">&para;</a></h2>
+
+<div class="card card-important">
+<div class="finding-title" id="important-1"><span class="finding-num">1.</span> Missing "Add Image" button when image list is empty <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#important-1">&para;</a></div>
+
+<p>The watcher at line 76 uses <code>images?.length</code> to gate <code>setAction</code>. On a fresh installation with zero images, <code>images</code> resolves to <code>[]</code> and <code>[].length</code> is <code>0</code> (falsy). The "Add Image" button never appears, blocking the primary "pull the first image" workflow. The old code set the action whenever the page reached the ready state, regardless of image count.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L69-L85">pkg/rancher-desktop/pages/Images.vue</a></div>
+<pre class="language-typescript" data-start="69" data-line="74-80"><code>    },
+  },
+
+  protectedImages(): string[] {
+    // This should be replaced with something on the image; see
+    // https://github.com/rancher-sandbox/rancher-desktop-daemon/issues/193
+    return [
+      'moby/buildkit',
+      'ghcr.io/rancher-sandbox/rancher-desktop/rdx-proxy',
+      ...this.rancherImages,
+      ...this.installedExtensionImages,
+    ];
+  },
+},
+
+watch: {
+  images: {
+    handler(images) {
+      if (images?.length) {
+        this.setAction({ action: 'ImagesButtonAdd' });
+      }
+    },
+    immediate: true,
+  },
+},</code></pre>
+
+<p class="fix-label">Fix:</p>
+<pre class="language-diff"><code>- if (images?.length) {
++ if (Array.isArray(images)) {
+    this.setAction({ action: 'ImagesButtonAdd' });
+  }</code></pre>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-2"><span class="finding-num">2.</span> <code>imagePush</code> errors silently dropped <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#important-2">&para;</a></div>
+
+<p>Unlike <code>imageDelete</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L127">line 127</a>), which wraps the API call in try/catch and commits errors via <code>SET_ERROR</code>, <code>imagePush</code> returns the raw promise with no error handling. The component's <code>doPush</code> does not <code>await</code> the result either. A failed push produces an unhandled promise rejection with no user feedback. The same gap exists in <code>imageScan</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L105">line 105</a>), though that action is currently unused.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L78-L109">pkg/rancher-desktop/store/container-engine.ts</a></div>
+<pre class="language-typescript" data-start="78" data-line="83-104"><code>    if (namespace !== undefined &amp;&amp; !state.namespaces?.some(ns =&gt; ns.metadata?.name === namespace)) {
+      throw new Error(`Cannot set current namespace to nonexistent namespace ${ namespace }`);
+    }
+    commit('SET_CURRENT_NAMESPACE', namespace);
+  },
+  imagePush(
+    { rootState },
+    { image }: {
+      image: RDDClient.IoRancherdesktopContainersV1alpha1Image,
+    },
+  ) {
+    const config: RDDClient.KubeConfig = rootState['rdd-connection'].config;
+    const client = config.makeApiClient(RDDClient.ContainersRancherdesktopIoV1alpha1Api);
+
+    return client.createNamespacedImagePushRequest({
+      namespace: image.metadata!.namespace!,
+      body:      {
+        metadata: {
+          namespace:    image.metadata!.namespace,
+          generateName: `image-push-${ image.metadata!.name! }-`,
+        },
+        spec: {
+          imageRef: image.metadata!.name!,
+        },
+      },
+    });
+  },
+  imageScan(
+    { rootState },
+    { image }: {
+      image: RDDClient.IoRancherdesktopContainersV1alpha1Image,</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L426-L438">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-typescript" data-start="426" data-line="431-433"><code>      if (result.response === 1) {
+        return;
+      }
+
+      // TODO: This should display deletion output.
+      await this.imageDelete({ image });
+    },
+    doPush(image: ParsedImage) {
+      // TODO: This should display push output.
+      this.imagePush({ image });
+    },
+    scanImage(row: ParsedImage) {
+      this.$router.push({</code></pre>
+
+<p class="fix-label">Fix:</p>
+<p>Add error handling to <code>imagePush</code> matching the <code>imageDelete</code> pattern:</p>
+<pre class="language-diff"><code>- imagePush(
+-   { rootState },
++ async imagePush(
++   { rootState, commit },
+    { image }: { ... },
+  ) {
+    const config: RDDClient.KubeConfig = rootState['rdd-connection'].config;
+    const client = config.makeApiClient(...);
+-   return client.createNamespacedImagePushRequest({...});
++   try {
++     await client.createNamespacedImagePushRequest({...});
++   } catch (error: any) {
++     commit('SET_ERROR', { error, source: 'images' });
++   }
+  },</code></pre>
+
+<p>And await it in the component:</p>
+<pre class="language-diff"><code>- doPush(image: ParsedImage) {
++ async doPush(image: ParsedImage) {
+    // TODO: This should display push output.
+-   this.imagePush({ image });
++   await this.imagePush({ image });
+  },</code></pre>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-3"><span class="finding-num">3.</span> <code>scanImage</code> uses <code>??</code> instead of <code>||</code> for empty-string fallback <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#important-3">&para;</a></div>
+
+<p><code>ParsedImage.reference</code> is derived from <code>image.status.repoTag ?? ''</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L261">line 261</a>). For untagged images, <code>reference</code> is <code>""</code> (empty string). The nullish coalescing operator <code>??</code> does not trigger on empty strings &mdash; only on <code>null</code> or <code>undefined</code> &mdash; so the fallback to <code>row.id</code> never fires. The route receives an empty <code>image</code> parameter.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L430-L444">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-typescript" data-start="430" data-line="435-439"><code>    },
+    doPush(image: ParsedImage) {
+      // TODO: This should display push output.
+      this.imagePush({ image });
+    },
+    scanImage(row: ParsedImage) {
+      this.$router.push({
+        name:   'images-scans-image-name',
+        params: { image: row.reference ?? row.id, namespace: this.selectedNamespace },
+      });
+    },
+    isDeletable(row: ParsedImage) {
+      return !this.protectedImages.includes(row.name);
+    },
+    isPushable(row: ParsedImage) {
+      // If it doesn't contain a '/', it's certainly not pushable,</code></pre>
+
+<p class="fix-label">Fix:</p>
+<pre class="language-diff"><code>- params: { image: row.reference ?? row.id, namespace: this.selectedNamespace },
++ params: { image: row.reference || row.id, namespace: this.selectedNamespace },</code></pre>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-4"><span class="finding-num">4.</span> Protected image matching may break with registry-prefixed references <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#important-4">&para;</a></div>
+
+<p>Before this PR, <code>isDeletable</code> checked <code>row.imageName</code>, which was a short name (e.g., <code>moby/buildkit</code>). This PR switches to <code>row.name</code>, which is parsed from <code>repoTag</code> and may include a registry prefix (e.g., <code>docker.io/moby/buildkit</code>). Similarly, <code>rancherImages</code> uses <code>.startsWith('rancher/')</code>, which fails if <code>repoTag</code> includes a registry prefix like <code>docker.io/rancher/k3s</code>. The <code>protectedImages</code> list includes the literal <code>'moby/buildkit'</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L65">line 65</a>), which would not match <code>'docker.io/moby/buildkit'</code>.</p>
+
+<p>Whether this triggers depends on the reference format the RDD API returns. If Docker Hub images come back without the <code>docker.io/</code> prefix, the matching works. If they include the prefix, protected images become deletable.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L47-L61">pkg/rancher-desktop/pages/Images.vue</a></div>
+<pre class="language-typescript" data-start="47" data-line="51-56"><code>    ready() {
+      // TODO: Actually look up the state (once that exists).
+      return Array.isArray(this.images);
+    },
+    rancherImages(): string[] {
+      return (this.images ?? [])
+        .map(image =&gt; image.status?.repoTag)
+        .filter(defined)
+        .map(reference =&gt; reference.replace(/:.*?$/, ''))
+        .filter(name =&gt; name.startsWith('rancher/'));
+    },
+    installedExtensionImages(): string[] {
+      return this.installedExtensions.map(image =&gt; image.id);
+    },
+    protectedImages(): string[] {</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L436-L448">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-typescript" data-start="436" data-line="441-442"><code>      this.$router.push({
+        name:   'images-scans-image-name',
+        params: { image: row.reference ?? row.id, namespace: this.selectedNamespace },
+      });
+    },
+    isDeletable(row: ParsedImage) {
+      return !this.protectedImages.includes(row.name);
+    },
+    isPushable(row: ParsedImage) {
+      // If it doesn't contain a '/', it's certainly not pushable,
+      // but having a '/' isn't sufficient, but it's all we have to go on.
+      return this.isDeletable(row) &amp;&amp; row.name.includes('/');
+    },</code></pre>
+
+<p class="fix-label">Fix:</p>
+<p>Use the parsed <code>repository</code> field (which strips the registry) for comparison, or normalize the protected image list:</p>
+<pre class="language-diff"><code>  isDeletable(row: ParsedImage) {
+-   return !this.protectedImages.includes(row.name);
++   return !this.protectedImages.some(p => p === row.name || p === row.repository);
+  },</code></pre>
+</div>
+
+<hr>
+
+<h2 id="suggestions" class="section-suggestion">Suggestions<a class="pilcrow" href="#suggestions">&para;</a></h2>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-1"><span class="finding-num">1.</span> Dead <code>imageScan</code> store action <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#suggestion-1">&para;</a></div>
+
+<p>The <code>imageScan</code> action is defined but never dispatched. The <code>scanImage</code> method in <code>Images.vue</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L435">line 435</a>) navigates via <code>$router.push</code> instead. The action also lacks the error handling present in <code>imageDelete</code>. Either remove it or add a comment explaining its planned use.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L100-L131">pkg/rancher-desktop/store/container-engine.ts</a></div>
+<pre class="language-typescript" data-start="100" data-line="105-126"><code>          imageRef: image.metadata!.name!,
+        },
+      },
+    });
+  },
+  imageScan(
+    { rootState },
+    { image }: {
+      image: RDDClient.IoRancherdesktopContainersV1alpha1Image,
+    },
+  ) {
+    const config: RDDClient.KubeConfig = rootState['rdd-connection'].config;
+    const client = config.makeApiClient(RDDClient.ContainersRancherdesktopIoV1alpha1Api);
+
+    return client.createNamespacedImageScanRequest({
+      namespace: image.metadata!.namespace!,
+      body:      {
+        metadata: {
+          namespace:    image.metadata!.namespace,
+          generateName: `image-scan-${ image.metadata!.name! }-`,
+        },
+        spec: {
+          imageRef: image.metadata!.name!,
+        },
+      },
+    });
+  },
+  async imageDelete(
+    { rootState, commit },
+    { image }: {
+      image: RDDClient.IoRancherdesktopContainersV1alpha1Image,</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-2"><span class="finding-num">2.</span> Unreachable "unknown state" template branch <span class="pill pill-claude">Claude</span><a class="pilcrow" href="#suggestion-2">&para;</a></div>
+
+<p>The outer <code>v-else</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L102">line 102</a>) fires only when <code>ready</code> is <code>false</code>. The inner <code>v-if="!ready"</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L103">line 103</a>) is therefore always <code>true</code>, making the <code>v-else</code> at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L107">line 107</a> permanently unreachable. The old code had a three-state enum that made the inner condition meaningful; now with a boolean, the structure is misleading. A TODO acknowledges this, but simplifying the branch would reduce confusion.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L97-L115">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-markup" data-start="97" data-line="102-109"><code>        &lt;/template&gt;
+      &lt;/Card&gt;
+    &lt;/div&gt;
+    &lt;div v-else&gt;
+      &lt;!-- TODO: actually handle this correctly --&gt;
+      &lt;h3 v-if=&quot;!ready&quot;&gt;
+        {{ t('images.state.imagesUnready') }}
+      &lt;/h3&gt;
+      &lt;h3 v-else&gt;
+        {{ t('images.state.unknown') }}
+      &lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot;&gt;
+import { Card, Checkbox } from '@rancher/components';
+import _ from 'lodash';
+import { defineComponent, PropType } from 'vue';</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-3"><span class="finding-num">3.</span> Page's <code>supportsNamespaces</code> hardcoded instead of using store getter <span class="pill pill-claude">Claude</span><a class="pilcrow" href="#suggestion-3">&para;</a></div>
+
+<p>The Volumes and Containers pages use <code>mapTypedGetters('container-engine', ['supportsNamespaces'])</code> from the store. Images hardcodes it as a data property. When the store getter starts returning <code>true</code> (per the TODO at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L60"><code>container-engine.ts:60</code></a>), Images will be the only page that does not pick up the change.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L27-L41">pkg/rancher-desktop/pages/Images.vue</a></div>
+<pre class="language-typescript" data-start="27" data-line="32-36"><code>import { defined } from '@pkg/utils/typeUtils';
+
+export default defineComponent({
+  components: { Images },
+  data() {
+    return {
+      settings:           defaultSettings,
+      supportsNamespaces: false,
+    };
+  },
+
+  computed: {
+    ...mapTypedGetters('extensions', ['installedExtensions']),
+    ...mapTypedState('rdd-connection', { kubeNamespace: 'namespace' }),
+    ...mapTypedState('container-engine', ['currentNamespace', 'images']),</code></pre>
+
+<p class="fix-label">Fix:</p>
+<p>Replace the data property with the store getter.</p>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-4"><span class="finding-num">4.</span> Page's <code>ready</code> computed is unused <span class="pill pill-claude">Claude</span><a class="pilcrow" href="#suggestion-4">&para;</a></div>
+
+<p>This computed property is never referenced in the page template. The component has its own <code>ready</code> computed (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L290">line 290</a>) that performs the same check. The page's version is dead code.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L42-L54">pkg/rancher-desktop/pages/Images.vue</a></div>
+<pre class="language-typescript" data-start="42" data-line="47-49"><code>    ...mapTypedState('container-engine', ['currentNamespace', 'images']),
+    ...mapTypedState('container-engine', { namespaceObjects: 'namespaces' }),
+    namespaces() {
+      return (this.namespaceObjects ?? []).map(ns =&gt; ns.metadata?.name).filter(defined);
+    },
+    ready() {
+      // TODO: Actually look up the state (once that exists).
+      return Array.isArray(this.images);
+    },
+    rancherImages(): string[] {
+      return (this.images ?? [])
+        .map(image =&gt; image.status?.repoTag)
+        .filter(defined)</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-5"><span class="finding-num">5.</span> <code>Intl.NumberFormat</code> instantiated per row per render <span class="pill pill-claude">Claude</span><a class="pilcrow" href="#suggestion-5">&para;</a></div>
+
+<p>A new <code>Intl.NumberFormat</code> is constructed for every row on every render. With a large image list this allocation adds up.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L57-L72">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-markup" data-start="57" data-line="62-67"><code>        &lt;template #col:id=&quot;{ row }:{ row: RowItem }&quot;&gt;
+          &lt;td&gt;
+            &lt;span v-tooltip=&quot;{ content: row.shortId ? row.id : undefined }&quot;&gt;
+              {{ row.shortId ?? row.id }}
+            &lt;/span&gt;
+          &lt;/td&gt;
+        &lt;/template&gt;
+        &lt;template #col:size=&quot;{ row }:{ row: RowItem }&quot;&gt;
+          &lt;td&gt;
+            &lt;span v-tooltip=&quot;{ content: row.size }&quot;&gt;
+              {{
+                Intl.NumberFormat(undefined, {
+                  style: 'unit',
+                  unit: 'byte',
+                  unitDisplay: 'narrow',
+                  notation: 'compact',
+                }).format(row.size)
+              }}
+            &lt;/span&gt;
+          &lt;/td&gt;
+        &lt;/template&gt;</code></pre>
+
+<p class="fix-label">Fix:</p>
+<p>Create the formatter once as a module-level constant:</p>
+<pre class="language-typescript"><code>const sizeFormatter = new Intl.NumberFormat(undefined, {
+  style: 'unit', unit: 'byte', unitDisplay: 'narrow', notation: 'compact',
+});</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-6"><span class="finding-num">6.</span> Action menu hide logic uses non-unique <code>reference</code> for identity <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#suggestion-6">&para;</a></div>
+
+<p>For untagged images, <code>reference</code> is <code>""</code>. Opening the action menu for one untagged image closes it on any unrelated row update that also contains an untagged image, because both rows share the same empty-string reference. Using <code>_key</code> or <code>id</code> would eliminate the collision.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L343-L354">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-typescript" data-start="343" data-line="348"><code>  watch: {
+    rows: {
+      // Hide the action menu if some of the images that the menu would act upon
+      // have been updated while the menu was open.
+      handler(newRows: RowItem[]) {
+        if (this.menuImages.some(name =&gt; newRows.map(r =&gt; r.reference).includes(name))) {
+          this.hideMenu(undefined);
+        }
+      },
+      deep: true,
+    },
+  },</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-7"><span class="finding-num">7.</span> <code>setCurrentNamespace</code> throws when namespaces not yet loaded <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#suggestion-7">&para;</a></div>
+
+<p>If <code>state.namespaces</code> is <code>undefined</code> (before the watcher populates it), <code>state.namespaces?.some(...)</code> returns <code>undefined</code>, and <code>!undefined</code> is <code>true</code>. The action throws a false error. This is currently unreachable because <code>supportsNamespaces</code> is hardcoded to <code>false</code>, but it becomes a real bug once namespaces are enabled.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L72-L86">pkg/rancher-desktop/store/container-engine.ts</a></div>
+<pre class="language-typescript" data-start="72" data-line="77-80"><code>  SET_ERROR(state, payload?) {
+    state.error = payload;
+  },
+} satisfies MutationsType&lt;ContainerEngineState&gt;;
+
+export const actions = {
+  ...resourceWatchActions(resources),
+  setCurrentNamespace({ commit, state }, { namespace }: { namespace: string | undefined }) {
+    if (namespace !== undefined &amp;&amp; !state.namespaces?.some(ns =&gt; ns.metadata?.name === namespace)) {
+      throw new Error(`Cannot set current namespace to nonexistent namespace ${ namespace }`);
+    }
+    commit('SET_CURRENT_NAMESPACE', namespace);
+  },
+  imagePush(
+    { rootState },</code></pre>
+
+<p class="fix-label">Fix:</p>
+<pre class="language-diff"><code>- if (namespace !== undefined && !state.namespaces?.some(ns => ns.metadata?.name === namespace)) {
++ if (namespace !== undefined && state.namespaces && !state.namespaces.some(ns => ns.metadata?.name === namespace)) {</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-8"><span class="finding-num">8.</span> Unbounded concurrent API requests on bulk delete <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#suggestion-8">&para;</a></div>
+
+<p>Selecting many images and clicking "Delete" fires all requests simultaneously via <code>Promise.all</code>. For a local daemon this is unlikely to cause problems in practice, but a sequential loop or concurrency limit would be more resilient.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L406-L416">pkg/rancher-desktop/components/Images.vue</a></div>
+<pre class="language-typescript" data-start="406" data-line="411"><code>      if (result.response === 1) {
+        return;
+      }
+
+      // TODO: This should display deletion output.
+      await Promise.all(this.imagesToDelete.map(image =&gt; this.imageDelete({ image })));
+    },
+    async deleteImage(image: ParsedImage) {
+      const options: Electron.MessageBoxOptions = {
+        message:   `Delete image ${ image.name }:${ image.tag }?`,
+        type:      'question',</code></pre>
+</div>
+
+<hr>
+
+<h2 id="design-observations" class="section-design">Design Observations<a class="pilcrow" href="#design-observations">&para;</a></h2>
+
+<h3 id="design-concerns">Concerns<a class="pilcrow" href="#design-concerns">&para;</a></h3>
+
+<div class="card card-design">
+<p><strong>(in-scope)</strong> The output window infrastructure (<code>ImagesOutputWindow</code>, <code>startImageManagerOutput</code>, <code>startRunningCommand</code>, <code>imageOutputCuller</code>, <code>Card</code>) remains in the component but is now unreachable: <code>showImageManagerOutput</code> returns <code>keepImageManagerOutputWindowOpen</code>, which is <code>false</code> and never set to <code>true</code> because <code>startImageManagerOutput()</code> is never called. The TODO comments acknowledge that deletion/push output display is not yet implemented. Once output display is wired through the RDD API, this infrastructure may not be the right shape. <span class="pill pill-claude">Claude</span></p>
+</div>
+
+<div class="card card-design">
+<p><strong>(in-scope)</strong> The page splits UI preference responsibility: RDD-backed resource state lives in <code>container-engine</code>, while image-page preferences (<code>showAll</code>, <code>namespace</code>) were removed from the old Electron settings IPC but not replaced. The <code>settings</code> data property is pinned to <code>defaultSettings</code> and never updated. Consolidating <code>currentNamespace</code> and <code>showAll</code> into one store-backed source of truth would remove the mismatch. <span class="pill pill-codex">Codex</span></p>
+</div>
+
+<div class="card card-design">
+<p><strong>(future)</strong> Namespace switching does not restart the image watcher. <code>watchImages</code> runs once on mount (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L97">line 97</a>); <code>onChangeNamespace</code> only commits <code>currentNamespace</code> via <code>setCurrentNamespace</code>. The <code>listContainerNamespacedResource</code> function applies <code>fieldSelector</code> during the initial list (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L20">line 20</a>) but the watch stream does not carry the selector. Once <code>supportsNamespaces</code> is enabled, selecting a namespace will not reliably filter images. <span class="pill pill-codex">Codex</span></p>
+</div>
+
+<h3 id="design-strengths">Strengths<a class="pilcrow" href="#design-strengths">&para;</a></h3>
+
+<div class="card card-design">
+<ul>
+<li>The image reference parsing in <code>parsedImages</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L250-L278">lines 250&ndash;278</a>) is well-documented with ASCII art and handles edge cases (untagged images, registries with ports) cleanly. <span class="pill pill-claude">Claude</span></li>
+<li>Moving image mutations into the <code>container-engine</code> store aligns images with the existing RDD resource/watch pattern used for volumes, keeping API calls out of the view layer. <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span></li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="testing-assessment">Testing Assessment<a class="pilcrow" href="#testing-assessment">&para;</a></h2>
+
+<div class="card card-neutral">
+<p>No tests are added or modified. Given the PR description acknowledges this is WIP, the absence is understandable, but the following scenarios carry the most risk:</p>
+<ol>
+<li><strong>Image reference parsing</strong> &mdash; the regex in <code>parsedImages</code> handles registries with ports, multiple path segments, and untagged images. Unit tests would prevent regressions as the RDD API's reference format stabilizes.</li>
+<li><strong><code>setCurrentNamespace</code> validation</strong> &mdash; the action throws on nonexistent namespaces; a unit test for the happy path and the error path would be straightforward.</li>
+<li><strong>Empty image list</strong> &mdash; no test covers the zero-images state, so the missing <code>ImagesButtonAdd</code> action went undetected.</li>
+<li><strong><code>imageDelete</code> error handling</strong> &mdash; the success/failure branching in the store action is testable in isolation.</li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="documentation-assessment">Documentation Assessment<a class="pilcrow" href="#documentation-assessment">&para;</a></h2>
+
+<div class="card card-neutral">
+<p>No user-facing documentation changes needed at this stage. The PR is an internal migration of data flow.</p>
+</div>
+
+<hr>
+
+<h2 id="commit-structure">Commit Structure<a class="pilcrow" href="#commit-structure">&para;</a></h2>
+
+<div class="card card-neutral">
+<p>Single commit (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/6b6ca2e52198146be991e50248f2ab7367d3c1d5"><code>6b6ca2e52</code></a> images: convert to RDD API) &mdash; clean and appropriate for a contained migration of one page to the new API pattern.</p>
+</div>
+
+<hr>
+
+<h2 id="acknowledged-limitations">Acknowledged Limitations<a class="pilcrow" href="#acknowledged-limitations">&para;</a></h2>
+
+<div class="card card-neutral">
+<table class="retro-table">
+<tr><th>TODO</th><th>Location</th><th>Impact</th></tr>
+<tr>
+<td><code>// TODO: This should display deletion output.</code></td>
+<td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L410"><code>components/Images.vue:410</code></a>, <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L428"><code>428</code></a></td>
+<td>Users get no feedback during image deletion. The output window infrastructure exists but is disconnected.</td>
+</tr>
+<tr>
+<td><code>// TODO: This should display push output.</code></td>
+<td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L432"><code>components/Images.vue:432</code></a></td>
+<td>Same for push operations.</td>
+</tr>
+<tr>
+<td><code>&lt;!-- TODO: actually handle this correctly --&gt;</code></td>
+<td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/components/Images.vue#L106"><code>components/Images.vue:106</code></a></td>
+<td>The unknown-state branch is unreachable with a boolean <code>ready</code> (see <a href="#suggestion-2">Suggestion 2</a>).</td>
+</tr>
+<tr>
+<td><code>// TODO: Actually look up the state (once that exists).</code></td>
+<td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L48"><code>pages/Images.vue:48</code></a></td>
+<td>Ready state is approximated by checking if <code>images</code> is an array.</td>
+</tr>
+<tr>
+<td><code>// TODO: Handle setting change (for namespaces).</code></td>
+<td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L89"><code>pages/Images.vue:89</code></a></td>
+<td>Namespace changes from settings are not reflected.</td>
+</tr>
+<tr>
+<td><code>// TODO: This should update the namespace.</code></td>
+<td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L117"><code>pages/Images.vue:117</code></a></td>
+<td>"Show all images" checkbox handler logs to console only.</td>
+</tr>
+<tr>
+<td><code>// TODO: Determine if the backend supports namespaces.</code></td>
+<td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/store/container-engine.ts#L60"><code>container-engine.ts:60</code></a></td>
+<td>Getter hardcoded to <code>false</code>.</td>
+</tr>
+<tr>
+<td><code>// This should be replaced with something on the image; see <a class="gh-ref" href="https://github.com/rancher-sandbox/rancher-desktop-daemon/issues/193" data-title="Container controller: Protected images" data-state="open" data-type="issue">#193</a></code></td>
+<td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/6b6ca2e52198146be991e50248f2ab7367d3c1d5/pkg/rancher-desktop/pages/Images.vue#L62-L63"><code>pages/Images.vue:62&ndash;63</code></a></td>
+<td>Protected image detection uses client-side heuristics rather than server-side metadata.</td>
+</tr>
+</table>
+<p>These are consistent with the PR description's acknowledgment that this is a partial migration with known gaps.</p>
+</div>
+
+<hr>
+
+<h2 id="agent-performance-retro">Agent Performance Retro<a class="pilcrow" href="#agent-performance-retro">&para;</a></h2>
+
+<h3 id="retro-claude"><span class="pill pill-claude">Claude</span> Opus 4.6<a class="pilcrow" href="#retro-claude">&para;</a></h3>
+
+<div class="card card-neutral">
+<ul>
+<li><strong>Duration</strong>: 5 min 0 s</li>
+<li><strong>Unique contributions</strong>: Unreachable template branch (Suggestion 2), hardcoded <code>supportsNamespaces</code> (Suggestion 3), dead <code>ready</code> computed (Suggestion 4), <code>Intl.NumberFormat</code> per-row allocation (Suggestion 5). Traced into SortableTable sorting logic to confirm the sort fallback behavior.</li>
+<li><strong>Accuracy</strong>: All findings verified. Rated the stale <code>default-sort-by</code> as Critical, which is correct &mdash; it produces visibly wrong behavior on every page load.</li>
+<li><strong>Depth</strong>: Good. Traced cross-component interactions (SortableTable sorting, <code>imageDelete</code> vs <code>imagePush</code> patterns). Read related files beyond the diff.</li>
+<li><strong>Coverage</strong>: All 3 files reviewed. No misses detected.</li>
+<li><strong>Signal-to-noise</strong>: High. Every finding is actionable and well-scoped.</li>
+</ul>
+</div>
+
+<h3 id="retro-codex"><span class="pill pill-codex">Codex</span> GPT 5.4<a class="pilcrow" href="#retro-codex">&para;</a></h3>
+
+<div class="card card-neutral">
+<ul>
+<li><strong>Duration</strong>: 5 min 16 s</li>
+<li><strong>Unique contributions</strong>: Namespace watch not restarting on change, settings lifecycle removed without replacement. Deep trace into <code>rddConnection.ts</code> and <code>rdd-client/cache.ts</code> to confirm the watch-filter gap.</li>
+<li><strong>Accuracy</strong>: All findings verified. Rated the stale <code>default-sort-by</code> as Suggestion, which understates its impact &mdash; the table sorts incorrectly on every load. The namespace watch finding is valid but currently unreachable (<code>supportsNamespaces</code> is false).</li>
+<li><strong>Depth</strong>: Excellent on the behavioral regression side. Traced the full watch/filter lifecycle through three layers of abstraction.</li>
+<li><strong>Coverage</strong>: All 3 files reviewed. No misses detected.</li>
+<li><strong>Signal-to-noise</strong>: High. Focused on behavioral regressions rather than code-level nits.</li>
+</ul>
+</div>
+
+<h3 id="retro-gemini"><span class="pill pill-gemini">Gemini</span> 3.1 Pro<a class="pilcrow" href="#retro-gemini">&para;</a></h3>
+
+<div class="card card-neutral">
+<ul>
+<li><strong>Duration</strong>: 9 min 45 s</li>
+<li><strong>Unique contributions</strong>: Protected image registry-prefix mismatch (Important 4), <code>??</code> vs <code>||</code> in scanImage (Important 3), action menu non-unique reference (Suggestion 6), <code>setCurrentNamespace</code> guard bug (Suggestion 7), unbounded concurrent deletes (Suggestion 8).</li>
+<li><strong>Accuracy</strong>: The protected-images finding is valid but depends on unverified assumptions about the RDD API's reference format. The <code>??</code> vs <code>||</code> finding is correct. Rated the missing Add button as Critical &mdash; defensible but Important is more appropriate given image pulling is already broken per the PR description.</li>
+<li><strong>Depth</strong>: Good. Traced into the parsed image fields and identified the <code>??</code> vs <code>||</code> semantic difference. Did not trace as deeply into the watch infrastructure as Codex.</li>
+<li><strong>Coverage</strong>: All 3 files reviewed. No misses detected.</li>
+<li><strong>Signal-to-noise</strong>: Good. Some findings (unbounded concurrent deletes to a local daemon) carry inflated severity but are still worth noting.</li>
+</ul>
+</div>
+
+<h3 id="retro-summary">Summary<a class="pilcrow" href="#retro-summary">&para;</a></h3>
+
+<div class="card card-neutral">
+<table class="retro-table">
+<tr>
+<th>Metric</th>
+<th><span class="pill pill-claude">Claude</span> Opus 4.6</th>
+<th><span class="pill pill-codex">Codex</span> GPT 5.4</th>
+<th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th>
+</tr>
+<tr><td>Duration</td><td>5:00</td><td>5:16</td><td>9:45</td></tr>
+<tr><td>Critical</td><td>1</td><td>0</td><td>2</td></tr>
+<tr><td>Important</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><td>Suggestion</td><td>4</td><td>1</td><td>2</td></tr>
+<tr><td>Design observations</td><td>2</td><td>2</td><td>1</td></tr>
+<tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>Unique insights</td><td>4</td><td>2</td><td>5</td></tr>
+<tr><td>Files reviewed</td><td>3</td><td>3</td><td>3</td></tr>
+<tr><td>Coverage misses</td><td>0</td><td>0</td><td>0</td></tr>
+</table>
+
+<p>All three agents produced valuable, complementary reviews. Claude excelled at code-level precision (tracing the sort fallback, spotting dead code). Codex provided the deepest behavioral analysis (namespace watch lifecycle). Gemini found the most unique edge cases (registry prefixes, <code>??</code> vs <code>||</code>, untagged image collisions). No agent produced false positives. Codex's severity calibration for the sort bug was the weakest spot; Gemini's severity was slightly inflated on the concurrent-deletes and Add-button findings. The multi-agent approach caught issues no single agent found alone.</p>
+</div>
+
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+  </script>
+</body>
+</html>
