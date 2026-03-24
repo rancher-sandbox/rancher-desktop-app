@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260324-153948-pr-37</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+  </style>
+</head>
+<body>
+  <main>
+
+<h1>Deep Review: 20260324-153948-pr-37</h1>
+
+<table class="meta-table">
+<tr><td>Date</td><td>2026-03-24 15:39</td></tr>
+<tr><td>Round</td><td>1</td></tr>
+<tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+<tr><td>PR</td><td><a class="gh-ref" href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/37" data-title="Merge from upstream" data-state="open" data-type="pr">#37</a> &mdash; Merge from upstream</td></tr>
+<tr><td>Branch</td><td><code>mook-as/merge-upstream-2026-03-24</code></td></tr>
+<tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/27187db76"><code>27187db76</code></a> Remove containerExec, <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/8afee780e"><code>8afee780e</code></a> Merge remote-tracking branch &lsquo;upstream/main&rsquo; into HEAD, Plus ~200 upstream merge/dependency commits</td></tr>
+<tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.6, <span class="pill pill-codex">Codex</span> GPT 5.4, <span class="pill pill-gemini">Gemini</span> 3.1 Pro</td></tr>
+<tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; Two user-visible features ship without working backends: the container Shell tab and the theme preference. Both degrade gracefully (empty terminal, no visual effect), but users can reach them through the production UI.</td></tr>
+<tr><td>Wall-clock time</td><td><code>19 min 45 s</code></td></tr>
+</table>
+
+<hr>
+
+<h2 id="executive-summary">Executive Summary<a class="pilcrow" href="#executive-summary">&para;</a></h2>
+
+<div class="card card-neutral">
+<p>This PR merges ~200 upstream commits into the fork, primarily to pull in commit <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/bc32f7586c"><code>bc32f7586c</code></a> (trivy version bump) to fix postinstall. The upstream changes include a new container shell feature, a theme preference setting, ESLint 10 upgrade, and extensive dependency bumps. The PR author&rsquo;s own commit (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/27187db76"><code>27187db76</code></a>) deletes the container exec backend, leaving the shell UI as intentional dead code pending RDD reimplementation. The two important findings both stem from this partial-merge pattern: upstream features with complete frontends but no backend wiring.</p>
+</div>
+
+<hr>
+
+<h2 id="critical-issues" class="section-critical">Critical Issues<a class="pilcrow" href="#critical-issues">&para;</a></h2>
+
+<div class="card card-critical">
+<p>None.</p>
+</div>
+
+<hr>
+
+<h2 id="important-issues" class="section-important">Important Issues<a class="pilcrow" href="#important-issues">&para;</a></h2>
+
+<div class="card card-important">
+<div class="finding-title" id="important-1"><span class="finding-num">1.</span> Shell tab visible but non-functional after backend removal <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span><a class="pilcrow" href="#important-1">&para;</a></div>
+
+<p>Commit <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/27187db76"><code>27187db76</code></a> deletes containerExec.ts &mdash; the only main-process handler for <code>container-exec/*</code> IPC events &mdash; but leaves the Shell tab visible in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/components/ContainerInfo.vue#L22-L27">ContainerInfo.vue:22&ndash;27</a>.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/components/ContainerInfo.vue#L16-L28">pkg/rancher-desktop/components/ContainerInfo.vue</a></div>
+<pre class="language-markup" data-start="16" data-line="22-27"><code>      &lt;tab
+        label=&quot;Logs&quot;
+        name=&quot;tab-logs&quot;
+        :weight=&quot;1&quot;
+        @active=&quot;activeTab = 'tab-logs'&quot;
+      /&gt;
+      &lt;tab
+        label=&quot;Shell&quot;
+        name=&quot;tab-shell&quot;
+        :weight=&quot;0&quot;
+        :disabled=&quot;!isRunning&quot;
+        @active=&quot;activeTab = 'tab-shell'&quot;
+      /&gt;</code></pre>
+
+<p>When a user clicks Shell on a running container, ContainerShell.vue sends <code>container-exec/start</code> via <code>ipcRenderer.send()</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/components/ContainerShell.vue#L190">line 190</a>), which silently goes nowhere. The terminal renders but stays permanently empty with no error feedback.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/components/ContainerShell.vue#L188-L193">pkg/rancher-desktop/components/ContainerShell.vue</a></div>
+<pre class="language-typescript" data-start="188" data-line="190,192"><code>  console.log('[ContainerShell] sending container-exec/start for:', props.containerId);
+  if (props.namespace) {
+    ipcRenderer.send('container-exec/start', props.containerId, props.namespace);
+  } else {
+    ipcRenderer.send('container-exec/start', props.containerId);
+  }</code></pre>
+
+<p>The e2e tests are correctly marked <code>test.describe.fixme('Container Shell Tab')</code> in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/e2e/containers.e2e.spec.ts#L304">e2e/containers.e2e.spec.ts:304</a>, so CI passes. The issue is user experience: the tab is visible and clickable in production.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/e2e/containers.e2e.spec.ts#L302-L307">e2e/containers.e2e.spec.ts</a></div>
+<pre class="language-typescript" data-start="302" data-line="304"><code>});
+
+test.describe.fixme('Container Shell Tab', () =&gt; {
+  let electronApp: ElectronApplication;
+  let shellContainerId: string;</code></pre>
+
+<p class="fix-label">Fix:</p>
+<p>Hide the Shell tab until the RDD backend lands. Either remove it from ContainerInfo.vue or gate it on a feature flag:</p>
+<pre class="language-diff"><code>-      &lt;tab
+-        label="Shell"
+-        name="tab-shell"
+-        :weight="0"
+-        :disabled="!isRunning"
+-        @active="activeTab = 'tab-shell'"
+-      /&gt;</code></pre>
+<p>Alternatively, add a TODO comment documenting that the dead UI is intentional pending RDD implementation.</p>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-2"><span class="finding-num">2.</span> Theme preference stored and validated but never applied <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span><a class="pilcrow" href="#important-2">&para;</a></div>
+
+<p>The <code>application.theme</code> setting is defined in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/config/settings.ts#L53-L57">settings.ts:53&ndash;57</a> for the enum, <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/config/settings.ts#L88">line 88</a> for the default, validated (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/config/settingsValidator.ts#L100">settingsValidator.ts:100</a>), exposed in the Preferences UI (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/components/ApplicationBehavior.vue#L90-L113">ApplicationBehavior.vue:90&ndash;113</a>), and documented in command-api.yaml.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/config/settings.ts#L53-L57">pkg/rancher-desktop/config/settings.ts</a></div>
+<pre class="language-typescript" data-start="53" data-line="53-57"><code>export enum Theme {
+  SYSTEM = 'system',
+  LIGHT = 'light',
+  DARK = 'dark',
+}</code></pre>
+
+<p>The default value at line 88:</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/config/settings.ts#L84-L89">pkg/rancher-desktop/config/settings.ts</a></div>
+<pre class="language-typescript" data-start="84" data-line="88"><code>    autoStart:              false,
+    startInBackground:      false,
+    hideNotificationIcon:   false,
+    window:                 { quitOnClose: false },
+    theme:                  Theme.SYSTEM,
+  },</code></pre>
+
+<p>No code reads the setting to call <code>nativeTheme.themeSource</code>. The window code at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/window/index.ts#L197-L201">window/index.ts:197&ndash;201</a> (commit <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/626e5ba0b"><code>626e5ba0b</code></a>) only reacts to OS theme changes. Users who select &ldquo;Light&rdquo; or &ldquo;Dark&rdquo; in Preferences see their selection persisted but it has no effect.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/window/index.ts#L197-L201">pkg/rancher-desktop/window/index.ts</a></div>
+<pre class="language-typescript" data-start="197" data-line="199"><code>function updateViewBackground() {
+  if (view) {
+    view.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#202c33' : '#f4f4f6');
+  }
+}</code></pre>
+
+<p class="fix-label">Fix:</p>
+<p>Wire the setting on startup and on settings-update:</p>
+<pre class="language-typescript"><code>import { nativeTheme } from 'electron';
+nativeTheme.themeSource = settings.application.theme; // 'system' | 'light' | 'dark'</code></pre>
+<p>Or add a TODO comment documenting that this awaits full implementation.</p>
+</div>
+
+<hr>
+
+<h2 id="suggestions" class="section-suggestion">Suggestions<a class="pilcrow" href="#suggestions">&para;</a></h2>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-1"><span class="finding-num">1.</span> Goroutine leak in guestagent signal handler <span class="pill pill-gemini">Gemini</span><a class="pilcrow" href="#suggestion-1">&para;</a></div>
+
+<p>When <code>runAgent</code> returns (through errgroup completion or normal shutdown), this anonymous goroutine blocks indefinitely waiting for a signal. The leak is benign because <code>runAgent</code> runs only from <code>main()</code> immediately before process exit. However, making the goroutine exit cleanly when the context completes is a low-cost improvement that keeps the function safe for future reuse.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/src/go/guestagent/main.go#L118-L131">src/go/guestagent/main.go</a></div>
+<pre class="language-go" data-start="118" data-line="125-129"><code>	groupCtx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	group, ctx := errgroup.WithContext(groupCtx)
+
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, syscall.SIGTERM)
+
+	go func() {
+		s := &lt;-sigCh
+		log.Debugf("received [%s] signal", s)
+		cancel()
+	}()
+
+	var portTracker tracker.Tracker</code></pre>
+
+<p class="fix-label">Fix:</p>
+<p>Use a select to exit if the context completes first:</p>
+<pre class="language-diff"><code> go func() {
+-    &lt;-sigCh
+-    log.Debug("Caught interrupt signal, cancelling group context")
+-    cancel()
++    select {
++    case &lt;-sigCh:
++        log.Debug("Caught interrupt signal, cancelling group context")
++        cancel()
++    case &lt;-groupCtx.Done():
++    }
+ }()</code></pre>
+</div>
+
+<hr>
+
+<h2 id="design-observations" class="section-design">Design Observations<a class="pilcrow" href="#design-observations">&para;</a></h2>
+
+<h3 id="design-concerns">Concerns<a class="pilcrow" href="#design-concerns">&para;</a></h3>
+
+<div class="card card-design">
+<ol>
+<li><strong>Container shell should be capability-driven, not renderer-driven</strong> (in-scope) <span class="pill pill-codex">Codex</span><br>
+The shell tab renders unconditionally. If the backend advertised <code>containerExec</code> support and the UI gated the tab on that capability, partial reverts like <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/27187db76"><code>27187db76</code></a> could not leave dead features behind. A capability-check pattern (e.g., an IPC query or feature registry) would eliminate this category of frontend/backend desynchronization.</li>
+</ol>
+</div>
+
+<h3 id="design-strengths">Strengths<a class="pilcrow" href="#design-strengths">&para;</a></h3>
+
+<div class="card card-design">
+<ul>
+<li><strong>ContainerInfo.vue rendering strategy</strong> <span class="pill pill-claude">Claude</span>: The <code>v-show</code> vs <code>v-if</code> distinction (lines 10&ndash;14) preserves terminal DOM/PTY state across tab switches while recreating logs fresh.</li>
+<li><strong>Structured concurrency in Go</strong> <span class="pill pill-gemini">Gemini</span>: The errgroup usage across switch_windows.go and guestagent/main.go provides clean teardown when any component fails.</li>
+<li><strong>IPC listener cleanup</strong> <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span>: ContainerShell.vue calls <code>removeListener</code> before <code>on</code> to prevent duplicate handlers across reconnects.</li>
+<li><strong>rdctl config tests</strong> <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span>: Thorough coverage in config_test.go &mdash; valid config, missing files, invalid JSON, CLI overrides, defaults, and validation.</li>
+<li><strong>yarn-dedupe automation</strong> <span class="pill pill-claude">Claude</span>: Clean script with safe defaults (no-push) and idempotent PR creation.</li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="testing-assessment">Testing Assessment<a class="pilcrow" href="#testing-assessment">&para;</a></h2>
+
+<div class="card card-neutral">
+<ol>
+<li><strong>No runtime coverage for theme application:</strong> The added validator tests (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/pkg/rancher-desktop/config/__tests__/settingsValidator.spec.ts#L439-L461">settingsValidator.spec.ts:439&ndash;461</a>) verify enum acceptance, but no test confirms the preference actually changes the UI appearance.</li>
+<li><strong>Shell feature has no active test coverage:</strong> Commit <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/27187db76"><code>27187db76</code></a> deleted containerExec.spec.ts, and the new e2e tests in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/e2e/containers.e2e.spec.ts#L302">e2e/containers.e2e.spec.ts:302</a> are marked <code>fixme</code>.</li>
+<li><strong>Interactive <code>runClient()</code> mode untested:</strong> The new interactive stdio mode in mobyClient.ts and nerdctlClient.ts has no tests. The mock at mock.ts:308 adds the overload signature but returns a stub that does not match <code>WritableReadableProcess</code>.</li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="documentation-assessment">Documentation Assessment<a class="pilcrow" href="#documentation-assessment">&para;</a></h2>
+
+<div class="card card-neutral">
+<ul>
+<li>command-api.yaml documents the new <code>application.theme</code> enum.</li>
+<li>Translation strings for the theme UI exist in en-us.yaml.</li>
+<li>Spelling dictionary updated with GOWORK and toolsets.</li>
+<li>No changelog or README updates needed for an internal merge PR.</li>
+<li>The theme preference and shell tab should not appear in release notes until they function.</li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="commit-structure">Commit Structure<a class="pilcrow" href="#commit-structure">&para;</a></h2>
+
+<div class="card card-neutral">
+<p>Commit <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/27187db76"><code>27187db76</code></a> (&ldquo;Remove containerExec&rdquo;) deletes the backend handler but leaves the upstream Shell tab renderer, page object, e2e tests, and interactive <code>runClient()</code> support intact. This partial revert creates Finding 1. A cleaner approach would be either a pure upstream merge (keeping the feature as-is) or a merge plus a full revert of all shell UI/client pieces. For this merge PR&rsquo;s purpose (pulling in the postinstall fix), the partial state is acceptable with an acknowledged TODO.</p>
+</div>
+
+<hr>
+
+<h2 id="acknowledged-limitations">Acknowledged Limitations<a class="pilcrow" href="#acknowledged-limitations">&para;</a></h2>
+
+<div class="card card-neutral">
+<ol>
+<li><strong>Container exec reimplementation pending</strong> &mdash; Commit <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/27187db76"><code>27187db76</code></a> message: &ldquo;This will need to be eventually reimplemented in RDD instead.&rdquo; The deletion is intentional; the Shell tab frontend is orphaned until RDD support lands.</li>
+<li><strong>Container Shell tests disabled</strong> &mdash; <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/27187db766af408e50e3df3a411ba4c25e1dfd9f/e2e/containers.e2e.spec.ts#L304">e2e/containers.e2e.spec.ts:304</a>: <code>test.describe.fixme('Container Shell Tab')</code>. The <code>fixme</code> marker documents that these tests are known-broken, consistent with the missing backend.</li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="agent-retro">Agent Performance Retro<a class="pilcrow" href="#agent-retro">&para;</a></h2>
+
+<h3 id="retro-claude"><span class="pill pill-claude">Claude</span> Opus 4.6<a class="pilcrow" href="#retro-claude">&para;</a></h3>
+
+<div class="card card-neutral">
+<ul>
+<li><strong>Duration</strong>: 5 min 10 s</li>
+<li>Found both important issues with thorough tracing through IPC paths and commit blame</li>
+<li>Provided 5 additional suggestions, though all were &ldquo;noting this is correct&rdquo; observations rather than actionable issues &mdash; informative but low signal</li>
+<li>Comprehensive coverage summary covering all 106 files</li>
+<li>Traced into callers and callees</li>
+<li>No false positives</li>
+</ul>
+</div>
+
+<h3 id="retro-codex"><span class="pill pill-codex">Codex</span> GPT 5.4<a class="pilcrow" href="#retro-codex">&para;</a></h3>
+
+<div class="card card-neutral">
+<ul>
+<li><strong>Duration</strong>: 7 min 31 s</li>
+<li>Found both important issues with precise blame attribution and thorough code-path tracing</li>
+<li>Tighter output &mdash; zero suggestion noise, focused exclusively on material findings</li>
+<li>Raised a valid commit structure concern about <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/27187db76"><code>27187db76</code></a>&rsquo;s partial nature</li>
+<li>Unique design observation: capability-driven shell tab to prevent dead-UI scenarios</li>
+<li>Complete coverage summary</li>
+<li>No false positives</li>
+</ul>
+</div>
+
+<h3 id="retro-gemini"><span class="pill pill-gemini">Gemini</span> 3.1 Pro<a class="pilcrow" href="#retro-gemini">&para;</a></h3>
+
+<div class="card card-neutral">
+<ul>
+<li><strong>Duration</strong>: 3 min 28 s</li>
+<li>Missed both important findings &mdash; did not identify the dead shell tab or the unwired theme preference</li>
+<li>Found one unique suggestion (goroutine leak in signal handler) &mdash; minor but valid</li>
+<li>Overly positive assessment: characterized the changes as having &ldquo;no critical defects&rdquo; and &ldquo;robust&rdquo; despite the dead UI</li>
+<li>Shortest runtime correlates with shallowest analysis</li>
+<li>Sandbox error prevented writing temp files, which may have limited diff analysis</li>
+<li>Coverage summary marked ContainerShell.vue, ContainerInfo.vue, and settings.ts as &ldquo;Reviewed, no issues&rdquo; &mdash; all files where other agents found important issues</li>
+</ul>
+</div>
+
+<h3 id="retro-summary">Summary<a class="pilcrow" href="#retro-summary">&para;</a></h3>
+
+<div class="card card-neutral">
+<table class="retro-table">
+<tr>
+<th>Metric</th>
+<th><span class="pill pill-claude">Claude</span> Opus 4.6</th>
+<th><span class="pill pill-codex">Codex</span> GPT 5.4</th>
+<th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th>
+</tr>
+<tr><td>Duration</td><td>5:10</td><td>7:31</td><td>3:28</td></tr>
+<tr><td>Critical</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>Important</td><td>2</td><td>2</td><td>0</td></tr>
+<tr><td>Suggestion</td><td>5</td><td>0</td><td>1</td></tr>
+<tr><td>Design observations</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>Unique insights</td><td>0</td><td>1</td><td>1</td></tr>
+<tr><td>Files reviewed</td><td>106/106</td><td>106/106</td><td>106/106</td></tr>
+<tr><td>Coverage misses</td><td>0</td><td>0</td><td>3</td></tr>
+</table>
+
+<p>Claude and Codex both identified the two material issues and provided complementary analysis. Codex was more focused and delivered the strongest design insight (capability-driven UI). Claude provided broader context with its suggestion annotations, though these added little actionable value. Gemini&rsquo;s speed came at a significant accuracy cost &mdash; missing both important findings makes it the weakest contributor for this review.</p>
+</div>
+
+  </main>
+
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+  </script>
+</body>
+</html>
