@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deep Review: 20260330-180618-pr-35</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+<style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+</style>
+</head>
+<body>
+<main>
+
+<h1>Deep Review: 20260330-180618-pr-35</h1>
+
+<table class="meta-table">
+<tr><td>Date</td><td>2026-03-30 18:06</td></tr>
+<tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+<tr><td>Round</td><td>1</td></tr>
+<tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+<tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/35" class="gh-ref" data-title="containers: convert to RDD API" data-state="open" data-type="pr">#35</a> — containers: convert to RDD API</td></tr>
+<tr><td>Branch</td><td><code>mook-as/rdd-api/containers</code></td></tr>
+<tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/c8ce2a413"><code>c8ce2a413</code></a> containers: convert to RDD API</td></tr>
+<tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.6, <span class="pill pill-codex">Codex</span> GPT 5.4, <span class="pill pill-gemini">Gemini</span> 3.1 Pro</td></tr>
+<tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> — two critical regressions break Start/Stop and log streaming; five important issues affect the status badge, table sorting, stale props, error callback lifecycle, and e2e hooks</td></tr>
+<tr><td>Wall-clock time</td><td>17 min 18 s</td></tr>
+</table>
+<hr>
+
+<h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&para;</a></h2>
+
+<div class="card card-neutral">
+<p>This PR migrates the containers page and log viewer from the Docker Extension API (<code>window.ddClient</code>) to the Kubernetes-style RDD API, following the pattern established by the images conversion in PR <a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/32" class="gh-ref" data-title="images: convert to RDD API" data-state="merged" data-type="pr">#32</a>. The change introduces a <code>usePassthroughURL</code> composable for WebSocket-based log streaming, restructures <code>ContainerLogs.vue</code> around watch-based lifecycle management with <code>AbortController</code>, and adds Vuex actions for container state transitions and deletion. Two critical regressions block the merge: the Start/Stop action patches a nonexistent <code>spec.desiredState</code> field (the API defines <code>spec.state</code>), and the log-streaming WebSocket URL inherits <code>https:</code> from the kubeconfig server URL instead of converting to <code>wss:</code>. Five important issues also need attention before merge.</p>
+</div>
+
+<hr>
+
+<h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&para;</a></h2>
+
+<div class="card card-critical">
+<div class="finding-title" id="critical-1">
+<span class="finding-num">1.</span> Start/Stop patches nonexistent <code>spec.desiredState</code> field <span class="pill pill-codex">Codex</span> (critical, regression)
+<a href="#critical-1" class="pilcrow">&para;</a>
+</div>
+
+<p>The generated RDD model (<code>IoRancherdesktopContainersV1alpha1ContainerSpec</code>) defines a single field <code>state</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerSpec.ts#L22">line 22</a>), not <code>desiredState</code>. Because <code>fieldValidation: 'Strict'</code> is set at line 118, the API rejects every Start/Stop request with a 422 error. Every call from <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/pages/Containers.vue#L260-L270">Containers.vue:260-270</a> through <code>containerSetState</code> fails silently (the <code>.catch</code> at line 119 commits <code>SET_ERROR</code>, but the user sees no feedback in the action menu).</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/store/container-engine.ts#L107-L122">pkg/rancher-desktop/store/container-engine.ts</a></div>
+<pre data-start="107" data-line="117"><code class="language-typescript">      state:     'running' | 'stopped',
+    },
+  ) {
+    const config: RDDClient.KubeConfig = rootState['rdd-connection'].config;
+    const client = config.makeApiClient(RDDClient.ContainersRancherdesktopIoV1alpha1Api);
+
+    return client.patchNamespacedContainer(
+      {
+        name:            container.metadata!.name!,
+        namespace:       container.metadata!.namespace!,
+        body:            { spec: { desiredState: state } },
+        fieldValidation: 'Strict',
+      }).catch((err: Error) =&gt; {
+      commit('SET_ERROR', { error: err, source: 'containers' });
+    });
+  },</code></pre>
+
+<p><span class="fix-label">Fix:</span></p>
+
+<pre><code class="language-diff">-    body:            { spec: { desiredState: state } },
++    body:            { spec: { state } },</code></pre>
+</div>
+
+<div class="card card-critical">
+<div class="finding-title" id="critical-2">
+<span class="finding-num">2.</span> WebSocket log URL uses <code>https:</code> instead of <code>wss:</code> <span class="pill pill-gemini">Gemini</span> (critical, regression)
+<a href="#critical-2" class="pilcrow">&para;</a>
+</div>
+
+<p><code>usePassthroughURL</code> at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/composables/passthrough.ts#L58">passthrough.ts:58</a> builds the URL from the kubeconfig server URL, which uses <code>https:</code>. The <code>logURL</code> computed at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L88">ContainerLogs.vue:88</a> appends the container name but preserves the protocol. The browser <code>WebSocket</code> constructor requires <code>ws:</code> or <code>wss:</code> and throws a synchronous <code>DOMException</code> for any other scheme, breaking log streaming entirely.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/composables/passthrough.ts#L53-L60">pkg/rancher-desktop/composables/passthrough.ts</a></div>
+<pre data-start="53" data-line="58"><code class="language-typescript">  });
+  return computed(() =&gt; {
+    if (!serverURL.value || !controller.value) {
+      return undefined;
+    }
+    return new URL(`/passthrough/${ controller.value }/${ endpoint }/`, serverURL.value);
+  });
+}</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L83-L89">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+<pre data-start="83" data-line="88"><code class="language-typescript">const genericLogURL = usePassthroughURL('logs');
+const logURL = computed(() =&gt; {
+  if (!genericLogURL.value || !container.value?.metadata?.name) {
+    return undefined;
+  }
+  return new URL(container.value.metadata.name, genericLogURL.value);
+});</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L196-L202">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+<pre data-start="196" data-line="201"><code class="language-typescript">  try {
+    buffer = '';
+
+    // Authentication for the log stream is handled in the main process via the
+    // webRequest.onBeforeSendHeaders listener; see `@pkg/window/index.ts`.
+    const socket = new WebSocket(logURL);
+    streamAborter.signal.addEventListener('abort', () =&gt; socket.close());</code></pre>
+
+<p><span class="fix-label">Fix:</span> Convert the protocol in the <code>logURL</code> computed:</p>
+
+<pre><code class="language-diff">- return new URL(container.value.metadata.name, genericLogURL.value);
++ const url = new URL(container.value.metadata.name, genericLogURL.value);
++ url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
++ return url;</code></pre>
+</div>
+
+<hr>
+
+<h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&para;</a></h2>
+
+<div class="card card-important">
+<div class="finding-title" id="important-1">
+<span class="finding-num">1.</span> ContainerStatusBadge indexes array with bracket access <span class="pill pill-codex">Codex</span> (important, regression)
+<a href="#important-1" class="pilcrow">&para;</a>
+</div>
+
+<p>This PR changed <code>container-engine.containers</code> from a map to an array (via <code>resourceState</code>). <code>ContainerStatusBadge</code> still accesses <code>this.containers[this.containerId]</code> with bracket notation (line 28), which returns <code>undefined</code> for a string key on an array. The status badge on the container details page header never renders. Additionally, <code>containerState</code> at line 34 reads <code>this.currentContainer.state || this.currentContainer.status</code>, but the new shape nests state under <code>status.status</code>.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerStatusBadge.vue#L18-L42">pkg/rancher-desktop/components/ContainerStatusBadge.vue</a></div>
+<pre data-start="18" data-line="28,34,40"><code class="language-typescript">  components: { BadgeState },
+  computed:   {
+    ...mapTypedState('container-engine', ['containers']),
+    containerId() {
+      return this.$route.params.id || '';
+    },
+    currentContainer() {
+      if (!this.containers || !this.containerId) {
+        return null;
+      }
+      return this.containers[this.containerId];
+    },
+    containerState() {
+      if (!this.currentContainer) {
+        return 'unknown';
+      }
+      return this.currentContainer.state || this.currentContainer.status || 'unknown';
+    },
+    isRunning() {
+      if (!this.currentContainer) {
+        return false;
+      }
+      return this.currentContainer.state === 'running' || this.currentContainer.status === 'Up';
+    },
+  },</code></pre>
+
+<p><span class="fix-label">Fix:</span> Update <code>ContainerStatusBadge</code> to use the array-find pattern already adopted by <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L75">ContainerLogs.vue:75</a>:</p>
+
+<pre><code class="language-diff">  currentContainer() {
+    if (!this.containers || !this.containerId) {
+      return null;
+    }
+-   return this.containers[this.containerId];
++   return this.containers.find(c =&gt; c.metadata?.name === this.containerId);
+  },
+  containerState() {
+    if (!this.currentContainer) {
+      return 'unknown';
+    }
+-   return this.currentContainer.state || this.currentContainer.status || 'unknown';
++   return this.currentContainer.status?.status || 'unknown';
+  },
+  isRunning() {
+    if (!this.currentContainer) {
+      return false;
+    }
+-   return this.currentContainer.state === 'running' || this.currentContainer.status === 'Up';
++   return this.currentContainer.status?.status === 'running';
+  },</code></pre>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-2">
+<span class="finding-num">2.</span> Table sort keys reference fields absent from RDD row objects <span class="pill pill-codex">Codex</span> (important, regression)
+<a href="#important-2" class="pilcrow">&para;</a>
+</div>
+
+<p>The headers sort by <code>containerName</code>, <code>image</code>, <code>imageName</code>, and <code>si</code> (lines 181, 186, 191, 196). The row builder at lines 227-230 spreads the RDD container object and adds <code>uptime</code> and <code>id</code> — none of the legacy sort keys exist on the resulting object. <code>SortableTable</code> resolves sort keys via property lookup, so every sortable column sorts on <code>undefined</code>.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/pages/Containers.vue#L173-L199">pkg/rancher-desktop/pages/Containers.vue</a></div>
+<pre data-start="173" data-line="181,186,191,196"><code class="language-typescript">      headers:              [
+        {
+          name:  'containerState',
+          label: this.t('containers.manage.table.header.state'),
+        },
+        {
+          name:  'containerName',
+          label: this.t('containers.manage.table.header.containerName'),
+          sort:  ['containerName', 'image', 'imageName'],
+        },
+        {
+          name:  'imageName',
+          label: this.t('containers.manage.table.header.image'),
+          sort:  ['imageName', 'containerName', 'imageName'],
+        },
+        {
+          name:  'ports',
+          label: this.t('containers.manage.table.header.ports'),
+          sort:  ['ports', 'containerName', 'imageName'],
+        },
+        {
+          name:  'uptime',
+          label: this.t('containers.manage.table.header.started'),
+          sort:  ['si', 'containerName', 'imageName'],
+          width: 120,
+        },
+      ],</code></pre>
+
+<p><span class="fix-label">Fix:</span> Update the sort arrays to use RDD field paths:</p>
+
+<pre><code class="language-diff">- sort:  ['containerName', 'image', 'imageName'],
++ sort:  ['status.name', 'status.image'],
+...
+- sort:  ['imageName', 'containerName', 'imageName'],
++ sort:  ['status.image', 'status.name'],
+...
+- sort:  ['ports', 'containerName', 'imageName'],
++ sort:  ['status.name'],
+...
+- sort:  ['si', 'containerName', 'imageName'],
++ sort:  ['status.startedAt', 'status.name'],</code></pre>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-3">
+<span class="finding-num">3.</span> Stale props passed to ContainerLogs and ContainerShell <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span> (important, regression)
+<a href="#important-3" class="pilcrow">&para;</a>
+</div>
+
+<p><code>ContainerLogs.vue</code> at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L45-L46">lines 45-46</a> declares only <code>containerId</code> as a prop — <code>isContainerRunning</code> and <code>namespace</code> were removed by this PR. <code>ContainerInfo.vue</code> still passes both at lines 92-93. Vue applies unrecognized props as HTML attributes on the root <code>&lt;div&gt;</code>, producing invalid DOM attributes and console warnings. The same issue affects <code>ContainerShell</code> at lines 100-101.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L87-L103">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+<pre data-start="87" data-line="92,93,100,101"><code class="language-html">      &lt;div class="tab-content"&gt;
+        &lt;container-logs
+          v-if="containerId &amp;&amp; activeTab === 'tab-logs'"
+          ref="containerLogs"
+          :container-id="containerId"
+          :is-container-running="isRunning"
+          :namespace="namespace"
+        /&gt;
+        &lt;container-shell
+          v-if="shellEverActivated &amp;&amp; containerId"
+          v-show="activeTab === 'tab-shell'"
+          ref="containerShell"
+          :container-id="containerId"
+          :is-container-running="isRunning"
+          :namespace="namespace"
+        /&gt;
+      &lt;/div&gt;</code></pre>
+
+<p><span class="fix-label">Fix:</span> Remove the stale bindings:</p>
+
+<pre><code class="language-diff">       &lt;container-logs
+         v-if="containerId &amp;&amp; activeTab === 'tab-logs'"
+         ref="containerLogs"
+         :container-id="containerId"
+-        :is-container-running="isRunning"
+-        :namespace="namespace"
+       /&gt;
+       &lt;container-shell
+         v-if="shellEverActivated &amp;&amp; containerId"
+         v-show="activeTab === 'tab-shell'"
+         ref="containerShell"
+         :container-id="containerId"
+-        :is-container-running="isRunning"
+-        :namespace="namespace"
+       /&gt;</code></pre>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-4">
+<span class="finding-num">4.</span> Child watch dispatch replaces parent's error callback on tab switch <span class="pill pill-claude">Claude</span> (important, regression)
+<a href="#important-4" class="pilcrow">&para;</a>
+</div>
+
+<p>On initial mount the ordering is safe: <code>ContainerLogs.onMounted</code> fires before <code>ContainerInfo.onMounted</code> (Vue 3 mounts children first), so the parent's callback-bearing dispatch wins. However, when a user switches tabs (logs &rarr; shell &rarr; logs), <code>ContainerLogs</code> remounts and dispatches <code>watchContainers</code> without a callback. <code>resourceWatchActions</code> at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/store/rddConnection.ts#L312">rddConnection.ts:312</a> closes the existing watcher and creates a replacement that lacks the error callback. Subsequent watch errors no longer commit <code>container-engine/SET_ERROR</code>, so the error banner in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/pages/Containers.vue#L284">Containers.vue:284</a> stays silent.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L218-L223">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+<pre data-start="218" data-line="219-223"><code class="language-typescript">onMounted(() =&gt; {
+  store.dispatch('container-engine/watchContainers', {
+    callback: (error) =&gt; {
+      store.commit('container-engine/SET_ERROR', { error, source: 'containers' });
+    },
+  }).catch(console.error);
+
+  window.addEventListener('keydown', handleGlobalKeydown);
+});</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L299-L301">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+<pre data-start="299" data-line="300"><code class="language-typescript">onMounted(() =&gt; {
+  store.dispatch('container-engine/watchContainers').catch(console.error);
+});</code></pre>
+
+<p><span class="fix-label">Fix:</span> Remove the redundant dispatch from <code>ContainerLogs.vue</code> — the parent page already starts the watch:</p>
+
+<pre><code class="language-diff">  onMounted(() =&gt; {
+-   store.dispatch('container-engine/watchContainers').catch(console.error);
+  });</code></pre>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-5">
+<span class="finding-num">5.</span> Removed <code>__xtermTerminal</code> e2e testing hook <span class="pill pill-claude">Claude</span> (important, regression)
+<a href="#important-5" class="pilcrow">&para;</a>
+</div>
+
+<p>The old code exposed the terminal instance for e2e tests:</p>
+
+<pre><code class="language-typescript">(terminalContainer.value as any).__xtermTerminal = terminal;</code></pre>
+
+<p><code>e2e/pages/container-logs-page.ts</code> still references this hook at lines 52, 60, and 68 for <code>scrollToBottom()</code>, <code>scrollToTop()</code>, and <code>getScrollPosition()</code>. Removing it without updating the page object breaks any e2e test that exercises container log scrolling.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L148-L157">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+<pre data-start="148" data-line="155"><code class="language-typescript">  t.loadAddon(new WebLinksAddon((event: MouseEvent, uri: string) =&gt; {
+    event.preventDefault();
+    shell.openExternal(uri);
+  }));
+
+  // Disable key events to allow normal behaviour such as copy/paste.
+  t.attachCustomKeyEventHandler(() =&gt; false);
+  terminal = t;
+  t.open(terminalContainer);
+
+  await nextTick();</code></pre>
+
+<p><span class="fix-label">Fix:</span> Re-add the hook after <code>terminal = t</code> at line 155:</p>
+
+<pre><code class="language-typescript">terminal = t;
+(terminalContainer as any).__xtermTerminal = t;</code></pre>
+
+<p>Or update the e2e page object to use an alternative approach.</p>
+</div>
+
+<hr>
+
+<h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&para;</a></h2>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-1">
+<span class="finding-num">1.</span> Namespace dropdown maps from wrong store module <span class="pill pill-gemini">Gemini</span> (suggestion, gap)
+<a href="#suggestion-1" class="pilcrow">&para;</a>
+</div>
+
+<p><code>rdd.namespaces</code> are Kubernetes namespaces (from <code>CoreV1Api.listNamespace()</code>); <code>container-engine.namespaces</code> are container engine namespaces (e.g., <code>default</code>, <code>k8s.io</code>). The dropdown at line 34 renders <code>rdd</code> namespaces, but <code>setCurrentNamespace</code> at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/store/container-engine.ts#L86">container-engine.ts:86</a> validates against <code>container-engine.namespaces</code>. This mismatch is currently dormant because <code>supportsNamespaces</code> returns <code>false</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/store/container-engine.ts#L65">line 65</a>), hiding the dropdown entirely. When namespace support is enabled, the dropdown will show the wrong list and validation will always fail.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/pages/Containers.vue#L202-L204">pkg/rancher-desktop/pages/Containers.vue</a></div>
+<pre data-start="202" data-line="203"><code class="language-typescript">  computed: {
+    ...mapTypedState('rdd', { namespaceObjects: 'namespaces' }),
+    ...mapTypedState('container-engine', ['containers', 'currentNamespace', 'error']),</code></pre>
+
+<p><span class="fix-label">Fix:</span> Map from the correct module:</p>
+
+<pre><code class="language-diff">- ...mapTypedState('rdd', { namespaceObjects: 'namespaces' }),
+- ...mapTypedState('container-engine', ['containers', 'currentNamespace', 'error']),
++ ...mapTypedState('container-engine', { namespaceObjects: 'namespaces', containers: 'containers', currentNamespace: 'currentNamespace', error: 'error' }),</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-2">
+<span class="finding-num">2.</span> Port list may crash on missing <code>bindings</code> and renders duplicates for dual-stack <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span> (suggestion, regression)
+<a href="#suggestion-2" class="pilcrow">&para;</a>
+</div>
+
+<p>If the API omits <code>bindings</code> via <code>omitempty</code>, <code>bindings.map()</code> throws a <code>TypeError</code>. Additionally, the RDD model allows multiple bindings per port (IPv4/IPv6). The old implementation collapsed duplicates by host port; this code emits one entry per binding, causing the same published port to appear twice and triggering the overflow dropdown prematurely.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/pages/Containers.vue#L368-L378">pkg/rancher-desktop/pages/Containers.vue</a></div>
+<pre data-start="368" data-line="372,374"><code class="language-typescript">    /**
+     * @returns {[number, number][]} (host port, container port) tuples, sorted by host port.
+     */
+    getPortList(container: Container): (readonly [number, number])[] {
+      return container.status?.ports?.flatMap(({ name, bindings }) =&gt; {
+        const containerPort = parseInt(name.split('/')[0], 10);
+        return bindings.map(binding =&gt; {
+          return [parseInt(binding.hostPort, 10), containerPort] as const;
+        }).filter(([hostPort]) =&gt; hostPort);
+      }) ?? [];
+    },</code></pre>
+
+<p><span class="fix-label">Fix:</span> Guard against missing bindings and deduplicate:</p>
+
+<pre><code class="language-diff">  return container.status?.ports?.flatMap(({ name, bindings }) =&gt; {
+    const containerPort = parseInt(name.split('/')[0], 10);
+-   return bindings.map(binding =&gt; {
++   return (bindings ?? []).map(binding =&gt; {
+      return [parseInt(binding.hostPort, 10), containerPort] as const;
+    }).filter(([hostPort]) =&gt; hostPort);
+  }) ?? [];</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-3">
+<span class="finding-num">3.</span> WebSocket error message renders as <code>[object Event]</code> <span class="pill pill-claude">Claude</span> (suggestion, regression)
+<a href="#suggestion-3" class="pilcrow">&para;</a>
+</div>
+
+<p>Per the WebSocket spec, the <code>error</code> event is a generic <code>Event</code> with no <code>message</code> property. The <code>'message' in event</code> check is <code>false</code>, and <code>${event}</code> stringifies to <code>"[object Event]"</code>. The user sees <code>"WebSocket error: [object Event]"</code>.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L247-L257">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+<pre data-start="247" data-line="252"><code class="language-typescript">      revealTimeout = setTimeout(() =&gt; {
+        waitingForInitialLogs.value = false;
+        nextTick(() =&gt; {
+          fitAddon?.fit();
+          terminal?.scrollToBottom();
+        });
+      }, 500);
+    });
+    socket.addEventListener('error', (event) =&gt; {
+      console.error('WebSocket error:', event);
+      errorMessage.value = `WebSocket error: ${ 'message' in event ? event.message : event }`;
+    });</code></pre>
+
+<p><span class="fix-label">Fix:</span></p>
+
+<pre><code class="language-diff">- errorMessage.value = `WebSocket error: ${ 'message' in event ? event.message : event }`;
++ errorMessage.value = 'WebSocket error: connection failed';</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-4">
+<span class="finding-num">4.</span> Dead CSS rule <code>.terminal-hidden</code> <span class="pill pill-claude">Claude</span> (suggestion, regression)
+<a href="#suggestion-4" class="pilcrow">&para;</a>
+</div>
+
+<p>This PR replaced the <code>{ 'terminal-hidden': waitingForInitialLogs }</code> class binding with a <code>v-if</code>/<code>v-else</code> pattern, making this CSS rule unreachable. Dead styles add confusion for future readers.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L329-L345">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+<pre data-start="329" data-line="337-339"><code class="language-css">.terminal-container {
+  background: #1a1a1a;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+
+  &amp;.terminal-hidden {
+    visibility: hidden;
+  }
+
+  :deep(.xterm) {
+    height: 100%;
+  }
+
+  :deep(.xterm-selection) {
+    overflow: hidden;
+  }</code></pre>
+
+<p><span class="fix-label">Fix:</span> Remove the <code>.terminal-hidden</code> block.</p>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-5">
+<span class="finding-num">5.</span> <code>RootGetters</code> type evaluates to <code>any</code> for all modules <span class="pill pill-claude">Claude</span> (suggestion, regression)
+<a href="#suggestion-5" class="pilcrow">&para;</a>
+</div>
+
+<p>Module getters are plain objects, not functions. <code>ReturnType&lt;ObjectType&gt;</code> evaluates to <code>any</code>, so every entry in <code>RootGetters</code> collapses to <code>any</code>. The type compiles without error but provides no type safety for <code>rootGetters</code> in <code>GetterTree</code> at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/store/ts-helpers.ts#L65">ts-helpers.ts:65</a>.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/entry/store.ts#L45-L47">pkg/rancher-desktop/entry/store.ts</a></div>
+<pre data-start="45" data-line="46"><code class="language-typescript">export type RootGetters = {
+  [K in keyof Modules]: Modules[K] extends { getters: any } ? ReturnType&lt;Modules[K]['getters']&gt; : never;
+};</code></pre>
+
+<p><span class="fix-label">Fix:</span></p>
+
+<pre><code class="language-typescript">export type RootGetters = {
+  [K in keyof Modules]: Modules[K] extends { getters: infer G }
+    ? { [P in keyof G]: G[P] extends (...args: any) =&gt; infer R ? R : never }
+    : never;
+};</code></pre>
+</div>
+
+<hr>
+
+<h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&para;</a></h2>
+
+<div class="card card-design">
+<h3>Concerns</h3>
+
+<ul>
+<li><strong>Duplicated container-lookup logic</strong> <em>(in-scope)</em> <span class="pill pill-codex">Codex</span>: Each component independently resolves the current container from the store array using <code>find(c =&gt; c.metadata?.name === id)</code> — <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L143">ContainerInfo.vue:143</a>, <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerLogs.vue#L75">ContainerLogs.vue:75</a>, and <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/components/ContainerStatusBadge.vue#L28">ContainerStatusBadge.vue:28</a> (broken). A shared computed or selector for "current container by route ID" would eliminate the store-shape mismatch that caused the badge regression and reduce the surface area for similar bugs.</li>
+</ul>
+
+<h3>Strengths</h3>
+
+<ul>
+<li>The watch-based lifecycle in <code>ContainerLogs.vue</code> with <code>AbortController</code> and <code>onCleanup</code> is a substantial improvement over the old imperative <code>initializeTerminal</code>/<code>startStreaming</code>/<code>stopStreaming</code> pattern. Each watch handler owns its cleanup, eliminating an entire class of stale-state bugs. <span class="pill pill-claude">Claude</span></li>
+<li>The <code>usePassthroughURL</code> composable cleanly encapsulates controller-manager discovery logic and is reusable for any passthrough endpoint. The computed chain from config map &rarr; info &rarr; controller &rarr; URL is well-structured. <span class="pill pill-claude">Claude</span></li>
+<li>The container actions (<code>containerSetState</code>, <code>containerDelete</code>) follow the established pattern from <code>imageDelete</code>/<code>imagePush</code> in the same store file, maintaining consistency across the migration. <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span></li>
+</ul>
+</div>
+
+<hr>
+
+<h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&para;</a></h2>
+
+<div class="card card-neutral">
+<ol>
+<li><strong>Start/Stop actions untested</strong> — no store-level or UI test verifies that Start/Stop sends the correct patch body. This would have caught <a href="#critical-1">Critical #1</a>.</li>
+<li><strong>E2e container log scrolling broken</strong> — the <code>__xtermTerminal</code> hook removal (<a href="#important-5">Important #5</a>) breaks <code>e2e/pages/container-logs-page.ts</code> scroll helpers at lines 52, 60, 68.</li>
+<li><strong>Container details badge untested</strong> — no test opens <code>/containers/info/:id</code> and asserts the <code>ContainerStatusBadge</code> renders the current container's state.</li>
+<li><strong>Table sorting untested after row-shape change</strong> — no test verifies that clicking column headers sorts correctly with the new RDD field structure.</li>
+<li><strong>Existing container e2e suite disabled</strong> — <code>e2e/containers.e2e.spec.ts</code> is currently disabled (line 9), so none of these regressions would be caught pre-merge.</li>
+<li><strong><code>usePassthroughURL</code> composable untested</strong> — the non-trivial logic (JSON parsing with fallback, controller priority, URL construction) would benefit from unit tests covering edge cases such as missing config map data.</li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&para;</a></h2>
+
+<div class="card card-neutral">
+<p>The spelling dictionary update (<code>passthroughs</code>) is appropriate. No other user-facing documentation changes are needed.</p>
+</div>
+
+<hr>
+
+<h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&para;</a></h2>
+
+<div class="card card-neutral">
+<ol>
+<li><code>"// TODO: Determine if the backend supports namespaces."</code> — <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/c8ce2a41378a37fe565294b0c2e1a9baaf8f32dc/pkg/rancher-desktop/store/container-engine.ts#L65">store/container-engine.ts:65</a>. <code>supportsNamespaces()</code> always returns <code>false</code>, hiding the namespace dropdown and disabling namespace-specific filtering. The migration makes this limitation more visible because namespace selection is now wired through the <code>currentNamespace</code> getter, which always returns <code>undefined</code>.</li>
+<li>The PR description explicitly states "many things are expected to be broken" — this is an incremental step in a larger migration where backend passthrough endpoints may not yet be fully implemented.</li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&para;</a></h2>
+
+<div class="card card-neutral">
+<h3><span class="pill pill-claude">Claude</span> Opus 4.6</h3>
+
+<p>Claude produced the most findings (7) and had the deepest trace-through analysis. Its unique contributions include the watch-override-on-tab-switch finding (<a href="#important-4">Important #4</a>), the removed e2e hook (<a href="#important-5">Important #5</a>), the <code>RootGetters</code> type issue (<a href="#suggestion-5">Suggestion #5</a>), the dead CSS rule (<a href="#suggestion-4">Suggestion #4</a>), and the WebSocket error message analysis (<a href="#suggestion-3">Suggestion #3</a>). Claude correctly traced the Vue lifecycle ordering to identify that the watch override bug manifests on tab switch, not initial mount — a nuance the other agents missed entirely.</p>
+
+<p>Claude missed both critical issues: the <code>desiredState</code> vs <code>state</code> field mismatch and the WebSocket protocol issue. It also missed the ContainerStatusBadge regression and the broken sort keys. Claude marked <code>pages/Containers.vue</code> and <code>store/container-engine.ts</code> as "no issues" — both had critical or important bugs caught by other agents.</p>
+
+<ul>
+<li>Unique contributions: 5 (<a href="#important-4">Important #4</a>, <a href="#important-5">Important #5</a>, <a href="#suggestion-3">Suggestion #3</a>, <a href="#suggestion-4">Suggestion #4</a>, <a href="#suggestion-5">Suggestion #5</a>)</li>
+<li>False positives: 0</li>
+<li>Depth: Excellent — traced lifecycle ordering, rddConnection watcher replacement, and type system evaluation</li>
+<li>Coverage misses: 2 (Containers.vue sort keys, container-engine.ts desiredState field)</li>
+</ul>
+
+<h3><span class="pill pill-codex">Codex</span> GPT 5.4</h3>
+
+<p>Codex found the most impactful bugs. Its sole critical finding — the <code>spec.desiredState</code> vs <code>spec.state</code> mismatch — is the most clear-cut regression in the PR. Codex was also the only agent to catch the ContainerStatusBadge array-access regression (<a href="#important-1">Important #1</a>) and the broken table sort keys (<a href="#important-2">Important #2</a>). Both required understanding how the store shape change affects downstream consumers not directly modified in the PR.</p>
+
+<p>Codex missed the WebSocket protocol issue, the watch-override callback bug, the stale props, and the e2e hook removal. It marked <code>ContainerLogs.vue</code> as "no issues" — this file had two critical/important findings from other agents.</p>
+
+<ul>
+<li>Unique contributions: 3 (<a href="#critical-1">Critical #1</a>, <a href="#important-1">Important #1</a>, <a href="#important-2">Important #2</a>)</li>
+<li>False positives: 0</li>
+<li>Depth: Good — traced through generated API models, SortableTable sorting internals, and badge component store shape</li>
+<li>Coverage misses: 1 (ContainerLogs.vue WebSocket/watch issues)</li>
+</ul>
+
+<h3><span class="pill pill-gemini">Gemini</span> 3.1 Pro</h3>
+
+<p>Gemini produced the fewest findings (5) but identified the WebSocket protocol critical issue that no other agent caught. It also identified the namespace store mapping mismatch (downgraded to Suggestion in consolidation because the dropdown is hidden by <code>supportsNamespaces</code> returning <code>false</code>).</p>
+
+<p>Gemini's Critical 2 (namespace dropdown broken) overstated the severity — the issue is dormant because <code>supportsNamespaces</code> always returns <code>false</code>. Gemini missed the <code>desiredState</code> field mismatch, the badge regression, the sort key issues, the watch-override bug, and the e2e hook removal. Its suggestion about missing WebSocket reconnection logic was partially valid but mitigated by the watch-based architecture that creates new connections when dependencies change.</p>
+
+<ul>
+<li>Unique contributions: 1 (<a href="#critical-2">Critical #2</a>)</li>
+<li>False positives: 0 strict, 1 severity inflation (namespace finding rated Critical but is dormant)</li>
+<li>Depth: Moderate — checked WebSocket spec details but did not trace into downstream consumers like badge or sort</li>
+<li>Coverage misses: 1 (container-engine.ts desiredState field)</li>
+</ul>
+
+<h3>Summary</h3>
+
+<table class="retro-table">
+<tr>
+<th>Metric</th>
+<th><span class="pill pill-claude">Claude</span> Opus 4.6</th>
+<th><span class="pill pill-codex">Codex</span> GPT 5.4</th>
+<th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th>
+</tr>
+<tr><td>Duration</td><td>8 min 27 s</td><td>6 min 2 s</td><td>5 min 0 s</td></tr>
+<tr><td>Critical</td><td>0</td><td>1</td><td>1</td></tr>
+<tr><td>Important</td><td>3</td><td>2</td><td>1</td></tr>
+<tr><td>Suggestion</td><td>4</td><td>1</td><td>1</td></tr>
+<tr><td>Design observations</td><td>3</td><td>2</td><td>0</td></tr>
+<tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>Unique insights</td><td>5</td><td>3</td><td>1</td></tr>
+<tr><td>Files reviewed</td><td>9</td><td>9</td><td>9</td></tr>
+<tr><td>Coverage misses</td><td>2</td><td>1</td><td>1</td></tr>
+</table>
+
+<p>Codex delivered the highest-impact findings (the only agent to catch the <code>desiredState</code> critical and both downstream consumer regressions). Claude provided the deepest analysis with the most nuanced lifecycle trace-through. Gemini caught the WebSocket protocol issue no one else found but was the shallowest overall. The multi-agent approach proved essential: no single agent found more than one of the two critical issues, and five of the seven important issues were caught by only one agent.</p>
+</div>
+
+<hr>
+
+<h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&para;</a></h2>
+
+<div class="card card-neutral">
+<p><strong>Repo context updates</strong></p>
+
+<ul>
+<li>The <code>ContainerStatusBadge</code> component uses the old store shape (map-style bracket access, pre-RDD field names). Future reviews of container-related PRs should trace through this component even if it is not in the changed files list, as it consumes <code>container-engine.containers</code> indirectly via the page header action mechanism.</li>
+<li><code>SortableTable</code> resolves sort keys via dot-path property lookup. When store shapes change, sort key arrays in header definitions must be verified against the new row object structure.</li>
+</ul>
+</div>
+
+</main>
+<script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+<script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+</script>
+</body>
+</html>
