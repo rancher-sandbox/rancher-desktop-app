@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260401-134554-pr-35</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+  </style>
+</head>
+<body>
+  <main>
+
+<h1 id="title">Deep Review: 20260401-134554-pr-35 <a class="pilcrow" href="#title">¶</a></h1>
+
+<table class="meta-table">
+  <tr><td>Date</td><td>2026-04-01 13:45</td></tr>
+  <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+  <tr><td>Round</td><td>3 (of PR <a class="gh-ref" href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/35" data-title="containers: convert to RDD API" data-state="open" data-type="pr">#35</a>)</td></tr>
+  <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+  <tr><td>PR</td><td><a class="gh-ref" href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/35" data-title="containers: convert to RDD API" data-state="open" data-type="pr">#35</a> — containers: convert to RDD API</td></tr>
+  <tr><td>Branch</td><td><code>mook-as/rdd-api/containers</code></td></tr>
+  <tr><td>Commits</td><td>
+    <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/303f3ec47"><code>303f3ec47</code></a> Address (AI) review comments round 2<br>
+    <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/e913b9c4b"><code>e913b9c4b</code></a> Address (AI) review comments<br>
+    <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/c8ce2a413"><code>c8ce2a413</code></a> containers: convert to RDD API
+  </td></tr>
+  <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span></td></tr>
+  <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> — prior review feedback addressed well; one likely API failure and one data-source mismatch remain</td></tr>
+  <tr><td>Wall-clock time</td><td><code>17 min 8 s</code></td></tr>
+</table>
+
+<hr>
+
+<h2 id="executive-summary">Executive Summary <a class="pilcrow" href="#executive-summary">¶</a></h2>
+
+<div class="card card-neutral">
+<p>This PR migrates the containers page from the Docker Extension API to the RDD Kubernetes-style API. The author addressed round 1 and 2 findings: the <code>spec.desiredState</code> &rarr; <code>spec.state</code> fix, <code>containerById</code> getter, sort key corrections, and <code>RootGetters</code> type mapping are all correctly implemented. Two important issues remain: the patch request's Content-Type/body format mismatch will likely cause the RDD API to reject start/stop operations, and the container grouping reads labels from a different source than the kube-system filter, which will break project grouping.</p>
+</div>
+
+<hr>
+
+<h2 id="critical-issues" class="section-critical">Critical Issues <a class="pilcrow" href="#critical-issues">¶</a></h2>
+
+<div class="card card-neutral">
+<p>None.</p>
+</div>
+
+<hr>
+
+<h2 id="important-issues" class="section-important">Important Issues <a class="pilcrow" href="#important-issues">¶</a></h2>
+
+<div class="card card-important">
+<div class="finding-title" id="important-1"><span class="finding-num">1.</span> Patch Content-Type sends JSON Patch header with merge-patch body <span class="pill pill-gemini">Gemini</span> <span style="font-weight:normal; font-size:0.85em; color:#92400e;">(important, regression)</span> <a class="pilcrow" href="#important-1">¶</a></div>
+
+<p>The generated client's <code>patchNamespacedContainer</code> method lists three accepted Content-Types: <code>application/json-patch+json</code>, <code>application/merge-patch+json</code>, and <code>application/apply-patch+yaml</code>. The <code>getPreferredMediaType</code> helper selects the first "JSON-like" match &mdash; <code>application/json-patch+json</code>. That format requires an array of RFC 6902 operations, but the body <code>{ spec: { state } }</code> is a merge-patch object. A server that validates Content-Type against body structure will reject every start/stop request.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/store/container-engine.ts#L111-L131">pkg/rancher-desktop/store/container-engine.ts:111-131</a></div>
+<pre class="language-typescript" data-start="111" data-line="122-128"><code>  /** Request the given container to transition to the provided state. */
+  containerSetState(
+    { rootState, commit },
+    { container, state }: {
+      container: RDDClient.IoRancherdesktopContainersV1alpha1Container,
+      state:     'running' | 'stopped',
+    },
+  ) {
+    const config: RDDClient.KubeConfig = rootState['rdd-connection'].config;
+    const client = config.makeApiClient(RDDClient.ContainersRancherdesktopIoV1alpha1Api);
+
+    return client.patchNamespacedContainer(
+      {
+        name:            container.metadata!.name!,
+        namespace:       container.metadata!.namespace!,
+        body:            { spec: { state } },
+        fieldValidation: 'Strict',
+      }).catch((err: Error) => {
+      commit('SET_ERROR', { error: err, source: 'containers' });
+    });
+  },</code></pre>
+
+<p><span class="fix-label">Fix:</span> Format the body as a JSON Patch array:</p>
+
+<pre class="language-diff"><code>     return client.patchNamespacedContainer(
+       {
+         name:            container.metadata!.name!,
+         namespace:       container.metadata!.namespace!,
+-        body:            { spec: { state } },
++        body:            [{ op: 'replace', path: '/spec/state', value: state }],
+         fieldValidation: 'Strict',
+       }).catch((err: Error) => {</code></pre>
+
+<p>Alternatively, if the RDD backend handles merge-patch correctly regardless of Content-Type, add a comment explaining the mismatch so future readers do not "fix" it.</p>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-2"><span class="finding-num">2.</span> Container grouping reads labels from <code>metadata</code> while kube-system filter reads from <code>status</code> <span class="pill pill-claude">Claude</span> <span style="font-weight:normal; font-size:0.85em; color:#92400e;">(important, regression)</span> <a class="pilcrow" href="#important-2">¶</a></div>
+
+<p>The kube-system filter at line 218 reads <code>io.kubernetes.pod.namespace</code> from <code>status.labels</code> (container runtime labels), while the project grouping at lines 240&ndash;243 reads the same label keys from <code>metadata.labels</code> (Kubernetes resource metadata). If the RDD backend does not copy container runtime labels to <code>metadata.labels</code>, grouping never matches on pod name or namespace, and all containers fall into "Standalone Containers." Both code paths were introduced in this PR (confirmed via <code>git blame</code>).</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/pages/Containers.vue#L213-L219">pkg/rancher-desktop/pages/Containers.vue:213-219</a></div>
+<pre class="language-typescript" data-start="213" data-line="218"><code>      return (this.containers ?? [])
+        .filter(hasField('metadata'))
+        .filter(hasField('status'))
+        .filter(container => {
+          // Filter out containers from the 'kube-system' namespace
+          return this.supportsNamespaces || container.status.labels?.['io.kubernetes.pod.namespace'] !== 'kube-system';
+        })</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/pages/Containers.vue#L239-L250">pkg/rancher-desktop/pages/Containers.vue:239-250</a></div>
+<pre class="language-typescript" data-start="239" data-line="240-243"><code>            projectGroup:     (() => {
+              const labels = container.metadata.labels ?? {};
+              const k8sPodName = labels['io.kubernetes.pod.name'];
+              const k8sNamespace = labels['io.kubernetes.pod.namespace'];
+              const composeProject = labels['com.docker.compose.project'];
+              if (k8sPodName && k8sNamespace) {
+                return `${ k8sNamespace }/${ k8sPodName }`;
+              } else if (composeProject) {
+                return composeProject;
+              }
+              return 'Standalone Containers';
+            })(),</code></pre>
+
+<p><span class="fix-label">Fix:</span> Use the same label source for both operations:</p>
+
+<pre class="language-diff"><code>-            const labels = container.metadata.labels ?? {};
++            const labels = container.status.labels ?? {};</code></pre>
+</div>
+
+<div class="card card-important">
+<div class="finding-title" id="important-3"><span class="finding-num">3.</span> Reconnect destroys terminal scrollback <span class="pill pill-codex">Codex</span> <span style="font-weight:normal; font-size:0.85em; color:#92400e;">(important, regression)</span> <a class="pilcrow" href="#important-3">¶</a></div>
+
+<p>On reconnect, the <code>open</code> handler sets <code>waitingForInitialLogs</code> to <code>true</code> (line 262). Because the template renders the loading indicator and terminal as mutually exclusive <code>v-if</code>/<code>v-else</code> branches (lines 13&ndash;26), this unmounts the terminal <code>&lt;div&gt;</code>. Unmounting triggers the <code>watch(terminalContainer)</code> cleanup (lines 98&ndash;103), which aborts the <code>terminalAborter</code> and disposes the <code>Terminal</code> instance (lines 138&ndash;140). Additionally, the stream cleanup at lines 201&ndash;203 calls <code>terminal?.reset()</code> and clears the buffer. The comment at lines 259&ndash;261 says the user should keep seeing old logs during a disconnect, but the implementation destroys them.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue#L13-L27">pkg/rancher-desktop/components/ContainerLogs.vue:13-27</a></div>
+<pre class="language-typescript" data-start="13" data-line="13-27"><code>    &lt;loading-indicator
+      v-if="!container || waitingForInitialLogs"
+      class="content-state"
+      data-testid="loading-indicator"
+    &gt;
+      Loading logs...
+    &lt;/loading-indicator&gt;
+
+    &lt;div
+      v-else
+      ref="terminalContainer"
+      class="terminal-container"
+      data-testid="terminal"
+    /&gt;
+  &lt;/div&gt;</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue#L96-L107">pkg/rancher-desktop/components/ContainerLogs.vue:96-107</a></div>
+<pre class="language-typescript" data-start="96" data-line="98-103"><code>const terminalContainer = useTemplateRef('terminalContainer');
+// Hook up the terminal once the container is mounted.
+watch(terminalContainer, async(terminalContainer, _oldValue, onCleanup) =&gt; {
+  terminalAborter?.abort();
+  terminalAborter = undefined;
+
+  if (!terminalContainer) {
+    return;
+  }
+
+  terminalAborter = new AbortController();
+  onCleanup(() =&gt; terminalAborter?.abort());</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue#L138-L141">pkg/rancher-desktop/components/ContainerLogs.vue:138-141</a></div>
+<pre class="language-typescript" data-start="138" data-line="138-141"><code>  terminalAborter.signal.addEventListener('abort', () =&gt; {
+    terminal = undefined;
+    t.dispose();
+  });</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue#L197-L204">pkg/rancher-desktop/components/ContainerLogs.vue:197-204</a></div>
+<pre class="language-typescript" data-start="197" data-line="201-203"><code>  cleanUp(() =&gt; {
+    streamAborter.abort();
+    clearTimeout(revealTimeout);
+  });
+  streamAborter.signal.addEventListener('abort', () =&gt; {
+    buffer = '';
+    terminal?.reset();
+  });</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue#L258-L278">pkg/rancher-desktop/components/ContainerLogs.vue:258-278</a></div>
+<pre class="language-typescript" data-start="258" data-line="262"><code>    socket.addEventListener('open', () =&gt; {
+      // Once the connection is open, reset the initial wait to avoid the logs
+      // streaming in quickly.  Do not do the reset earlier, so that the user
+      // can still look at the last known logs during a disconnect.
+      waitingForInitialLogs.value = true;
+      clearTimeout(revealTimeout);
+
+      reconnectResetTimer = setTimeout(() =&gt; {
+        // If we have no logs after a while, reset the reconnect attempts to
+        // allow retries again.
+        reconnectAttempts = 0;
+      }, 10_000);
+
+      revealTimeout = setTimeout(() =&gt; {
+        waitingForInitialLogs.value = false;
+        nextTick(() =&gt; {
+          fitAddon?.fit();
+          terminal?.scrollToBottom();
+        });
+      }, 500);
+    });</code></pre>
+
+<p><span class="fix-label">Fix:</span> Keep the terminal mounted during reconnects. Use <code>visibility: hidden</code> or an overlay for the loading state instead of <code>v-if</code>/<code>v-else</code>, so the terminal DOM element persists across reconnection cycles. Only create a new Terminal when the container identity changes.</p>
+</div>
+
+<hr>
+
+<h2 id="suggestions" class="section-suggestion">Suggestions <a class="pilcrow" href="#suggestions">¶</a></h2>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-1"><span class="finding-num">1.</span> <code>portsSortKey</code> uses lexicographic sort on numbers <span class="pill pill-claude">Claude</span> <span style="font-weight:normal; font-size:0.85em; color:#1e40af;">(suggestion, regression)</span> <a class="pilcrow" href="#suggestion-1">¶</a></div>
+
+<p>JavaScript's <code>Array.prototype.sort()</code> without a comparator converts elements to strings. <code>[80, 443, 3000].sort()</code> produces <code>[3000, 443, 80]</code>. Since <code>SortableTable</code> compares array elements to determine row order, the wrong element order within the key produces incorrect column sorting.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/pages/Containers.vue#L297-L303">pkg/rancher-desktop/pages/Containers.vue:297-303</a></div>
+<pre class="language-typescript" data-start="297" data-line="302"><code>            },
+            viewInfo: () =&gt; {
+              this.viewInfo(container);
+            },
+            portList,
+            portsSortKey: portList.map(([hostPort]) =&gt; hostPort).sort(),
+          };</code></pre>
+
+<p><span class="fix-label">Fix:</span></p>
+
+<pre class="language-diff"><code>-portsSortKey: portList.map(([hostPort]) => hostPort).sort(),
++portsSortKey: portList.map(([hostPort]) => hostPort).sort((a, b) => a - b),</code></pre>
+</div>
+
+<div class="card card-suggestion">
+<div class="finding-title" id="suggestion-2"><span class="finding-num">2.</span> Stopped containers never begin streaming after they start <span class="pill pill-codex">Codex</span> <span style="font-weight:normal; font-size:0.85em; color:#1e40af;">(suggestion, gap)</span> <a class="pilcrow" href="#suggestion-2">¶</a></div>
+
+<p>The log-stream watcher at line 191 depends only on <code>logURL</code> and <code>reconnectTrigger</code>. If the user opens logs for a stopped container, the WebSocket fails and <code>handleStreamError</code> (line 314) suppresses the retry because <code>isRunning</code> is <code>false</code>. When that container later starts, neither <code>logURL</code> (based on container name, not state) nor <code>reconnectTrigger</code> changes, so the watcher never fires. The user must navigate away and back to see logs.</p>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue#L189-L194">pkg/rancher-desktop/components/ContainerLogs.vue:189-194</a></div>
+<pre class="language-typescript" data-start="189" data-line="191"><code>
+// Start streaming logs from the container.
+watch([logURL, reconnectTrigger], async([logURL], _, cleanUp) =&gt; {
+  if (!container.value || !logURL) {
+    return;
+  }</code></pre>
+
+<div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue#L310-L330">pkg/rancher-desktop/components/ContainerLogs.vue:310-330</a></div>
+<pre class="language-typescript" data-start="310" data-line="312-318"><code>let reconnectTimer: ReturnType&lt;typeof setTimeout&gt; | undefined;
+
+function handleStreamError() {
+  clearTimeout(reconnectTimer);
+  if (!isRunning) {
+    // If the container isn't running, we expect the log stream to fail, so
+    // don't show a reconnect button in this case.
+    return;
+  }
+  // On unexpected log streaming error, retry with exponential backoff by
+  // touching the `reconnectTrigger` ref, which is a dependency of the log
+  // streaming watcher.
+  if (reconnectAttempts &lt; maxReconnectAttempts) {
+    const delay = Math.pow(2, reconnectAttempts) * 1_000;
+    reconnectTimer = setTimeout(() =&gt; {
+      reconnectAttempts++;
+      // Trigger a reconnect.
+      reconnectTrigger.value++;
+    }, delay);
+  }
+}</code></pre>
+
+<p><span class="fix-label">Fix:</span> Add <code>isRunning</code> (or the container's status) as a watch dependency and trigger a reconnect when it transitions to <code>running</code>.</p>
+</div>
+
+<hr>
+
+<h2 id="design-observations" class="section-design">Design Observations <a class="pilcrow" href="#design-observations">¶</a></h2>
+
+<h3 id="design-concerns">Concerns <a class="pilcrow" href="#design-concerns">¶</a></h3>
+
+<div class="card card-design">
+<p><strong>(in-scope)</strong> Coupling the terminal lifecycle to DOM presence via <code>v-if</code>/<code>v-else</code> in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue">ContainerLogs.vue</a> causes reconnects to destroy the terminal. Treating the loading indicator as an overlay instead of a mutually exclusive branch would decouple transport state from DOM state and eliminate this class of bugs. <span class="pill pill-codex">Codex</span></p>
+</div>
+
+<h3 id="design-strengths">Strengths <a class="pilcrow" href="#design-strengths">¶</a></h3>
+
+<div class="card card-design">
+<ol>
+<li>The <code>containerById</code> getter centralizes container lookup and is used consistently across <code>ContainerStatusBadge</code>, <code>ContainerLogs</code>, and <code>ContainerInfo</code> &mdash; a meaningful improvement over the prior per-component array searches. <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span></li>
+<li>The <code>usePassthroughURL</code> composable cleanly encapsulates ConfigMap discovery and URL construction, keeping <code>ContainerLogs</code> focused on display logic. <span class="pill pill-claude">Claude</span></li>
+<li>Storing watcher options alongside the watcher itself in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/store/rddConnection.ts#L213">rddConnection.ts:213,348</a> enables the <code>setCurrentNamespace</code> action to re-dispatch watchers with their original options &mdash; a pragmatic infrastructure addition. <span class="pill pill-claude">Claude</span></li>
+<li>The <code>RootGetters</code> type and <code>Intersect&lt;Values&lt;...&gt;&gt;</code> pattern in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/typings/store.d.ts">typings/store.d.ts</a> elegantly types Vuex's flattened getters map without hardcoding module names. <span class="pill pill-gemini">Gemini</span></li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="testing-assessment">Testing Assessment <a class="pilcrow" href="#testing-assessment">¶</a></h2>
+
+<div class="card card-neutral">
+<p>No tests are added or modified. The PR description acknowledges "many things are expected to be broken," consistent with an iterative migration. Key untested scenarios, ranked by risk:</p>
+<ol>
+<li>Container start/stop/delete via the new <code>containerSetState</code> and <code>containerDelete</code> actions</li>
+<li>WebSocket log streaming lifecycle (connect, reconnect, abort on navigation)</li>
+<li>Port list rendering and sorting with the new <code>status.ports</code> data shape</li>
+<li>Container grouping by project (Docker Compose, Kubernetes pod)</li>
+<li>Namespace switching and its effect on watcher re-dispatch</li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="documentation-assessment">Documentation Assessment <a class="pilcrow" href="#documentation-assessment">¶</a></h2>
+
+<div class="card card-neutral">
+<p>No documentation gaps found. The comment at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/components/ContainerLogs.vue#L217-L218">ContainerLogs.vue:217-218</a> referencing <code>@pkg/window/index.ts</code> for auth header injection is accurate (the <code>webRequest.onBeforeSendHeaders</code> handler is at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/window/index.ts#L241">window/index.ts:241</a>).</p>
+</div>
+
+<hr>
+
+<h2 id="commit-structure">Commit Structure <a class="pilcrow" href="#commit-structure">¶</a></h2>
+
+<div class="card card-neutral">
+<p>The three-commit structure is appropriate: the main conversion (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/c8ce2a413"><code>c8ce2a413</code></a>), then two review fix-up commits (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/e913b9c4b"><code>e913b9c4b</code></a>, <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/303f3ec47"><code>303f3ec47</code></a>). The fix-up commits address code review feedback and remain separate for reviewability across rebases. Each commit message accurately describes its changes.</p>
+</div>
+
+<hr>
+
+<h2 id="acknowledged-limitations">Acknowledged Limitations <a class="pilcrow" href="#acknowledged-limitations">¶</a></h2>
+
+<div class="card card-neutral">
+<ol>
+<li><code>"TODO: Re-enabling this feature is filed as <a class="gh-ref" href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/38" data-title="Restore feature: Container Shell" data-state="open" data-type="issue">#38</a>"</code> &mdash; <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L104">pages/containers/ContainerInfo.vue:104</a>. The Shell tab is intentionally disabled to reduce scope. This change does not worsen the limitation.</li>
+<li><code>"TODO: Determine if the backend supports namespaces."</code> &mdash; <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/store/container-engine.ts#L67">store/container-engine.ts:67</a>. <code>supportsNamespaces()</code> always returns <code>false</code>, making the namespace-refresh logic dormant. Pre-existing from PR <a class="gh-ref" href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/32" data-title="images: convert to RDD API" data-state="merged" data-type="pr">#32</a>, unchanged by this PR.</li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="unresolved-feedback">Unresolved Feedback <a class="pilcrow" href="#unresolved-feedback">¶</a></h2>
+
+<div class="card card-neutral">
+<p>The <a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/35#issuecomment-4163943228">round 1 review comment</a> raised a design concern about each component independently resolving containers from the store array. The author addressed this with the <code>containerById</code> getter, resolving the concern.</p>
+<p>The round 1 review's suggestion about the namespace dropdown mapping from the wrong store module was accepted. The fix at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/303f3ec47e41f403d4a43685873bee2db1bfea01/pkg/rancher-desktop/pages/Containers.vue#L205">Containers.vue:205</a> now maps <code>namespaceObjects</code> from <code>container-engine</code> instead of <code>rdd</code>. Resolved.</p>
+<p>No unresolved feedback remains.</p>
+</div>
+
+<hr>
+
+<h2 id="agent-performance-retro">Agent Performance Retro <a class="pilcrow" href="#agent-performance-retro">¶</a></h2>
+
+<h3 id="retro-claude"><span class="pill pill-claude">Claude</span> <a class="pilcrow" href="#retro-claude">¶</a></h3>
+
+<div class="card card-neutral">
+<p>Claude produced two findings: the <code>metadata.labels</code> vs <code>status.labels</code> inconsistency (Important, validated &mdash; unique to Claude) and the <code>portsSortKey</code> lexicographic sort (Suggestion, validated &mdash; unique to Claude). Both findings included correct <code>git blame</code> verification and precise line references. Claude's coverage was thorough across all 12 files, and its design observations were the most detailed. No false positives.</p>
+</div>
+
+<h3 id="retro-codex"><span class="pill pill-codex">Codex</span> <a class="pilcrow" href="#retro-codex">¶</a></h3>
+
+<div class="card card-neutral">
+<p>Codex focused deeply on the <code>ContainerLogs.vue</code> WebSocket lifecycle and produced two findings: reconnect destroying scrollback (Important, validated &mdash; unique to Codex) and stopped containers never auto-streaming (Suggestion, validated &mdash; unique to Codex). Codex also raised a design concern about coupling terminal lifecycle to DOM presence, which is actionable. One documentation finding (stale comment at <code>ContainerLogs.vue:217-218</code>) was a false positive &mdash; the referenced file path is correct. Coverage complete across all files.</p>
+</div>
+
+<h3 id="retro-gemini"><span class="pill pill-gemini">Gemini</span> <a class="pilcrow" href="#retro-gemini">¶</a></h3>
+
+<div class="card card-neutral">
+<p>Gemini produced two findings: the JSON Patch Content-Type mismatch (classified as Critical, downgraded to Important in consolidation &mdash; unique to Gemini) and <code>status.name</code> potentially undefined in sort keys (classified as Important &mdash; false positive, since <code>name</code> is a required field in the <code>ContainerStatus</code> model). Gemini's tracing of the generated client's MIME type selection logic was impressive and led to a genuine finding. Coverage complete across all files but shallower on the Vue component lifecycle.</p>
+</div>
+
+<h3 id="retro-summary">Summary <a class="pilcrow" href="#retro-summary">¶</a></h3>
+
+<table class="retro-table">
+<thead>
+<tr><th>Metric</th><th><span class="pill pill-claude">Claude</span></th><th><span class="pill pill-codex">Codex</span></th><th><span class="pill pill-gemini">Gemini</span></th></tr>
+</thead>
+<tbody>
+<tr><td>Duration</td><td>6:53</td><td>7:11</td><td>5:53</td></tr>
+<tr><td>Critical</td><td>0</td><td>0</td><td>1 (downgraded)</td></tr>
+<tr><td>Important</td><td>1</td><td>1</td><td>1 (1 false positive)</td></tr>
+<tr><td>Suggestion</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><td>Design observations</td><td>4</td><td>2</td><td>2</td></tr>
+<tr><td>False positives</td><td>0</td><td>1</td><td>1</td></tr>
+<tr><td>Unique insights</td><td>2</td><td>2</td><td>1</td></tr>
+<tr><td>Files reviewed</td><td>12</td><td>12</td><td>12</td></tr>
+<tr><td>Coverage misses</td><td>0</td><td>0</td><td>0</td></tr>
+</tbody>
+</table>
+
+<div class="card card-neutral" style="margin-top: 1rem;">
+<p>All three agents contributed unique, validated findings. Claude provided the broadest coverage with no false positives. Codex delivered the deepest lifecycle analysis of <code>ContainerLogs.vue</code>. Gemini found a subtle generated-client issue that required tracing through MIME type selection logic, though it also produced the only severity-inflated finding.</p>
+</div>
+
+<hr>
+
+<h2 id="review-process-notes">Review Process Notes <a class="pilcrow" href="#review-process-notes">¶</a></h2>
+
+<div class="card card-neutral">
+<p><strong>Repo context updates</strong></p>
+<ul>
+<li>The generated RDD client's <code>getPreferredMediaType</code> selects <code>application/json-patch+json</code> over <code>application/merge-patch+json</code> for patch endpoints. Any code using <code>patchNamespaced*</code> methods must format the body as a JSON Patch array (RFC 6902), not a merge-patch object. Future reviews should check patch body format against Content-Type for all new patch calls.</li>
+</ul>
+</div>
+
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+  </script>
+</body>
+</html>
