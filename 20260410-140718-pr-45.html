@@ -298,50 +298,7 @@ export interface RDDConnectionState {
 
     <div class="card card-suggestion">
       <div class="finding-title" id="S1">
-        <span class="finding-num">S1.</span> <code>unwatchResources</code> calls missing <code>.catch()</code> in three pages <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span><a href="#S1" class="pilcrow">&#182;</a>
-      </div>
-      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/pages/Containers.vue#L321-L331">pkg/rancher-desktop/pages/Containers.vue</a></div>
-      <pre data-start="321" data-line="326"><code class="language-typescript">      callback: (error: Error) =&gt; {
-        this.SET_ERROR({ error, source: &#39;containers&#39; });
-      },
-    }).catch(error =&gt; this.SET_ERROR({ error, source: &#39;containers&#39; }));
-    this.watchImages({
-      callback: (error: Error) =&gt; {
-        this.SET_ERROR({ error, source: &#39;images&#39; });
-      },
-    }).catch(error =&gt; this.SET_ERROR({ error, source: &#39;images&#39; }));
-  },
-  methods: {</code></pre>
-    <p><code>unwatchResources</code> awaits <code>state._watchersInitialized</code>. If that latch is in a rejected state (from a failed <code>setupResourceWatch</code>), these calls produce unhandled promise rejections. Compare with <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/layouts/default.vue#L153"><code>default.vue:153</code></a> and <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L249"><code>ContainerInfo.vue:249</code></a>, which correctly call <code>.catch()</code>. The author dismissed this in round 1, noting the page is unmounting. While unhandled rejections do not crash the Electron renderer by default, the inconsistency invites confusion.</p>
-      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/layouts/default.vue#L148-L158">pkg/rancher-desktop/layouts/default.vue</a></div>
-      <pre data-start="148" data-line="153"><code class="language-markup">    ...mapTypedActions(&#39;rdd-connection&#39;, [&#39;fetchConfig&#39;]),
-    async fetch() {
-      await this.fetchConfig();
-    },
-
-    openDashboard() {
-      ipcRenderer.send(&#39;dashboard-open&#39;);
-    },
-    openPreferences() {
-      ipcRenderer.send(&#39;preferences-open&#39;);
-    },</code></pre>
-      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L244-L254">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
-      <pre data-start="244" data-line="249"><code class="language-markup">      store.commit(&#39;container-engine/SET_ERROR&#39;, { error, source: &#39;containers&#39; });
-    },
-  }).catch(console.error);
-
-  window.addEventListener(&#39;keydown&#39;, handleGlobalKeydown);
-});
-
-onBeforeUnmount(() =&gt; {
-  store.dispatch(&#39;page/setHeader&#39;, { action: null });
-
-  window.removeEventListener(&#39;keydown&#39;, handleGlobalKeydown);</code></pre>
-    <p>Fix: Add <code>.catch(err =&gt; console.error(err))</code> to match the existing pattern.</p>
-    </div>
-    <div class="card card-suggestion">
-      <div class="finding-title" id="S2">
-        <span class="finding-num">S2.</span> Tight loop when config lacks <code>currentContext</code> <span class="pill pill-gemini">Gemini</span><a href="#S2" class="pilcrow">&#182;</a>
+        <span class="finding-num">S1.</span> Tight loop when config lacks <code>currentContext</code> <span class="pill pill-gemini">Gemini</span><a href="#S1" class="pilcrow">&#182;</a>
       </div>
       <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/store/rddConnection.ts#L370-L392">pkg/rancher-desktop/store/rddConnection.ts</a></div>
       <pre data-start="370" data-line="375-387"><code class="language-typescript">  #type:        K;
@@ -371,8 +328,8 @@ onBeforeUnmount(() =&gt; {
     <p>Fix: Add a delay in the <code>try</code> block when the context is still missing after a successful fetch.</p>
     </div>
     <div class="card card-suggestion">
-      <div class="finding-title" id="S3">
-        <span class="finding-num">S3.</span> Stale reconnect timer can fire after external <code>setupResourceWatch</code> <span class="pill pill-claude">Claude</span><a href="#S3" class="pilcrow">&#182;</a>
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> Stale reconnect timer can fire after external <code>setupResourceWatch</code> <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
       </div>
       <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/store/rddConnection.ts#L363-L373">pkg/rancher-desktop/store/rddConnection.ts</a></div>
       <pre data-start="363" data-line="368"><code class="language-typescript"> * A watcher is used to watch a resource type.
@@ -390,50 +347,8 @@ class Watcher&lt;
     <p>Fix: Clear <code>reconnectTimeout</code> at the top of <code>setupResourceWatch</code>.</p>
     </div>
     <div class="card card-suggestion">
-      <div class="finding-title" id="S4">
-        <span class="finding-num">S4.</span> <code>mockModules</code> default only provides <code>mapTypedGetters</code> <span class="pill pill-claude">Claude</span><a href="#S4" class="pilcrow">&#182;</a>
-      </div>
-      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/utils/testUtils/mockModules.ts#L1-L17">pkg/rancher-desktop/utils/testUtils/mockModules.ts</a></div>
-      <pre data-start="1" data-line="6-12"><code class="language-typescript">import path from &#39;node:path&#39;;
-
-import { jest } from &#39;@jest/globals&#39;;
-
-const defaultOverrides = {
-  &#39;@pkg/utils/logging&#39;: (() =&gt; {
-    class Log {
-      log = jest.fn();
-      error = jest.fn();
-      info = jest.fn();
-      warn = jest.fn();
-      debug = jest.fn();
-      debugE = jest.fn();
-    }
-    return ({
-      Log,
-      default:    new Proxy({}, {</code></pre>
-    <p>Components commonly import <code>mapTypedActions</code>, <code>mapTypedState</code>, and <code>mapTypedMutations</code> from <code>@pkg/entry/store</code>. When a test provides <code>undefined</code> for this mock (getting the default), these functions resolve to <code>undefined</code>, and the <code>...spread</code> silently produces nothing. The component mounts but mapped methods are missing, producing confusing failures at call sites rather than at import time. No current tests break, but this is a trap for future test authors.</p>
-    </div>
-    <div class="card card-suggestion">
-      <div class="finding-title" id="S5">
-        <span class="finding-num">S5.</span> StatusBar mixes data sources <span class="pill pill-claude">Claude</span><a href="#S5" class="pilcrow">&#182;</a>
-      </div>
-    <p><code>kubernetesVersion</code> reads from preferences while <code>kubernetesEnabled</code> and <code>containerEngine</code> read from the app resource. Until the backend populates <code>app.spec</code> fully, the status bar can show inconsistent state. Understandable as transitional; consider unifying the source when <code>app.spec</code> is authoritative.</p>
-    </div>
-    <div class="card card-suggestion">
-      <div class="finding-title" id="S6">
-        <span class="finding-num">S6.</span> <code>passthrough.ts</code> module-global flag not safe across HMR <span class="pill pill-claude">Claude</span><a href="#S6" class="pilcrow">&#182;</a>
-      </div>
-    <p>The module-level <code>systemConfigMapsWatched</code> flag survives hot-module replacement while the store is recreated, leaving <code>systemConfigMaps</code> unwatched until a full page reload. Dev-only impact.</p>
-    </div>
-    <div class="card card-suggestion">
-      <div class="finding-title" id="S7">
-        <span class="finding-num">S7.</span> StatusBar test does not cover <code>app === undefined</code> <span class="pill pill-claude">Claude</span><a href="#S7" class="pilcrow">&#182;</a>
-      </div>
-    <p>The test always provides a populated <code>app</code> object. The fallback path where <code>kubernetesEnabled</code> returns <code>false</code> and <code>containerEngine</code> returns <code>&#39;unknown&#39;</code> is unverified.</p>
-    </div>
-    <div class="card card-suggestion">
-      <div class="finding-title" id="S8">
-        <span class="finding-num">S8.</span> No tests for watch lifecycle <span class="pill pill-codex">Codex</span><a href="#S8" class="pilcrow">&#182;</a>
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> No tests for watch lifecycle <span class="pill pill-codex">Codex</span><a href="#S3" class="pilcrow">&#182;</a>
       </div>
     <p><code>unwatchResources</code> on the last subscriber, <code>waitForResources</code> after a stop/start cycle, and <code>ensureAppStarted</code> across reconnection all lack test coverage. These are the highest-risk untested paths.</p>
     </div>
@@ -444,21 +359,13 @@ const defaultOverrides = {
     <p><strong>Concerns</strong></p>
     <ol>
       <li><strong>(in-scope)</strong> The watch lifecycle has no semantic distinction between intentional close and backend disconnect. <code>ListWatch.stop()</code> and a backend-initiated disconnect both flow through the same error path, producing the cascade behind I1. Introducing an <code>intentionallyClosed</code> flag in <code>ListWatch</code> or splitting <code>doneHandler</code> into separate paths would eliminate this class of bugs. <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span></li>
-    </ol>
-    <ol>
       <li><strong>(in-scope)</strong> View lifecycles directly drive transport teardown. A component unmounting closes the underlying HTTP connection. Keeping informers alive for the process lifetime and using refcounts only to gate store commits would remove the need to reinterpret aborts as disconnects. <span class="pill pill-codex">Codex</span></li>
     </ol>
     <p><strong>Strengths</strong></p>
     <ol>
       <li>The refcounted <code>watchResources</code>/<code>unwatchResources</code> API handles overlapping component lifecycles cleanly. When two components watch the same resource, the watcher runs as long as either is active. [All agents]</li>
-    </ol>
-    <ol>
       <li>The <code>fetchConfig</code> deduplication via <code>fetchConfigPromise</code> (new in this round) prevents concurrent reconnection storms without adding complexity. <span class="pill pill-claude">Claude</span></li>
-    </ol>
-    <ol>
       <li>Lazy <code>fieldSelector</code>/<code>labelSelector</code> evaluation via functions ensures namespace changes propagate to watchers on reconnect without rebuilding them. <span class="pill pill-claude">Claude</span></li>
-    </ol>
-    <ol>
       <li>The <code>setHeaderOptions</code> middleware approach for overriding Content-Type avoids modifying generated code and composes well with other middleware. <span class="pill pill-claude">Claude</span></li>
     </ol>
     </div>
@@ -497,7 +404,7 @@ const defaultOverrides = {
       <li><strong>Round 1 I7 (unwatchResources may trigger spurious reconnect)</strong>: The author dismissed this, stating the ERROR handler &quot;is only for HTTP status 410; that will not be the case for a <code>.stop()</code> call.&quot; Two agents independently verified this is incorrect by tracing through <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rdd-client/watch.ts#L110-L117"><code>watch.ts:110-117</code></a>: <code>controller.signal.aborted</code> is true after <code>stop()</code>, so the catch block calls <code>doneCallOnce(err)</code> with the <code>AbortError</code>. <code>AbortError</code> is not a 410, so it hits the <code>else if (err)</code> branch and fires ERROR callbacks. This is now I1 in this round.</li>
     </ul>
     <ul>
-      <li><strong>Round 1 I5 (unwatchResources rejections uncaught in three pages)</strong>: The author dismissed this, saying the page is unmounting. The finding persists as S1. While not fatal in Electron, the inconsistency with <code>default.vue</code> and <code>ContainerInfo.vue</code> (which do catch) invites confusion.</li>
+      <li><strong>Round 1 I5 (unwatchResources rejections uncaught in three pages)</strong>: The author dismissed this, saying the page is unmounting. Two agents re-raised it (Claude S2, Gemini I1), but the author&#39;s reasoning stands: unhandled rejections in Electron are not fatal, and the page is being destroyed.</li>
     </ul>
     </div>
     <hr>
@@ -505,20 +412,21 @@ const defaultOverrides = {
 
     <div class="card card-neutral">
     <h3 id="gemini"><span class="pill pill-gemini">Gemini</span> <a href="#gemini" class="pilcrow">&#182;</a></h3>
-    <p>Gemini found 1 critical and 2 important issues. Its strongest contribution was the detailed <code>doneHandler</code> trace (C1), which identified the exact ordering problem and provided a clear diff fix. It also correctly identified the tight config-fetch loop (I2). Gemini ran with limited tool access (grep regex error on one call) but still covered all changed files and produced a focused review with no false positives. Coverage was thorough despite the 416KB diff being external to the prompt.</p>
+    <p>Gemini found 1 critical and 2 important issues (raw). Its strongest contribution was the detailed <code>doneHandler</code> trace (C1), which identified the exact ordering problem and provided a clear diff fix. It also identified the tight config-fetch loop. Gemini ran with limited tool access (grep regex error on one call) but still covered all changed files. One finding (I1, unwatchResources rejections) was dropped as already dismissed by the author in round 1.</p>
     <h3 id="codex"><span class="pill pill-codex">Codex</span> <a href="#codex" class="pilcrow">&#182;</a></h3>
-    <p>Codex found 2 important issues and 1 suggestion. Its unique contribution was identifying the stale <code>#loaded</code> latch on restart (I2), a subtle lifecycle bug that neither other agent caught. The I1 finding overlapped with Gemini&#39;s C1, with an equally detailed trace through the code. Codex produced no false positives. Its test coverage suggestion (S1) appropriately targeted the highest-risk untested paths.</p>
+    <p>Codex found 2 important issues and 1 suggestion. Its unique contribution was identifying the stale <code>#loaded</code> latch on restart (I2), a subtle lifecycle bug that neither other agent caught. The I1 finding overlapped with Gemini&#39;s C1, with an equally detailed trace through the code. Codex produced no false positives. Its test coverage suggestion appropriately targeted the highest-risk untested paths.</p>
     <h3 id="claude"><span class="pill pill-claude">Claude</span> <a href="#claude" class="pilcrow">&#182;</a></h3>
-    <p>Claude found 2 important issues and 4 suggestions. Its I1 finding (stale reconnect timer) was unique and valid but lower-impact than other agents&#39; findings. I2 (mockModules default) was valid but affects future test authors rather than current functionality. Claude provided the most design observations and the most thorough coverage summary. It did not identify the doneHandler ordering bug that both other agents found, despite it being the most significant issue in the PR.</p>
+    <p>Claude found 2 important issues and 4 suggestions (raw), but 5 of those 6 findings re-raised items the author had already dismissed in round 1 and were dropped from the consolidated report. Its one surviving finding (S2, stale reconnect timer) was unique and valid but low-impact. Claude provided the most design observations and the most thorough coverage summary. It did not identify the doneHandler ordering bug that both other agents found, despite it being the most significant issue in the PR.</p>
     <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
     <table class="retro-table">
       <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.6</th><th><span class="pill pill-codex">Codex</span> GPT 5.4</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
       <tbody>
         <tr><td>Duration</td><td>~15 min</td><td>8 min 47 s</td><td>4 min 49 s</td></tr>
-        <tr><td>Findings</td><td>0C 0I 4S</td><td>0C 2I 1S</td><td>0C 1I 1S</td></tr>
+        <tr><td>Findings</td><td>0C 0I 1S</td><td>0C 2I 1S</td><td>0C 1I 1S</td></tr>
         <tr><td>Design observations</td><td>4</td><td>2</td><td>0</td></tr>
         <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><td>Unique insights</td><td>2 (S3, S5)</td><td>1 (I2)</td><td>1 (S2)</td></tr>
+        <tr><td>Unique insights</td><td>0</td><td>1 (I2)</td><td>1 (S1)</td></tr>
+        <tr><td>Dropped (author-dismissed)</td><td>4 (S2, S4, S5, S6)</td><td>0</td><td>1 (I1)</td></tr>
         <tr><td>Files reviewed</td><td>44</td><td>44</td><td>44</td></tr>
         <tr><td>Coverage misses</td><td>1 (missed doneHandler bug)</td><td>0</td><td>0</td></tr>
       </tbody>
@@ -526,10 +434,14 @@ const defaultOverrides = {
     <p><strong>Reconciliation:</strong></p>
     <ul>
       <li>Gemini C1 (doneHandler ordering): downgraded critical → important I1. The app self-heals through reconnection; no data loss or security impact. The bug causes unnecessary reconnects but not permanent failure.</li>
-      <li>Gemini I1 (unwatchResources rejections): downgraded important → suggestion S1. The author acknowledged and declined to fix in round 1; unhandled rejections in Electron are not fatal by default.</li>
-      <li>Gemini I2 (tight config-fetch loop): downgraded important → suggestion S2. Requires an unlikely backend state (valid config without <code>currentContext</code>) to trigger.</li>
-      <li>Claude I1 (stale reconnect timer): downgraded important → suggestion S3. Impact is one redundant watcher recreation; the system self-heals.</li>
-      <li>Claude I2 (mockModules default): downgraded important → suggestion S4. No current tests fail; this is a trap for future test authors.</li>
+      <li>Gemini I1 (unwatchResources rejections): dropped. The author acknowledged and declined to fix in round 1.</li>
+      <li>Gemini I2 (tight config-fetch loop): downgraded important → suggestion S1. Requires an unlikely backend state (valid config without <code>currentContext</code>) to trigger.</li>
+      <li>Claude I1 (stale reconnect timer): downgraded important → suggestion S2. Impact is one redundant watcher recreation; the system self-heals.</li>
+      <li>Claude I2 (mockModules default): dropped. The author already acknowledged in round 1 (&quot;they&#39;ll get filled in as we use them&quot;).</li>
+      <li>Claude S1 (StatusBar data sources): dropped. The author addressed this in round 1 I9 response (&quot;Expected; stub values until the app exists&quot;).</li>
+      <li>Claude S2 (unwatchResources .catch): dropped. Same as Gemini I1; author declined to fix.</li>
+      <li>Claude S3 (HMR flag): dropped. The author acknowledged in round 1 S10 response.</li>
+      <li>Claude S4 (StatusBar test): dropped. Related to author&#39;s round 1 I9 response.</li>
     </ul>
     </div>
     <hr>
