@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260410-140718-pr-45</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260410-140718-pr-45</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-04-10 14:07</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+      <tr><td>Round</td><td>2 (of PR 45)</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/45" class="gh-ref" data-title="Create app resource" data-state="open" data-type="pr">#45</a> — Create app resource</td></tr>
+      <tr><td>Branch</td><td><code>app-start</code></td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/fb3512b5a"><code>fb3512b5a</code></a> Address (AI) review comments<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/cae2540e3"><code>cae2540e3</code></a> Vuex: switch to passing in resources as arguments<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/5f7e96b00"><code>5f7e96b00</code></a> Start app on startup<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/9d35d53de"><code>9d35d53de</code></a> Vuex: convert watches to refcounted<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/eac28153e"><code>eac28153e</code></a> Only list resources in the correct namespace<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/3c5976c67"><code>3c5976c67</code></a> store: Remove obsolete types<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/e4c61d0ed"><code>e4c61d0ed</code></a> rdd-client: regenerate</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.6, <span class="pill pill-codex">Codex</span> GPT 5.4, <span class="pill pill-gemini">Gemini</span> 3.1 Pro</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; the doneHandler ordering bug causes spurious reconnects on every page navigation and needs fixing</td></tr>
+      <tr><td>Wall-clock time</td><td><code>21 min 20 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>This round 2 review covers the same PR after the author addressed four findings from round 1: fetchConfig race deduplication (I1), containerSetState Content-Type (I6), disconnect callback key collision (I8), and setCurrentNamespace callback replacement (S9). The core architecture — refcounted <code>watchResources</code>/<code>unwatchResources</code> with centralized <code>setupResourceWatch</code> — remains solid.</p>
+    <p>Two agents independently confirmed that the <code>doneHandler</code> ordering bug dismissed in round 1 (I7) is real: when a component unmounts and closes its watcher, the abort error fires ERROR callbacks before the <code>stopped</code> flag is checked, triggering a full backend reconnect on every page navigation. This is the only finding that blocks merge. One new finding surfaced: the <code>Watcher.#loaded</code> latch is not reset when a stopped watcher restarts, so <code>waitForResources</code> rejects permanently after a stop/start cycle.</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+    <p>None.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> Intentional watcher close triggers spurious global reconnect <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rdd-client/cache.ts#L160-L181">pkg/rdd-client/cache.ts</a></div>
+      <pre data-start="160" data-line="165-176"><code class="language-typescript">      this.request.abort();
+      this.request = undefined;
+    }
+  }
+
+  private async doneHandler(err: any): Promise&lt;void&gt; {
+    this._stop();
+    if (
+      err &amp;&amp;
+            ((err as { statusCode?: number }).statusCode === 410 || (err as { code?: number }).code === 410)
+    ) {
+      this.resourceVersion = &#39;&#39;;
+    } else if (err) {
+      this.callbackCache[ERROR].forEach((elt: ErrorCallback) =&gt; elt(err));
+      return;
+    }
+    if (this.stopped) {
+      // do not auto-restart
+      return;
+    }
+    this.callbackCache[CONNECT].forEach((elt: ErrorCallback) =&gt; elt(undefined));
+    if (!this.resourceVersion) {</code></pre>
+    <p>When a component unmounts and <code>unwatchResources</code> reduces the refcount to zero, <code>Watcher.close()</code> calls <code>ListWatch.stop()</code>, which sets <code>this.stopped = true</code> and aborts the request. The abort produces an <code>AbortError</code> in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rdd-client/watch.ts#L110-L117"><code>watch.ts:110-117</code></a> that flows to <code>doneHandler</code>. Because the <code>else if (err)</code> branch at line 172 fires ERROR callbacks <em>before</em> the <code>this.stopped</code> check at line 176, every intentional close triggers the full disconnect path: <code>notifyDisconnected</code>, config clear, and reconnect scheduling. Ordinary page navigation causes a backend reconnect storm.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rdd-client/watch.ts#L105-L122">pkg/rdd-client/watch.ts</a></div>
+      <pre data-start="105" data-line="110-117"><code class="language-typescript">          statusCode: number | undefined;
+        };
+        error.statusCode = response.status;
+        throw error;
+      }
+    } catch (err) {
+      if (timeoutSignal.aborted &amp;&amp; !controller.signal.aborted) {
+        // If we hit the timeout, consider this a graceful close; ListWatch will
+        // do an auto-restart.
+        doneCallOnce(null);
+      } else {
+        doneCallOnce(err);
+      }
+    }
+
+    return controller;
+  }
+}</code></pre>
+    <p>The author dismissed round 1&#39;s I7 finding, stating the error handler &quot;is only for HTTP status 410.&quot; Tracing through <code>watch.ts</code> confirms this is incorrect: <code>controller.signal.aborted</code> is true (so the <code>else</code> branch calls <code>doneCallOnce(err)</code> with the <code>AbortError</code>), and <code>AbortError</code> is not a 410, so it hits the <code>else if (err)</code> branch.</p>
+    <p>Fix: Move the <code>stopped</code> check above the error processing.</p>
+      <pre><code class="language-diff"> private async doneHandler(err: any): Promise&lt;void&gt; {
+   this._stop();
++  if (this.stopped) {
++    return;
++  }
+   if (
+     err &amp;&amp;
+     ((err as { statusCode?: number }).statusCode === 410 || (err as { code?: number }).code === 410)
+   ) {
+     this.resourceVersion = &#39;&#39;;
+   } else if (err) {
+     this.callbackCache[ERROR].forEach((elt: ErrorCallback) =&gt; elt(err));
+     return;
+   }
+-  if (this.stopped) {
+-    // do not auto-restart
+-    return;
+-  }</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I2">
+        <span class="finding-num">I2.</span> Restarting a stopped watcher does not reset the <code>loaded</code> latch <span class="pill pill-codex">Codex</span><a href="#I2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/store/rddConnection.ts#L1-L20">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="1" data-line="610-616"><code class="language-typescript">// This file contains the state required to maintain a connection to the Rancher
+// Desktop Daemon.
+
+import { markRaw } from &#39;vue&#39;;
+import { Plugin } from &#39;vuex&#39;;
+
+import { ActionContext, ActionTree, Commit, MutationsType } from &#39;@pkg/store/ts-helpers&#39;;
+import ipcRenderer from &#39;@pkg/utils/ipcRenderer&#39;;
+import { UpperSnakeCase } from &#39;@pkg/utils/typeUtils&#39;;
+import * as RDDClient from &#39;@rdd-client&#39;;
+
+/**
+ * RDDState describes the connection to the Rancher Desktop Daemon.
+ */
+export interface RDDConnectionState {
+  /** config is the Kubernetes configuration to use. */
+  config:              RDDClient.KubeConfig;
+  error:               any;
+  watch:               RDDClient.Watch;
+  disconnectCallbacks: Record&lt;string, () =&gt; void&gt;;</code></pre>
+    <p><code>Watcher.#loaded</code> is a <code>Latch</code> (a Promise with exposed <code>resolve</code>/<code>reject</code> methods) created once at construction (line 552). When the watcher encounters an error, the error handler at line 605 calls <code>this.#loaded.reject(err)</code>. A settled Promise ignores subsequent <code>resolve</code> calls, so restarting the watcher via <code>watchResources</code> (which calls <code>start()</code> at line 494) leaves <code>#loaded</code> permanently rejected. Any subsequent <code>waitForResources</code> call rejects immediately, even though the watcher is running and receiving data.</p>
+    <p>This bug compounds with I1: intentional closes via <code>unwatchResources</code> reject <code>#loaded</code> through the spurious error path. With the I1 fix applied, intentional closes no longer reject <code>#loaded</code>, but genuine backend errors still do — and the latch remains stale until <code>setupResourceWatch</code> recreates the Watcher.</p>
+    <p>Fix: Reset the latch in <code>start()</code>.</p>
+      <pre><code class="language-diff"> start() {
++  this.#loaded = Latch();
++  this.#loaded.catch(() =&gt; { /* ignore */ });
+   this.#watcher.start().catch(err =&gt; {
+     console.debug(`Watch ${ this.#type } ended:`, err);
+     this.#doneFn(err);
+     this.#loaded.reject(err);
+   });
+ }</code></pre>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> <code>unwatchResources</code> calls missing <code>.catch()</code> in three pages <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/pages/Containers.vue#L321-L331">pkg/rancher-desktop/pages/Containers.vue</a></div>
+      <pre data-start="321" data-line="326"><code class="language-typescript">      callback: (error: Error) =&gt; {
+        this.SET_ERROR({ error, source: &#39;containers&#39; });
+      },
+    }).catch(error =&gt; this.SET_ERROR({ error, source: &#39;containers&#39; }));
+    this.watchImages({
+      callback: (error: Error) =&gt; {
+        this.SET_ERROR({ error, source: &#39;images&#39; });
+      },
+    }).catch(error =&gt; this.SET_ERROR({ error, source: &#39;images&#39; }));
+  },
+  methods: {</code></pre>
+    <p><code>unwatchResources</code> awaits <code>state._watchersInitialized</code>. If that latch is in a rejected state (from a failed <code>setupResourceWatch</code>), these calls produce unhandled promise rejections. Compare with <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/layouts/default.vue#L153"><code>default.vue:153</code></a> and <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L249"><code>ContainerInfo.vue:249</code></a>, which correctly call <code>.catch()</code>. The author dismissed this in round 1, noting the page is unmounting. While unhandled rejections do not crash the Electron renderer by default, the inconsistency invites confusion.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/layouts/default.vue#L148-L158">pkg/rancher-desktop/layouts/default.vue</a></div>
+      <pre data-start="148" data-line="153"><code class="language-markup">    ...mapTypedActions(&#39;rdd-connection&#39;, [&#39;fetchConfig&#39;]),
+    async fetch() {
+      await this.fetchConfig();
+    },
+
+    openDashboard() {
+      ipcRenderer.send(&#39;dashboard-open&#39;);
+    },
+    openPreferences() {
+      ipcRenderer.send(&#39;preferences-open&#39;);
+    },</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L244-L254">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+      <pre data-start="244" data-line="249"><code class="language-markup">      store.commit(&#39;container-engine/SET_ERROR&#39;, { error, source: &#39;containers&#39; });
+    },
+  }).catch(console.error);
+
+  window.addEventListener(&#39;keydown&#39;, handleGlobalKeydown);
+});
+
+onBeforeUnmount(() =&gt; {
+  store.dispatch(&#39;page/setHeader&#39;, { action: null });
+
+  window.removeEventListener(&#39;keydown&#39;, handleGlobalKeydown);</code></pre>
+    <p>Fix: Add <code>.catch(err =&gt; console.error(err))</code> to match the existing pattern.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> Tight loop when config lacks <code>currentContext</code> <span class="pill pill-gemini">Gemini</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/store/rddConnection.ts#L370-L392">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="370" data-line="375-387"><code class="language-typescript">  #type:        K;
+  #namespace?:  string;
+  #items:       readonly T[] = [];
+  #notifyDelay: ReturnType&lt;typeof setTimeout&gt; | undefined;
+  #commit:      Commit&lt;any&gt;;
+  #doneFn:      (error?: any) =&gt; void;
+  #watcher:     RDDClient.ListWatch&lt;T&gt;;
+
+  /**
+   * Create a new watcher.
+   * The caller is responsible for calling `start()`.
+   */
+  constructor(
+    type: K,
+    path: string,
+    listFn: () =&gt; Promise&lt;RDDClient.KubernetesListObject&lt;T&gt;&gt;,
+    doneFn: (error?: any) =&gt; void,
+    watch: RDDClient.Watch,
+    commit: Commit&lt;any&gt;,
+    namespace?: string,
+  ) {
+    this.#type = type;
+    this.#namespace = namespace;</code></pre>
+    <p>If <code>fetchConfig</code> succeeds but the returned config has no <code>currentContext</code>, the loop retries immediately with no delay. The 1-second backoff applies only to the <code>catch</code> branch. In practice this requires the backend to return a valid but incomplete config, which is unlikely during normal startup; the backend either fails to respond (caught) or returns a complete config.</p>
+    <p>Fix: Add a delay in the <code>try</code> block when the context is still missing after a successful fetch.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> Stale reconnect timer can fire after external <code>setupResourceWatch</code> <span class="pill pill-claude">Claude</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/store/rddConnection.ts#L363-L373">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="363" data-line="368"><code class="language-typescript"> * A watcher is used to watch a resource type.
+ * This is kept in the per-module `_watchers` state.
+ */
+class Watcher&lt;
+  K extends string,
+  T extends RDDClient.KubernetesObject,
+&gt; {
+  #type:        K;
+  #namespace?:  string;
+  #items:       readonly T[] = [];
+  #notifyDelay: ReturnType&lt;typeof setTimeout&gt; | undefined;</code></pre>
+    <p><code>reconnectTimeout</code> is cleared only inside <code>doneFn</code>. If <code>setupResourceWatch</code> is invoked externally (e.g., from <code>setCurrentNamespace</code>) within the 1-second reconnect window, the pending timer fires and redundantly recreates all watchers. The system self-heals after one extra cycle. Impact is low.</p>
+    <p>Fix: Clear <code>reconnectTimeout</code> at the top of <code>setupResourceWatch</code>.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S4">
+        <span class="finding-num">S4.</span> <code>mockModules</code> default only provides <code>mapTypedGetters</code> <span class="pill pill-claude">Claude</span><a href="#S4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/utils/testUtils/mockModules.ts#L1-L17">pkg/rancher-desktop/utils/testUtils/mockModules.ts</a></div>
+      <pre data-start="1" data-line="6-12"><code class="language-typescript">import path from &#39;node:path&#39;;
+
+import { jest } from &#39;@jest/globals&#39;;
+
+const defaultOverrides = {
+  &#39;@pkg/utils/logging&#39;: (() =&gt; {
+    class Log {
+      log = jest.fn();
+      error = jest.fn();
+      info = jest.fn();
+      warn = jest.fn();
+      debug = jest.fn();
+      debugE = jest.fn();
+    }
+    return ({
+      Log,
+      default:    new Proxy({}, {</code></pre>
+    <p>Components commonly import <code>mapTypedActions</code>, <code>mapTypedState</code>, and <code>mapTypedMutations</code> from <code>@pkg/entry/store</code>. When a test provides <code>undefined</code> for this mock (getting the default), these functions resolve to <code>undefined</code>, and the <code>...spread</code> silently produces nothing. The component mounts but mapped methods are missing, producing confusing failures at call sites rather than at import time. No current tests break, but this is a trap for future test authors.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S5">
+        <span class="finding-num">S5.</span> StatusBar mixes data sources <span class="pill pill-claude">Claude</span><a href="#S5" class="pilcrow">&#182;</a>
+      </div>
+    <p><code>kubernetesVersion</code> reads from preferences while <code>kubernetesEnabled</code> and <code>containerEngine</code> read from the app resource. Until the backend populates <code>app.spec</code> fully, the status bar can show inconsistent state. Understandable as transitional; consider unifying the source when <code>app.spec</code> is authoritative.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S6">
+        <span class="finding-num">S6.</span> <code>passthrough.ts</code> module-global flag not safe across HMR <span class="pill pill-claude">Claude</span><a href="#S6" class="pilcrow">&#182;</a>
+      </div>
+    <p>The module-level <code>systemConfigMapsWatched</code> flag survives hot-module replacement while the store is recreated, leaving <code>systemConfigMaps</code> unwatched until a full page reload. Dev-only impact.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S7">
+        <span class="finding-num">S7.</span> StatusBar test does not cover <code>app === undefined</code> <span class="pill pill-claude">Claude</span><a href="#S7" class="pilcrow">&#182;</a>
+      </div>
+    <p>The test always provides a populated <code>app</code> object. The fallback path where <code>kubernetesEnabled</code> returns <code>false</code> and <code>containerEngine</code> returns <code>&#39;unknown&#39;</code> is unverified.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S8">
+        <span class="finding-num">S8.</span> No tests for watch lifecycle <span class="pill pill-codex">Codex</span><a href="#S8" class="pilcrow">&#182;</a>
+      </div>
+    <p><code>unwatchResources</code> on the last subscriber, <code>waitForResources</code> after a stop/start cycle, and <code>ensureAppStarted</code> across reconnection all lack test coverage. These are the highest-risk untested paths.</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <p><strong>Concerns</strong></p>
+    <ol>
+      <li><strong>(in-scope)</strong> The watch lifecycle has no semantic distinction between intentional close and backend disconnect. <code>ListWatch.stop()</code> and a backend-initiated disconnect both flow through the same error path, producing the cascade behind I1. Introducing an <code>intentionallyClosed</code> flag in <code>ListWatch</code> or splitting <code>doneHandler</code> into separate paths would eliminate this class of bugs. <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span></li>
+    </ol>
+    <ol>
+      <li><strong>(in-scope)</strong> View lifecycles directly drive transport teardown. A component unmounting closes the underlying HTTP connection. Keeping informers alive for the process lifetime and using refcounts only to gate store commits would remove the need to reinterpret aborts as disconnects. <span class="pill pill-codex">Codex</span></li>
+    </ol>
+    <p><strong>Strengths</strong></p>
+    <ol>
+      <li>The refcounted <code>watchResources</code>/<code>unwatchResources</code> API handles overlapping component lifecycles cleanly. When two components watch the same resource, the watcher runs as long as either is active. [All agents]</li>
+    </ol>
+    <ol>
+      <li>The <code>fetchConfig</code> deduplication via <code>fetchConfigPromise</code> (new in this round) prevents concurrent reconnection storms without adding complexity. <span class="pill pill-claude">Claude</span></li>
+    </ol>
+    <ol>
+      <li>Lazy <code>fieldSelector</code>/<code>labelSelector</code> evaluation via functions ensures namespace changes propagate to watchers on reconnect without rebuilding them. <span class="pill pill-claude">Claude</span></li>
+    </ol>
+    <ol>
+      <li>The <code>setHeaderOptions</code> middleware approach for overriding Content-Type avoids modifying generated code and composes well with other middleware. <span class="pill pill-claude">Claude</span></li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ol>
+      <li><em></em>No tests for <code>unwatchResources</code> on the last subscriber<em></em> — this is the path that triggers I1 and runs on every page teardown.</li>
+      <li><em></em>No tests for <code>waitForResources</code> after a stop/start cycle<em></em> — this is the path affected by I2.</li>
+      <li><em></em>No tests for <code>ensureAppStarted</code><em></em> — the create/patch/poll loop with 409 handling is the core new behavior and is untested.</li>
+      <li><em></em><code>BackendProgress.spec.ts</code> entirely skipped<em></em> — <code>describe.skip</code> at line 42 disables all meaningful coverage. Acknowledged by the author as intentional (backend progress format not yet defined).</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>The JSDoc comments on <code>ResourceWatchActionsReturn</code> (lines 330-358) clearly describe the expected lifecycle for each action. No blocking documentation gaps.</p>
+    </div>
+    <hr>
+    <h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ol>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/store/rddConnection.ts#L381-L382"><code>rddConnection.ts:381-382</code></a>: Config fetch failures during reconnection are silently retried without user notification. The TODO notes this should emit a diagnostic.</li>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/components/BackendProgress.vue#L67-L89"><code>BackendProgress.vue:67-89</code></a>: The <code>k8s-progress</code> IPC listener is commented out, disabling detailed progress reporting. The author notes the backend has not specified the progress format.</li>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rancher-desktop/store/container-engine.ts#L91-L92"><code>container-engine.ts:91-92</code></a>: Setting <code>currentNamespace</code> to <code>undefined</code> skips <code>setupResourceWatch</code>, leaving old watchers running with the previous <code>fieldSelector</code>.</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="unresolved-feedback">Unresolved Feedback <a href="#unresolved-feedback" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><strong>Round 1 I7 (unwatchResources may trigger spurious reconnect)</strong>: The author dismissed this, stating the ERROR handler &quot;is only for HTTP status 410; that will not be the case for a <code>.stop()</code> call.&quot; Two agents independently verified this is incorrect by tracing through <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/e4c61d0eded666d17aff4830fa7abe95cf7ed2aa/pkg/rdd-client/watch.ts#L110-L117"><code>watch.ts:110-117</code></a>: <code>controller.signal.aborted</code> is true after <code>stop()</code>, so the catch block calls <code>doneCallOnce(err)</code> with the <code>AbortError</code>. <code>AbortError</code> is not a 410, so it hits the <code>else if (err)</code> branch and fires ERROR callbacks. This is now I1 in this round.</li>
+    </ul>
+    <ul>
+      <li><strong>Round 1 I5 (unwatchResources rejections uncaught in three pages)</strong>: The author dismissed this, saying the page is unmounting. The finding persists as S1. While not fatal in Electron, the inconsistency with <code>default.vue</code> and <code>ContainerInfo.vue</code> (which do catch) invites confusion.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="gemini"><span class="pill pill-gemini">Gemini</span> <a href="#gemini" class="pilcrow">&#182;</a></h3>
+    <p>Gemini found 1 critical and 2 important issues. Its strongest contribution was the detailed <code>doneHandler</code> trace (C1), which identified the exact ordering problem and provided a clear diff fix. It also correctly identified the tight config-fetch loop (I2). Gemini ran with limited tool access (grep regex error on one call) but still covered all changed files and produced a focused review with no false positives. Coverage was thorough despite the 416KB diff being external to the prompt.</p>
+    <h3 id="codex"><span class="pill pill-codex">Codex</span> <a href="#codex" class="pilcrow">&#182;</a></h3>
+    <p>Codex found 2 important issues and 1 suggestion. Its unique contribution was identifying the stale <code>#loaded</code> latch on restart (I2), a subtle lifecycle bug that neither other agent caught. The I1 finding overlapped with Gemini&#39;s C1, with an equally detailed trace through the code. Codex produced no false positives. Its test coverage suggestion (S1) appropriately targeted the highest-risk untested paths.</p>
+    <h3 id="claude"><span class="pill pill-claude">Claude</span> <a href="#claude" class="pilcrow">&#182;</a></h3>
+    <p>Claude found 2 important issues and 4 suggestions. Its I1 finding (stale reconnect timer) was unique and valid but lower-impact than other agents&#39; findings. I2 (mockModules default) was valid but affects future test authors rather than current functionality. Claude provided the most design observations and the most thorough coverage summary. It did not identify the doneHandler ordering bug that both other agents found, despite it being the most significant issue in the PR.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.6</th><th><span class="pill pill-codex">Codex</span> GPT 5.4</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>~15 min</td><td>8 min 47 s</td><td>4 min 49 s</td></tr>
+        <tr><td>Findings</td><td>0C 0I 4S</td><td>0C 2I 1S</td><td>0C 1I 1S</td></tr>
+        <tr><td>Design observations</td><td>4</td><td>2</td><td>0</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>2 (S3, S5)</td><td>1 (I2)</td><td>1 (S2)</td></tr>
+        <tr><td>Files reviewed</td><td>44</td><td>44</td><td>44</td></tr>
+        <tr><td>Coverage misses</td><td>1 (missed doneHandler bug)</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Reconciliation:</strong></p>
+    <ul>
+      <li>Gemini C1 (doneHandler ordering): downgraded critical → important I1. The app self-heals through reconnection; no data loss or security impact. The bug causes unnecessary reconnects but not permanent failure.</li>
+      <li>Gemini I1 (unwatchResources rejections): downgraded important → suggestion S1. The author acknowledged and declined to fix in round 1; unhandled rejections in Electron are not fatal by default.</li>
+      <li>Gemini I2 (tight config-fetch loop): downgraded important → suggestion S2. Requires an unlikely backend state (valid config without <code>currentContext</code>) to trigger.</li>
+      <li>Claude I1 (stale reconnect timer): downgraded important → suggestion S3. Impact is one redundant watcher recreation; the system self-heals.</li>
+      <li>Claude I2 (mockModules default): downgraded important → suggestion S4. No current tests fail; this is a trap for future test authors.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p><strong>Repo context updates</strong></p>
+    <ul>
+      <li>[repo] <strong>Add: doneHandler stop-vs-error ordering.</strong> When reviewing code that calls <code>ListWatch.stop()</code> or <code>Watcher.close()</code>, verify that the <code>doneHandler</code> checks <code>this.stopped</code> before dispatching ERROR callbacks. This is the root cause of spurious reconnects on intentional close and has been a recurring finding across two review rounds. If/when I1 is fixed, update this entry to note the fix and shift the guidance to &quot;verify the fix was not regressed.&quot;</li>
+    </ul>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
