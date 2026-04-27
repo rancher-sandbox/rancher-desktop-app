@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260427-160502-pr-47</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260427-160502-pr-47</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-04-27 16:05</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+      <tr><td>Round</td><td>2</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/47" class="gh-ref" data-title="Get Kubernetes namespace from app" data-state="open" data-type="pr">#47</a> — Get Kubernetes namespace from app</td></tr>
+      <tr><td>Branch</td><td><code>kube-namespace-from-app</code></td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/45ba1293b"><code>45ba1293b</code></a> Fix rewatching resources<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7e6c27d35"><code>7e6c27d35</code></a> rdd-client/watch: Fix multi-line matching<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/f0cbc3273"><code>f0cbc3273</code></a> store/rddConnection: fix HTTP 429 handing<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7c981ce10"><code>7c981ce10</code></a> store: rddConnection: make fetchConfig block until success<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/17f70d5ab"><code>17f70d5ab</code></a> rdd-client: watch: ensure timeout is cleared<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/e9f69f551"><code>e9f69f551</code></a> rdd-client: watch: Ignore timeout on body<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/5e4efd3fc"><code>5e4efd3fc</code></a> store/container-engine: Get kubernetes namespace from app<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7f6f4bd8c"><code>7f6f4bd8c</code></a> store/rdd: Remove unused ConfigMap resources<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/3122dcc74"><code>3122dcc74</code></a> Store: Fix plugin typing</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.7 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; fix the clearTimeout race (I2) and the <code>ResourceNames&lt;T&gt;[number]</code> type widening (I3) before merge; the <code>app.spec.namespace</code> default-fallback question (I1) is a re-raise from round 1 and the author can keep declining it.</td></tr>
+      <tr><td>Wall-clock time</td><td><code>25 min 10 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>Round 2 rebases the prior &quot;namespace from app&quot; PR onto a substantially rewritten watch path. The architectural moves are good: namespace tracking moved into <code>rdd-connection</code> (a new <code>addNamespacedResource</code> registry plus a <code>SET_NAMESPACE</code> mutation), <code>rewatchResources</code> action replaces full-<code>setupResourceWatch</code> re-entry on namespace change, <code>Watcher.start()</code> recreates the inner <code>ListWatch</code> and uses <code>Object.is(watcher, this.#watcher)</code> stale-watcher checks, and the <code>rdd</code> module&#39;s unused <code>configMaps</code> resource is dropped. Round 1&#39;s I2 (rdd asymmetry), I3 (concurrency in <code>setupResourceWatch</code>), and I4 (transient-undefined rebind) are addressed by these moves.</p>
+    <p>What landed less cleanly: the <code>error</code> handler on the inner <code>ListWatch</code> now calls <code>clearTimeout(this.#restartTimeout)</code> <em>before</em> the stale-watcher check, so a deferred error from a closed watcher cancels a still-pending 429 restart on the live watcher; the <code>callback</code> parameter type widened from a strict <code>ResourceNames&lt;T&gt;</code> union to <code>ResourceNames&lt;T&gt;[number]</code>, which evaluates to plain <code>string</code> and silently loses callback-arg type safety; and the round-1 fallback-when-<code>spec.namespace</code>-undefined concern returned in a new shape (the rdd-side <code>if (newNamespace)</code> guard now drops legitimate <code>undefined → &#39;default&#39;</code> transitions). Several round-1 Suggestions remain unaddressed and resurface here (Images.vue stale <code>kubeNamespace</code> mapping, redundant primitive equality guard, missing JSDoc on <code>kubernetesNamespace</code>).</p>
+    <p>Structure: 0 critical, 3 important, 10 suggestions, 1 design observation.</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+    <p>None.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> <code>kubernetesNamespace</code> getter does not apply the documented <code>&#39;default&#39;</code> fallback <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rdd.ts#L43-L56">pkg/rancher-desktop/store/rdd.ts</a></div>
+      <pre data-start="43" data-line="48-51"><code class="language-ts">    return function(type: string) {
+      const conditions: any[] | undefined = getters.app?.status?.conditions;
+      return conditions?.find((condition: any) =&gt; condition.type === type)?.status === &#39;True&#39;;
+    };
+  },
+  kubernetesNamespace(state, getters) {
+    const app: RDDClient.IoRancherdesktopAppV1alpha1App | undefined = getters.app;
+    return app?.spec?.namespace;
+  },
+  created(state, getters) {
+    return getters.status(&#39;Created&#39;);
+  },
+  running(state, getters) {
+    return getters.status(&#39;Running&#39;);</code></pre>
+      <pre><code class="language-ts">// rdd.ts plugin:
+store.watch(
+  (_state, getters) =&gt; getters[&#39;rdd/kubernetesNamespace&#39;],
+  (newNamespace: string | undefined) =&gt; {
+    if (newNamespace) { // Ignore empty/unset; not valid for state.
+      store.commit(&#39;rdd-connection/SET_NAMESPACE&#39;, newNamespace);
+    }
+  },
+);</code></pre>
+    <p>The generated <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rdd-client/gen/models/IoRancherdesktopAppV1alpha1AppSpec.ts#L24"><code>IoRancherdesktopAppV1alpha1AppSpec.ts:24</code></a> documents that <code>spec.namespace</code> &quot;Defaults to <code>default</code> if not specified.&quot; The repo-context note for this codebase explicitly says callers that depend on <code>app.spec.namespace</code> need an explicit fallback. The current code does the opposite: the getter returns the raw optional, and the <code>if (newNamespace)</code> guard silently drops every <code>undefined</code> observation.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rdd-client/gen/models/IoRancherdesktopAppV1alpha1AppSpec.ts#L19-L29">pkg/rdd-client/gen/models/IoRancherdesktopAppV1alpha1AppSpec.ts</a></div>
+      <pre data-start="19" data-line="24"><code class="language-typescript">*/
+export class IoRancherdesktopAppV1alpha1AppSpec {
+    &#39;containerEngine&#39;?: IoRancherdesktopAppV1alpha1AppSpecContainerEngine;
+    &#39;kubernetes&#39;?: IoRancherdesktopAppV1alpha1AppSpecKubernetes;
+    /**
+    * Namespace is the namespace where this cluster-scoped App resource creates and manages its owned namespaced resources (e.g., rancher-desktop). Defaults to \&quot;default\&quot; if not specified. This field is immutable after creation: changing it would orphan existing owned resources (LimaVM, ConfigMaps) in the original namespace.
+    */
+    &#39;namespace&#39;?: string;
+    /**
+    * running specifies whether the VM should be running.
+    */</code></pre>
+    <p>That&#39;s fine for the locally-created App because <code>ensureAppStarted</code> writes <code>spec.namespace: &#39;rancher-desktop&#39;</code> explicitly (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rdd.ts#L100"><code>rdd.ts:100</code></a>), but two paths still hit <code>undefined</code>:</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rdd.ts#L95-L105">pkg/rancher-desktop/store/rdd.ts</a></div>
+      <pre data-start="95" data-line="100"><code class="language-typescript">            apiVersion: &#39;app.rancherdesktop.io/v1alpha1&#39;,
+            metadata:   {
+              name: &#39;app&#39;,
+            },
+            spec: {
+              namespace: &#39;rancher-desktop&#39;,
+              running:   false,
+            },
+          },
+        });
+      } catch (err) {</code></pre>
+    <ol>
+      <li>An externally-managed App whose <code>spec.namespace</code> is omitted relies on the server&#39;s default. Whether the API server fills the field on read depends on the CRD&#39;s <code>default</code> schema being applied; if it isn&#39;t, the wire JSON omits it and the renderer parks at the initial <code>&#39;default&#39;</code> (rddConnection.ts:36) without ever observing a transition.</li>
+      <li>A transition <code>&#39;rancher-desktop&#39; → undefined</code> (e.g., the App is replaced with one lacking the field) leaves <code>state[&#39;rdd-connection&#39;].namespace</code> stuck at <code>&#39;rancher-desktop&#39;</code> forever. <code>rewatchResources</code> is never dispatched, so watches keep targeting the stale namespace.</li>
+    </ol>
+    <p>This is a re-raise of round-1 I1; the author chose not to fix it then and <code>mook-as</code> flagged this round as nit-picking. Recording it because the repo-context convention names it (treat <code>app.spec.namespace</code> as <code>string | undefined</code> and apply an explicit fallback), and the fix is a one-liner. Gemini called this Critical citing <code>omitempty</code> semantics; downgraded to Important — <code>omitempty</code> is a Go encoder behavior that doesn&#39;t fire when the server has already filled in the default, so the runtime impact is narrower than Gemini described, but the contract violation is real.</p>
+    <p>Fix:</p>
+      <pre><code class="language-diff">   kubernetesNamespace(state, getters) {
+     const app: RDDClient.IoRancherdesktopAppV1alpha1App | undefined = getters.app;
+-    return app?.spec?.namespace;
++    return app?.spec?.namespace || &#39;default&#39;;
+   },</code></pre>
+      <pre><code class="language-diff">       (_state, getters) =&gt; getters[&#39;rdd/kubernetesNamespace&#39;],
+-      (newNamespace: string | undefined) =&gt; {
+-        if (newNamespace) { // Ignore empty/unset; not valid for state.
+-          store.commit(&#39;rdd-connection/SET_NAMESPACE&#39;, newNamespace);
+-        }
++      (newNamespace: string) =&gt; {
++        store.commit(&#39;rdd-connection/SET_NAMESPACE&#39;, newNamespace);
+       },</code></pre>
+    <p>(important, gap; round 1 I1 unaddressed)</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I2">
+        <span class="finding-num">I2.</span> <code>clearTimeout</code> runs before the stale-watcher check, can cancel a live 429 restart <span class="pill pill-claude">Claude</span><a href="#I2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L635-L666">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="635" data-line="640-661"><code class="language-ts">      // Only trigger a change if this is the current watcher.
+      if (Object.is(watcher, this.#watcher)) {
+        this.onChange();
+      }
+    });
+    watcher.on(&#39;error&#39;, (err) =&gt; {
+      clearTimeout(this.#restartTimeout);
+      if (!Object.is(watcher, this.#watcher)) {
+        // This error is from a stale watcher; ignore it.
+        return;
+      }
+      this.#loaded.reset();
+      this.#loaded.catch(() =&gt; { /* ignore */ });
+      if (Object.is(err, errorManuallyStopped)) {
+        // The watcher errored out because we called stop(); do not propagate
+        // this as an actual error.
+        return;
+      } else if (err.statusCode === 429) {
+        // We can get this if we request too early (when the backend restarts),
+        // with a message of &quot;storage is (re)initializing&quot;.  Just retry.
+        let delay = 0.1;
+        try {
+          const body = JSON.parse(err.body);
+          delay = body?.details?.retryAfterSeconds ?? delay;
+        } catch { /* ignore */ }
+        this.#restartTimeout = setTimeout(() =&gt; this.start(), delay * 1_000);
+        return;
+      }
+      // `err` is an object that calls `toString()` on `console.log`, so we
+      // need to re-convert it to a plain object for better debugging.
+      console.debug(`${ this.#type } watch error`, JSON.parse(JSON.stringify(err)));
+      this.#loaded.reject(err);</code></pre>
+    <p><code>#restartTimeout</code> is a per-<code>Watcher</code> field, but the <code>error</code> handler is the <em>only</em> event handler that touches <code>this.#restartTimeout</code> <em>before</em> the stale-check at line 642. The <code>change</code>, <code>connect</code>, and <code>start().catch</code> handlers (lines 628-639, 671-678) all return early when <code>!Object.is(watcher, this.#watcher)</code> and never mutate watcher state. The <code>error</code> handler is the outlier.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L623-L644">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="623" data-line="628-639"><code class="language-typescript">      false,
+      this.#labelSelector,
+      this.#fieldSelector,
+    );
+    this.#watcher = watcher;
+    watcher.on(&#39;change&#39;, () =&gt; {
+      // Only trigger a change if this is the current watcher.
+      if (Object.is(watcher, this.#watcher)) {
+        this.onChange();
+      }
+    });
+    watcher.on(&#39;connect&#39;, () =&gt; {
+      // Only trigger a change if this is the current watcher.
+      if (Object.is(watcher, this.#watcher)) {
+        this.onChange();
+      }
+    });
+    watcher.on(&#39;error&#39;, (err) =&gt; {
+      clearTimeout(this.#restartTimeout);
+      if (!Object.is(watcher, this.#watcher)) {
+        // This error is from a stale watcher; ignore it.
+        return;</code></pre>
+    <p>Concrete sequence:</p>
+    <ol>
+      <li>Inner <code>ListWatch</code> A is running.</li>
+      <li>A is closed by <code>start()</code>&#39;s line 618 (<code>this.#watcher?.stop(errorManuallyStopped)</code>) when the namespace changes; the abort propagates asynchronously.</li>
+      <li>Line 627 assigns <code>this.#watcher = B</code>.</li>
+      <li>B&#39;s <code>start()</code> runs, hits a 429, sets <code>this.#restartTimeout = setTimeout(() =&gt; this.start(), delay)</code>.</li>
+      <li>A&#39;s <code>&#39;error&#39;</code> event finally fires (with <code>errorManuallyStopped</code> as the reason).</li>
+      <li>The handler executes <code>clearTimeout(this.#restartTimeout)</code> — clearing <strong>B&#39;s</strong> restart — <em>then</em> <code>!Object.is(A, B)</code> is true and returns.</li>
+      <li>B&#39;s restart never fires; the watcher is silently parked. No further <code>&#39;error&#39;</code>, <code>&#39;change&#39;</code>, or <code>&#39;connect&#39;</code> event will trigger it back to life.</li>
+    </ol>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L613-L623">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="613" data-line="618"><code class="language-typescript">    // worry about any issues from ListWatch restart.
+  }
+
+  start() {
+    // Stop any existing watcher before starting a new one.
+    this.#watcher?.stop(errorManuallyStopped);
+    const watcher = new RDDClient.ListWatch&lt;T&gt;(
+      this.#path(),
+      this.#watch,
+      this.#listFn,
+      false,</code></pre>
+    <p>The window is small but the mode is &quot;no further trigger&quot; — once parked, the watcher only recovers when the next external <code>rewatchResources</code> arrives (a namespace change). Pages stay loading indefinitely until then.</p>
+    <p>Fix: move the <code>clearTimeout</code> after the stale-check, so a stale watcher&#39;s deferred error never touches the live watcher&#39;s restart timer.</p>
+      <pre><code class="language-diff"> watcher.on(&#39;error&#39;, (err) =&gt; {
+-  clearTimeout(this.#restartTimeout);
+   if (!Object.is(watcher, this.#watcher)) {
+     // This error is from a stale watcher; ignore it.
+     return;
+   }
++  clearTimeout(this.#restartTimeout);
+   this.#loaded.reset();
+   this.#loaded.catch(() =&gt; { /* ignore */ });</code></pre>
+    <p>(important, regression)</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I3">
+        <span class="finding-num">I3.</span> <code>ResourceNames&lt;T&gt;[number]</code> widens callback signature to plain <code>string</code> <span class="pill pill-gemini">Gemini</span> <span class="pill pill-claude">Claude</span><a href="#I3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L307-L319">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="307" data-line="312-314"><code class="language-ts">/**
+ * ResourceWatchActionsOptions describes options the caller may pass to start
+ * watching a resource.
+ */
+interface ResourceWatchActionsOptions&lt;T extends readonly ResourceTypeLike[]&gt; {
+  /** Callback that is invoked when an error occurs. */
+  callback?: (error: Error, resourceName: ResourceNames&lt;T&gt;[number]) =&gt; void,
+}
+
+/** ResourceWatchActionsReturn defines the return type of resourceWatchActions(). */
+interface ResourceWatchActionsReturn&lt;T extends readonly ResourceTypeLike[]&gt; {
+  /**
+   * Set up watching resources; this is expected to be called in a plugin when</code></pre>
+    <p><code>ResourceNames&lt;T&gt;</code> is already a string-literal union built by ending the mapped type with <code>}[number]</code> (lines 236-241). Indexing a string-literal union with <code>[number]</code> evaluates to the primitive <code>string</code> (TypeScript treats string literals as char-indexable, and the <code>[number]</code> index of any string is <code>string</code>). So the callback&#39;s <code>resourceName</code> parameter is now plain <code>string</code>, not the precise union it was pre-PR.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L231-L246">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="231" data-line="236-241"><code class="language-typescript">};
+
+/**
+ * ResourceNames extracts the union of resource names from an array of ResourceTypeLike.
+ */
+export type ResourceNames&lt;T extends readonly ResourceTypeLike[]&gt; = {
+  [K in keyof T]: T[K] extends
+  ResourceType&lt;infer C, infer StateName extends string, infer TypeName extends string&gt;
+    ? StateName
+    : never;
+}[number];
+
+/**
+ * ResourceStateWatcher defines the type of the _watchers item in the state object.
+ */
+type ResourceStateWatcher&lt;N extends string, T extends RDDClient.KubernetesObject&gt; =</code></pre>
+    <p>This is a regression of the API surface that round 1 established. The change at line 429 (<code>resourceOptions.callback?.(error, r.name)</code>) was probably the trigger — <code>r.name</code> widens to <code>string</code> inside the <code>for (const r of resources)</code> loop, so the original <code>ResourceNames&lt;T&gt;</code> annotation no longer matched without a cast. The cheap-looking fix at 313 silently dropped the type narrowing for every consumer.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L424-L434">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="424" data-line="429"><code class="language-typescript">              return result;
+            },
+            (error) =&gt; { // doneFn
+              commit(&#39;rdd-connection/SET_ERROR&#39;, error, { root: true });
+              if (error) {
+                resourceOptions.callback?.(error, r.name);
+                console.error(`${ r.name }:`, error);
+              } else {
+                console.error(`${ r.name }: Closing connection without error`);
+              }
+              // The old config is no longer valid.</code></pre>
+    <p>Concrete impact: <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/container-engine.ts#L253"><code>container-engine.ts:253</code></a> writes <code>(error: Error, source) =&gt; store.commit(&#39;container-engine/SET_ERROR&#39;, { error, source })</code>. Pre-PR, <code>source</code> was inferred as <code>&#39;containers&#39; | &#39;images&#39; | &#39;namespaces&#39; | &#39;volumes&#39;</code>, matching <code>SET_ERROR</code>&#39;s <code>{ source: resourceNames }</code> payload. Post-PR, <code>source</code> is <code>string</code>, and the only thing keeping the commit call from compile-erroring is the <code>payload?</code> looseness in <code>MutationsType&lt;&gt;</code>.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/container-engine.ts#L248-L258">pkg/rancher-desktop/store/container-engine.ts</a></div>
+      <pre data-start="248" data-line="253"><code class="language-typescript">
+export const plugins: Plugin&lt;RootState&gt;[] = [
+  // Start watching resources immediately.
+  function(store) {
+    store.dispatch(&#39;container-engine/setupResourceWatch&#39;, {
+      callback: (error: Error, source) =&gt; {
+        console.error(&#39;Error watching container engine resources:&#39;, error);
+        store.commit(&#39;container-engine/SET_ERROR&#39;, { error, source });
+      },
+    }).catch((error: Error) =&gt; {
+      console.error(&#39;Failed to set up watch for container engine resources:&#39;, error);</code></pre>
+    <p>Gemini called this Important; Claude called it Suggestion. Promoting because it is a quiet regression of a contract the prior PR added, the surface lives in a public-ish helper (<code>resourceWatchActions</code>), and the fix is one cast.</p>
+    <p>Fix: revert the type and add the cast at the callsite.</p>
+      <pre><code class="language-diff"> interface ResourceWatchActionsOptions&lt;T extends readonly ResourceTypeLike[]&gt; {
+   /** Callback that is invoked when an error occurs. */
+-  callback?: (error: Error, resourceName: ResourceNames&lt;T&gt;[number]) =&gt; void,
++  callback?: (error: Error, resourceName: ResourceNames&lt;T&gt;) =&gt; void,
+ }</code></pre>
+      <pre><code class="language-diff">               if (error) {
+-                resourceOptions.callback?.(error, r.name);
++                resourceOptions.callback?.(error, r.name as ResourceNames&lt;T&gt;);
+                 console.error(`${ r.name }:`, error);</code></pre>
+    <p>(important, regression)</p>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> Stale <code>kubeNamespace</code> mapping in <code>Images.vue</code> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span> <span class="pill pill-claude">Claude</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/pages/Images.vue#L34-L44">pkg/rancher-desktop/pages/Images.vue</a></div>
+      <pre data-start="34" data-line="39"><code class="language-ts">  },
+
+  computed: {
+    ...mapTypedGetters(&#39;extensions&#39;, [&#39;installedExtensions&#39;]),
+    ...mapTypedGetters(&#39;container-engine&#39;, [&#39;supportsNamespaces&#39;]),
+    ...mapTypedState(&#39;rdd-connection&#39;, { kubeNamespace: &#39;namespace&#39; }),
+    ...mapTypedState(&#39;container-engine&#39;, [&#39;currentNamespace&#39;, &#39;images&#39;]),
+    ...mapTypedState(&#39;container-engine&#39;, { namespaceObjects: &#39;namespaces&#39; }),
+    namespaces() {
+      return (this.namespaceObjects ?? []).map(ns =&gt; ns.metadata?.name).filter(defined);
+    },</code></pre>
+    <p><code>kubeNamespace</code> is mapped from <code>rdd-connection.namespace</code> but never referenced in the template or methods. The renderer source of truth is now <code>rdd/kubernetesNamespace</code>; leaving this mapping in place preserves the access pattern this PR is replacing and will mislead the next editor.</p>
+      <pre><code class="language-diff">   ...mapTypedGetters(&#39;extensions&#39;, [&#39;installedExtensions&#39;]),
+   ...mapTypedGetters(&#39;container-engine&#39;, [&#39;supportsNamespaces&#39;]),
+-  ...mapTypedState(&#39;rdd-connection&#39;, { kubeNamespace: &#39;namespace&#39; }),
+   ...mapTypedState(&#39;container-engine&#39;, [&#39;currentNamespace&#39;, &#39;images&#39;]),</code></pre>
+    <p>(suggestion, gap; round 1 S1 unaddressed)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> Redundant equality guard on a primitive Vuex source <span class="pill pill-gemini">Gemini</span> <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L103-L134">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="103" data-line="108-129"><code class="language-ts">  function(store) {
+    store.dispatch(&#39;rdd-connection/fetchConfig&#39;).catch(ex =&gt; {
+      console.error(ex);
+    });
+  },
+  /** Vuex plugin to re-watch resources on Kubernetes namespace change. */
+  function(store) {
+    let currentNamespace = store.state[&#39;rdd-connection&#39;].namespace;
+    store.watch(
+      (state) =&gt; state[&#39;rdd-connection&#39;].namespace,
+      (newNamespace) =&gt; {
+        if (newNamespace &amp;&amp; newNamespace !== currentNamespace) {
+          currentNamespace = newNamespace;
+
+          const { namespacedResources } = store.state[&#39;rdd-connection&#39;];
+          for (const [module, resources] of Object.entries(namespacedResources)) {
+            if (resources.size) {
+              store.dispatch(`${ module }/rewatchResources`, Array.from(resources))
+                .catch(error =&gt; {
+                  console.error(`Failed to rewatch resources for module ${ module }:`, error);
+                });
+            }
+          }
+        }
+      },
+    );
+  },
+];
+
+/// /////////////////////////////////////////////////////////////////////////////
+// The rest of the file is helpers to implement stores for Kubernetes resources.
+/// /////////////////////////////////////////////////////////////////////////////</code></pre>
+    <p>Vuex&#39;s <code>store.watch</code> wraps Vue&#39;s reactive <code>watch</code>, which fires only when the source value differs from the previous one. For a primitive string source, the callback cannot be invoked twice with the same value, so <code>newNamespace !== currentNamespace</code> is always true and <code>currentNamespace</code> is a redundant mirror.</p>
+      <pre><code class="language-diff"> function(store) {
+-  let currentNamespace = store.state[&#39;rdd-connection&#39;].namespace;
+   store.watch(
+     (state) =&gt; state[&#39;rdd-connection&#39;].namespace,
+     (newNamespace) =&gt; {
+-      if (newNamespace &amp;&amp; newNamespace !== currentNamespace) {
+-        currentNamespace = newNamespace;
+-
++      if (newNamespace) {
+         const { namespacedResources } = store.state[&#39;rdd-connection&#39;];</code></pre>
+    <p>(suggestion, regression; round 1 S2 unaddressed in new location)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> 429 retry handler matches only the watch-client error shape <span class="pill pill-codex">Codex</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L647-L665">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="647" data-line="652-660"><code class="language-ts">      this.#loaded.catch(() =&gt; { /* ignore */ });
+      if (Object.is(err, errorManuallyStopped)) {
+        // The watcher errored out because we called stop(); do not propagate
+        // this as an actual error.
+        return;
+      } else if (err.statusCode === 429) {
+        // We can get this if we request too early (when the backend restarts),
+        // with a message of &quot;storage is (re)initializing&quot;.  Just retry.
+        let delay = 0.1;
+        try {
+          const body = JSON.parse(err.body);
+          delay = body?.details?.retryAfterSeconds ?? delay;
+        } catch { /* ignore */ }
+        this.#restartTimeout = setTimeout(() =&gt; this.start(), delay * 1_000);
+        return;
+      }
+      // `err` is an object that calls `toString()` on `console.log`, so we
+      // need to re-convert it to a plain object for better debugging.
+      console.debug(`${ this.#type } watch error`, JSON.parse(JSON.stringify(err)));</code></pre>
+    <p>The error reaches this handler from two paths: <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rdd-client/watch.ts#L131-L137"><code>pkg/rdd-client/watch.ts:131-137</code></a> constructs an error with <code>statusCode</code>, but generated-client list failures throw <code>ApiException</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rdd-client/gen/apis/exception.ts#L11"><code>pkg/rdd-client/gen/apis/exception.ts:11</code></a>), which exposes the status as <code>code</code>. A transient 429 from the initial list path therefore skips the retry-after branch and falls through to the generic error handling. The reconnect path still recovers, but it loses the retry-after delay this commit explicitly adds.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rdd-client/watch.ts#L126-L142">pkg/rdd-client/watch.ts</a></div>
+      <pre data-start="126" data-line="131-137"><code class="language-typescript">            doneCallOnce(null);
+          } catch (err) {
+            doneCallOnce(err);
+          }
+        })();
+      } else {
+        const statusText = response.statusText || &#39;Internal Server Error&#39;;
+        const error = new Error(statusText) as Error &amp; {
+          statusCode: number | undefined;
+        };
+        error.statusCode = response.status;
+        throw error;
+      }
+    } catch (err) {
+      doneCallOnce(err);
+    } finally {
+      clearTimeout(timeout);</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rdd-client/gen/apis/exception.ts#L6-L15">pkg/rdd-client/gen/apis/exception.ts</a></div>
+      <pre data-start="6" data-line="11"><code class="language-typescript"> * API returns a ErrorMessageObject whenever HTTP status code is not in [200, 299]
+ * =&gt; ApiException(404, someErrorMessageObject)
+ *
+ */
+export class ApiException&lt;T&gt; extends Error {
+    public constructor(public code: number, message: string, public body: T, public headers: { [key: string]: string; }) {
+        super(&quot;HTTP-Code: &quot; + code + &quot;\nMessage: &quot; + message + &quot;\nBody: &quot; + JSON.stringify(body) + &quot;\nHeaders: &quot; +
+        JSON.stringify(headers));
+    }
+}</code></pre>
+    <p><code>err.body</code> may also be unset on the watch-client shape; <code>JSON.parse(undefined)</code> throws, the catch swallows it, and the delay falls back to 0.1 s — silent.</p>
+      <pre><code class="language-diff">-     } else if (err.statusCode === 429) {
++     } else if (err.statusCode === 429 || err.code === 429) {
+        // We can get this if we request too early (when the backend restarts),
+        // with a message of &quot;storage is (re)initializing&quot;.  Just retry.
+        let delay = 0.1;
+        try {
+-         const body = JSON.parse(err.body);
++         const body = typeof err.body === &#39;string&#39; ? JSON.parse(err.body) : err.body;
+          delay = body?.details?.retryAfterSeconds ?? delay;
+        } catch { /* ignore */ }</code></pre>
+    <p>(suggestion, regression)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S4">
+        <span class="finding-num">S4.</span> <code>addNamespacedResource</code> mutation breaks the SCREAMING<em>SNAKE</em>CASE convention <span class="pill pill-claude">Claude</span><a href="#S4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L47-L65">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="47" data-line="52-60"><code class="language-ts">    state.error = error ? markRaw(error) : error;
+  },
+  SET_NAMESPACE(state, namespace) {
+    state.namespace = namespace;
+  },
+  /**
+   * Mark a namespaced resource as being watched; this is used to track
+   * re-watching resources on connect and when the Kubernetes namespace changes.
+   * @param moduleName the name of the Vuex module.
+   */
+  addNamespacedResource(state, [module, resource]: [string, string]) {
+    state.namespacedResources[module] ??= new Set();
+    state.namespacedResources[module].add(resource);
+  },
+} satisfies MutationsType&lt;RDDConnectionState&gt; &amp; MutationTree&lt;RDDConnectionState&gt;;
+
+/**
+ * fetchConfigPromise is used to ensure that multiple concurrent calls to
+ * `fetchConfig` only runs once; this is necessary if a disconnect causes</code></pre>
+    <p>Every other mutation in the file (<code>SET_CONFIG</code>, <code>SET_ERROR</code>, <code>SET_NAMESPACE</code>, plus the <code>SET_*</code> macros) uses <code>SCREAMING_SNAKE_CASE</code>. This one mutation is the lone camelCase outlier, and the file already widens its mutation typing with <code>&amp; MutationTree&lt;RDDConnectionState&gt;</code> at line 61 specifically to accept it. Renaming aligns with convention and removes the type widening.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L56-L66">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="56" data-line="61"><code class="language-typescript">   */
+  addNamespacedResource(state, [module, resource]: [string, string]) {
+    state.namespacedResources[module] ??= new Set();
+    state.namespacedResources[module].add(resource);
+  },
+} satisfies MutationsType&lt;RDDConnectionState&gt; &amp; MutationTree&lt;RDDConnectionState&gt;;
+
+/**
+ * fetchConfigPromise is used to ensure that multiple concurrent calls to
+ * `fetchConfig` only runs once; this is necessary if a disconnect causes
+ * multiple watchers to error out at once.</code></pre>
+      <pre><code class="language-diff">-  addNamespacedResource(state, [module, resource]: [string, string]) {
++  ADD_NAMESPACED_RESOURCE(state, [module, resource]: [string, string]) {
+     state.namespacedResources[module] ??= new Set();
+     state.namespacedResources[module].add(resource);
+   },</code></pre>
+    <p>Update the two call sites in <code>setupResourceWatch</code> (lines 387, 391). (suggestion, regression)</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L382-L392">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="382" data-line="387"><code class="language-typescript">          const client = r.makeClient(rddState.config);
+          const listFn: (client: any, options: ListResourceOptions&lt;typeof state&gt;) =&gt; any = (() =&gt; {
+            const type = r.type ?? r.name.replace(/s$/, &#39;&#39;).replace(/^./, s =&gt; s.toUpperCase());
+            if (r.list) {
+              if (r.namespaced) {
+                commit(&#39;rdd-connection/addNamespacedResource&#39;, [module, r.name], { root: true });
+              }
+              return r.list;
+            } else if (`listNamespaced${ type }` in client) {
+              commit(&#39;rdd-connection/addNamespacedResource&#39;, [module, r.name], { root: true });
+              return (client, options) =&gt; {</code></pre>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S5">
+        <span class="finding-num">S5.</span> JSDoc parameter does not match the destructured signature <span class="pill pill-claude">Claude</span><a href="#S5" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L47-L65">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="47" data-line="52-60"><code class="language-ts">    state.error = error ? markRaw(error) : error;
+  },
+  SET_NAMESPACE(state, namespace) {
+    state.namespace = namespace;
+  },
+  /**
+   * Mark a namespaced resource as being watched; this is used to track
+   * re-watching resources on connect and when the Kubernetes namespace changes.
+   * @param moduleName the name of the Vuex module.
+   */
+  addNamespacedResource(state, [module, resource]: [string, string]) {
+    state.namespacedResources[module] ??= new Set();
+    state.namespacedResources[module].add(resource);
+  },
+} satisfies MutationsType&lt;RDDConnectionState&gt; &amp; MutationTree&lt;RDDConnectionState&gt;;
+
+/**
+ * fetchConfigPromise is used to ensure that multiple concurrent calls to
+ * `fetchConfig` only runs once; this is necessary if a disconnect causes</code></pre>
+    <p>The mutation accepts a <code>[module, resource]</code> tuple, not a single <code>moduleName</code>. Document both elements or drop the <code>@param</code>.</p>
+      <pre><code class="language-diff">    * Mark a namespaced resource as being watched; this is used to track
+    * re-watching resources on connect and when the Kubernetes namespace changes.
+-   * @param moduleName the name of the Vuex module.
++   * @param payload `[moduleName, resourceName]` — the Vuex module name and the
++   *   resource name within it.
+    */</code></pre>
+    <p>(suggestion, regression)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S6">
+        <span class="finding-num">S6.</span> Stale <code>// The old config is no longer valid</code> comment <span class="pill pill-claude">Claude</span><a href="#S6" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L429-L439">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="429" data-line="434"><code class="language-ts">                resourceOptions.callback?.(error, r.name);
+                console.error(`${ r.name }:`, error);
+              } else {
+                console.error(`${ r.name }: Closing connection without error`);
+              }
+              // The old config is no longer valid.
+              const doReconnect = async() =&gt; {
+                // None of these are expected to throw.
+                await dispatch(&#39;rdd-connection/fetchConfig&#39;, undefined, { root: true });
+                watcher.close();
+                if (state._watchers[r.name]?.refCount &gt; 0) {</code></pre>
+    <p>Pre-PR, this branch invalidated the cached config via <code>commit(&#39;rdd-connection/SET_CONFIG&#39;, new RDDClient.KubeConfig(), { root: true })</code> and let <code>fetchConfig</code> refetch. That invalidation is gone, and the new <code>fetchConfig</code> (lines 78-98) memoizes the first successful config without ever clearing <code>fetchConfigPromise</code>. So <code>dispatch(&#39;rdd-connection/fetchConfig&#39;, …)</code> in <code>doReconnect</code> returns the cached config in a microtask — the comment no longer matches the code. Either delete the comment or replace it with one that explains the reconnect re-establishes the watch using the cached config.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L73-L103">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="73" data-line="78-98"><code class="language-typescript">   * Fetch the Kubernetes configuration from the backend and update the state.
+   * This may be called multiple times concurrently.
+   * This never throws; instead, it blocks until success.
+   * After the first success, it always returns the same config.
+   */
+  async fetchConfig({ commit }): Promise&lt;RDDClient.KubeConfig&gt; {
+    if (!fetchConfigPromise) {
+      fetchConfigPromise = (async() =&gt; {
+        while (true) {
+          try {
+            const config = await ipcRenderer.invoke(&#39;rdd/kube-config&#39;);
+            const kubeConfig = new RDDClient.KubeConfig();
+
+            kubeConfig.loadFromString(config);
+            commit(&#39;SET_CONFIG&#39;, kubeConfig);
+
+            return kubeConfig;
+          } catch {
+            // Try again
+            await new Promise(resolve =&gt; setTimeout(resolve, 1_000));
+          }
+        }
+      })();
+    }
+    return fetchConfigPromise;
+  },
+} satisfies ActionTree&lt;RDDConnectionState, any, typeof mutations&gt;;
+
+export const plugins: Plugin&lt;RootState&gt;[] = [
+  /** Vuex plugin to automatically fetch connection configuration on startup. */
+  function(store) {</code></pre>
+    <p>(suggestion, regression)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S7">
+        <span class="finding-num">S7.</span> Reconnect-only branches in <code>setupResourceWatch</code> are now dead <span class="pill pill-claude">Claude</span><a href="#S7" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L366-L466">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="366" data-line="371-461"><code class="language-ts">
+      // Ensure that the connection configuration is available.  If we already
+      // have a config, this returns immediately.
+      await dispatch(&#39;rdd-connection/fetchConfig&#39;, undefined, { root: true });
+
+      if (state._watchersInitialized.settled) {
+        // This should never happen, but guard against it just in case.
+        throw new Error(&#39;setupResourceWatch called more than once&#39;);
+      }
+
+      try {
+        for (const r of resources) {
+          const resourceOptions = Object.assign({}, state._watchers[r.name]?.options, options ?? {});
+          let reconnectTimeout: ReturnType&lt;typeof setTimeout&gt; | undefined;
+
+          state._watchers[r.name]?.watcher?.close();
+          const client = r.makeClient(rddState.config);
+          const listFn: (client: any, options: ListResourceOptions&lt;typeof state&gt;) =&gt; any = (() =&gt; {
+            const type = r.type ?? r.name.replace(/s$/, &#39;&#39;).replace(/^./, s =&gt; s.toUpperCase());
+            if (r.list) {
+              if (r.namespaced) {
+                commit(&#39;rdd-connection/addNamespacedResource&#39;, [module, r.name], { root: true });
+              }
+              return r.list;
+            } else if (`listNamespaced${ type }` in client) {
+              commit(&#39;rdd-connection/addNamespacedResource&#39;, [module, r.name], { root: true });
+              return (client, options) =&gt; {
+                return client[`listNamespaced${ type }`]({
+                  namespace:     options.namespace,
+                  fieldSelector: options.fieldSelector,
+                  labelSelector: options.labelSelector,
+                });
+              };
+            } else if (`list${ type }` in client) {
+              return (client, options) =&gt; {
+                return client[`list${ type }`]({
+                  fieldSelector: options.fieldSelector,
+                  labelSelector: options.labelSelector,
+                });
+              };
+            } else {
+              throw new Error(`Client ${ r.makeClient.name } does not have a list function for resource type ${ module }/${ type }`);
+            }
+          })();
+          const watcher = new Watcher(
+            r.name,
+            () =&gt; r.path(rootState[&#39;rdd-connection&#39;].namespace),
+            async() =&gt; { // listFn
+              // If this throws, the `doneFn` callback gets called with the exception.
+              const listOptions: ListResourceOptions&lt;any&gt; = {
+                namespace:       rootState[&#39;rdd-connection&#39;].namespace,
+                state,
+                connectionState: rddState,
+                fieldSelector:   r.fieldSelector?.(actionContext),
+                labelSelector:   r.labelSelector?.(actionContext),
+              };
+              const result = await listFn(client, listOptions);
+              commit(&#39;rdd-connection/SET_ERROR&#39;, undefined, { root: true });
+              return result;
+            },
+            (error) =&gt; { // doneFn
+              commit(&#39;rdd-connection/SET_ERROR&#39;, error, { root: true });
+              if (error) {
+                resourceOptions.callback?.(error, r.name);
+                console.error(`${ r.name }:`, error);
+              } else {
+                console.error(`${ r.name }: Closing connection without error`);
+              }
+              // The old config is no longer valid.
+              const doReconnect = async() =&gt; {
+                // None of these are expected to throw.
+                await dispatch(&#39;rdd-connection/fetchConfig&#39;, undefined, { root: true });
+                watcher.close();
+                if (state._watchers[r.name]?.refCount &gt; 0) {
+                  watcher.start();
+                }
+              };
+              clearTimeout(reconnectTimeout);
+              reconnectTimeout = setTimeout(doReconnect, 1_000);
+            },
+            rootState[&#39;rdd-connection&#39;].watch,
+            commit,
+            undefined, // namespace
+            () =&gt; r.labelSelector?.(actionContext),
+            () =&gt; r.fieldSelector?.(actionContext),
+          );
+          const refCount = state._watchers[r.name]?.refCount ?? 0;
+          commit(&#39;SET__WATCHERS&#39;, {
+            ...state._watchers,
+            [r.name]: { watcher, options: resourceOptions, refCount },
+          } as any);
+          if (refCount &gt; 0) {
+            // If the existing refcount is set (i.e. a reconnect), start watching
+            // automatically.
+            watcher.start();
+          }
+        }
+        state._watchersInitialized.resolve();
+      } catch (error) {
+        state._watchersInitialized.reject(error);
+        throw error;</code></pre>
+    <p>The <code>_watchersInitialized.settled</code> guard at line 371 throws on the second entry, and the disconnect path uses the per-watcher <code>doReconnect</code> closure rather than re-entering <code>setupResourceWatch</code>. So <code>state._watchers[r.name]</code> is always undefined at line 381, <code>refCount</code> is always 0 at line 452, and the <code>if (refCount &gt; 0)</code> branch (line 457) never executes. Likewise, the <code>Object.assign({}, state._watchers[r.name]?.options, options ?? {})</code> at line 378 reduces to <code>Object.assign({}, undefined, options ?? {})</code>. Pruning these makes the function&#39;s intent (one-shot setup) match its behavior.</p>
+    <p>(suggestion, regression)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S8">
+        <span class="finding-num">S8.</span> <code>Watcher</code> constructor stores <code>#namespace</code> but every caller passes <code>undefined</code> <span class="pill pill-claude">Claude</span><a href="#S8" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L443-L453">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="443" data-line="448"><code class="language-ts">              clearTimeout(reconnectTimeout);
+              reconnectTimeout = setTimeout(doReconnect, 1_000);
+            },
+            rootState[&#39;rdd-connection&#39;].watch,
+            commit,
+            undefined, // namespace
+            () =&gt; r.labelSelector?.(actionContext),
+            () =&gt; r.fieldSelector?.(actionContext),
+          );
+          const refCount = state._watchers[r.name]?.refCount ?? 0;
+          commit(&#39;SET__WATCHERS&#39;, {</code></pre>
+      <pre><code class="language-ts">this.#items = this.#watcher?.list(this.#namespace) ?? [];</code></pre>
+    <p>The namespace lives in the <code>path</code> thunk now, so the constructor parameter is always <code>undefined</code>. The field is still read in <code>onChange</code> to filter the cache, but <code>ListWatch.list(undefined)</code> returns all entries — exactly the unfiltered behavior the path closure already produces. Drop the parameter and the field.</p>
+    <p>(suggestion, regression)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S9">
+        <span class="finding-num">S9.</span> Trailing-line JSON parser dispatches events without <code>type</code> <span class="pill pill-claude">Claude</span><a href="#S9" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rdd-client/watch.ts#L110-L130">pkg/rdd-client/watch.ts</a></div>
+      <pre data-start="110" data-line="115-125"><code class="language-ts">              }
+              if (done) {
+                break;
+              }
+            }
+            if (lastLine) {
+              let data: any;
+              try {
+                data = JSON.parse(lastLine);
+              } catch (error) {
+                console.debug(&#39;Error parsing watch event JSON last line, ignoring&#39;, { lastLine, error });
+              }
+              if (data) {
+                callback(data.type, data.object, data);
+              }
+            }
+            doneCallOnce(null);
+          } catch (err) {
+            doneCallOnce(err);
+          }
+        })();</code></pre>
+    <p>The flush block runs after the read loop ends with an unterminated last line. If <code>JSON.parse</code> succeeds but the parsed object lacks <code>type</code> (e.g., a malformed event or non-event JSON appended at stream close), the callback fires as <code>callback(undefined, undefined, data)</code>. <code>ListWatch.watchHandler</code> falls through its switch with no logging, so the bad event is silently dropped. The in-loop branch already guards against this implicitly via the <code>try/continue</code> pattern. Add a symmetric guard here.</p>
+      <pre><code class="language-diff">-  if (data) {
++  if (data?.type) {
+     callback(data.type, data.object, data);
+   }</code></pre>
+    <p>(suggestion, regression)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S10">
+        <span class="finding-num">S10.</span> <code>kubernetesNamespace</code> getter still lacks JSDoc <span class="pill pill-claude">Claude</span><a href="#S10" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rdd.ts#L43-L56">pkg/rancher-desktop/store/rdd.ts</a></div>
+      <pre data-start="43" data-line="48-51"><code class="language-ts">    return function(type: string) {
+      const conditions: any[] | undefined = getters.app?.status?.conditions;
+      return conditions?.find((condition: any) =&gt; condition.type === type)?.status === &#39;True&#39;;
+    };
+  },
+  kubernetesNamespace(state, getters) {
+    const app: RDDClient.IoRancherdesktopAppV1alpha1App | undefined = getters.app;
+    return app?.spec?.namespace;
+  },
+  created(state, getters) {
+    return getters.status(&#39;Created&#39;);
+  },
+  running(state, getters) {
+    return getters.status(&#39;Running&#39;);</code></pre>
+    <p>This getter is the renderer-side source of truth for the namespace, consumed by the <code>rdd</code> plugin and indirectly by every namespaced watcher. It is exported across module boundaries via <code>flattenedGetters</code> and warrants a one-line JSDoc explaining when it can be undefined and how callers should handle that case.</p>
+      <pre><code class="language-diff">+  /**
++   * The Kubernetes namespace this App owns its resources in. Undefined
++   * until the App custom resource has been observed at least once.
++   * Callers that depend on a defined value must apply an explicit
++   * `&#39;default&#39;` fallback (matching the CRD&#39;s documented default).
++   */
+   kubernetesNamespace(state, getters) {</code></pre>
+    <p>(suggestion, enhancement; round 1 S4 unaddressed)</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><em>(in-scope)</em> Recreating the inner <code>ListWatch</code> in every <code>Watcher.start()</code> (lines 619-680) and gating callbacks on <code>Object.is(watcher, this.#watcher)</code> is exactly the right shape for repeated rewatches — it avoids the long-standing <code>ListWatch.start()</code> re-use fragility and makes stale events safe to ignore. <span class="pill pill-codex">Codex</span> <span class="pill pill-claude">Claude</span></li>
+      <li><em>(in-scope)</em> Promoting <code>path</code>, <code>labelSelector</code>, and <code>fieldSelector</code> to thunks on the <code>Watcher</code> (lines 412, 449-450) lets each <code>start()</code> re-evaluate against current store state, so the rewatch flow works without recreating the wrapping <code>Watcher</code>. <span class="pill pill-claude">Claude</span></li>
+      <li><em>(in-scope)</em> Tracking namespaced resources in <code>rdd-connection.namespacedResources</code> (a <code>Record&lt;string, Set&lt;string&gt;&gt;</code>) and dispatching <code>rewatchResources</code> per module on namespace change is cleaner than the prior disconnect-callback indirection, and isolates per-watcher reconnect inside <code>doneFn</code>. <span class="pill pill-claude">Claude</span></li>
+      <li><em>(in-scope)</em> The <code>Latch.settled</code> accessor (<code>pkg/rancher-desktop/utils/latch.ts:24-25,90-94</code>) is a minimal addition wired correctly into <code>resolve</code>/<code>reject</code>/<code>reset</code>, and the <code>setupResourceWatch</code> &quot;called more than once&quot; guard that uses it is the right shape. <span class="pill pill-claude">Claude</span></li>
+      <li><em>(in-scope)</em> Multi-line regex fix in <code>pkg/rdd-client/watch.ts</code> — switching from <code>/^(.*?)\r?\n(.*?)$/m</code> to <code>/^(.*?)\r?\n(.*)$/s</code> resolves a chunking bug where multiple JSON events in a single buffer read were swallowed because <code>.</code> in non-<code>s</code> mode does not match newlines, so <code>(.*?)</code> after the newline could not capture the remainder. <span class="pill pill-gemini">Gemini</span></li>
+      <li><em>(in-scope)</em> Dynamic <code>listFn</code> discovery in <code>setupResourceWatch</code> (lines 383-409) — picking <code>listNamespaced&lt;Type&gt;</code> vs <code>list&lt;Type&gt;</code> based on the client shape — removes the per-resource <code>list:</code> boilerplate across <code>container-engine.ts</code> and <code>rdd.ts</code> and centralizes the namespaced/cluster-scoped distinction. <span class="pill pill-gemini">Gemini</span></li>
+      <li><em>(in-scope)</em> <code>Plugin&lt;RootState&gt;</code> typing across all four modules (round 1&#39;s I2-related hygiene) is uniform and removes the per-module <code>Plugin&lt;ModuleState&gt;</code> divergence. <span class="pill pill-claude">Claude</span></li>
+    </ul>
+    <h3 id="concerns">Concerns <a href="#concerns" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><em>(in-scope)</em> <em></em>Periodic-reconnect behavior changed materially with the new <code>watch.ts</code> timeout semantics<em></em> <span class="pill pill-claude">Claude</span></li>
+    </ul>
+    <p>  Pre-PR, <code>AbortSignal.timeout(this.getRequestTimeoutMS())</code> at the original <code>pkg/rdd-client/watch.ts</code> used a random 5–10 minute window applied to the entire fetch lifetime; on fire, the previous <code>try/catch</code> turned a <code>timeoutSignal.aborted</code> into <code>done(null)</code> — a graceful close that triggered <code>ListWatch</code> auto-restart. That matched the Kubernetes client-go pattern of forcing periodic reconnects to resume from a fresh resourceVersion.</p>
+    <p>  Post-PR (<code>pkg/rdd-client/watch.ts:64-70,141-143</code>), the timeout is created with <code>setTimeout</code> and cleared in a <code>finally</code> block. Once the body-streaming IIFE launches, the <code>finally</code> clears the timer, so the timeout effectively gates only the headers-arrival window of the initial fetch. There is no longer a client-side periodic reconnect; if the daemon&#39;s body socket silently stalls, the read just hangs.</p>
+    <p>  For local IPC this is likely fine, and the <code>error</code>-path reconnect still recovers from drops, but the random 5–10 minute window is now a vestige and obscures the change in semantics. Two options:</p>
+    <ol>
+      <li>Shorten the initial-connect timeout to something HTTP-sized (e.g. 30 s) and rename <code>getRequestTimeoutMS</code> accordingly.</li>
+      <li>Restore the periodic graceful-close behavior — re-arm the timeout when streaming starts and treat its firing as a normal end-of-stream.</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>No automated tests cover <code>pkg/rancher-desktop/store/rddConnection.ts</code>, <code>pkg/rdd-client/watch.ts</code>, or the namespace-change pipeline. The repo lacks store-test infrastructure entirely (<code>find pkg/rancher-desktop/store -name &#39;*.spec.ts&#39;</code> returns empty), so adding tests for this PR would mean introducing the harness too. That belongs in a follow-up.</p>
+    <p>Highest-risk untested scenarios, ordered by priority:</p>
+    <ol>
+      <li>The race in I2 — concurrent <code>rewatchResources</code> and 429-driven restart in the same <code>Watcher</code>. A test driving two <code>error</code> events with intervening <code>start()</code> calls would catch the silent-park failure.</li>
+      <li><code>rewatchResources</code> leaving an empty array briefly between <code>close()</code> and the new <code>ListWatch</code>&#39;s first <code>change</code>. The <code>connect</code> event fires before <code>listFn</code> resolves in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rdd-client/cache.ts#L180-L191"><code>pkg/rdd-client/cache.ts:180-191</code></a>, and <code>onChange</code> commits whatever is in <code>this.#watcher.list()</code> at that moment — which can be empty.</li>
+      <li><code>JSON.parse(err.body)</code> in the 429 handler — <code>err.body</code> may be undefined on the watch-client error shape, and unparseable on retries with empty bodies. Silent fallback to 100 ms delay.</li>
+      <li>App <code>spec.namespace</code> transitions between explicit value and undefined (covers I1).</li>
+      <li>Watch event chunking — combined <code>buffer + newline + buffer + newline</code> chunks correctly extract every event without dropping the remainder (covers the multi-line regex fix).</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><code>kubernetesNamespace</code> getter at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rdd.ts#L48-L51"><code>rdd.ts:48-51</code></a> lacks a JSDoc explaining when it is undefined and what callers should do (S10; round 1 S4 unaddressed).</li>
+      <li>The <code>addNamespacedResource</code> mutation&#39;s JSDoc names a <code>moduleName</code> parameter that does not exist in the destructured signature (S5).</li>
+      <li>The <code>// The old config is no longer valid</code> comment at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L434"><code>rddConnection.ts:434</code></a> no longer matches the code (S6).</li>
+      <li><code>rewatchResources</code> has a docstring (lines 335-340) — good. The accompanying note that <code>rewatchResources</code> runs concurrently across resources without serialization is missing; given the round-1 concurrency concern, a one-liner would help future maintainers.</li>
+      <li>No user-facing docs are affected.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><code>// We may temporarily have stale data before the new watch applies; that is acceptable, and reduces flickering.</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L551-L552"><code>rddConnection.ts:551-552</code></a>) — author explicitly accepts the brief stale window during <code>rewatchResources</code>. Consistent with the implementation.</li>
+      <li><code>// This should never happen, but guard against it just in case.</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/rddConnection.ts#L372"><code>rddConnection.ts:372</code></a>) — author acknowledges the <code>_watchersInitialized.settled</code> guard is defensive. Consistent with the new flow that calls <code>setupResourceWatch</code> only from the module plugin.</li>
+      <li><code>// TODO: Determine if the backend supports namespaces.</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/45ba1293bc43419d70468f870e3f0b5c7aa30920/pkg/rancher-desktop/store/container-engine.ts#L60"><code>container-engine.ts:60</code></a>) — pre-existing; means the new <code>setCurrentNamespace</code> action stays dead until the TODO is addressed.</li>
+      <li><code>// TODO: Once we have diagnostics, emit one here so the user can deal with it.</code> was removed from the PR&#39;s <code>setupResourceWatch</code>. The new <code>fetchConfig</code> blocks until success without surfacing the failures. Worth restoring the diagnostic TODO at <code>fetchConfig</code> (lines 90-93) so the gap stays tracked.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="unresolved-feedback">Unresolved Feedback <a href="#unresolved-feedback" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li>@jandubois posted the round 1 review URL on the PR; the unaddressed Suggestions from that review (S1 Images.vue mapping, S2 redundant guard, S4 missing JSDoc, S5 hard-coded <code>&#39;rancher-desktop&#39;</code> in <code>createApp</code>) resurface this round as S1, S2, S10, and the &quot;createApp body still hard-codes&quot; item is not re-raised here because it is cosmetic and the author already declined it.</li>
+      <li>@mook-as commented &quot;Went through too many rounds of local AI review; at this point it&#39;s just kind of nit-picking.&quot; — reasonable position; the only findings worth pre-merge attention from this round are I2 and I3, both of which are real regressions introduced by this PR&#39;s new code rather than nit-picks.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="claude"><span class="pill pill-claude">Claude</span> <a href="#claude" class="pilcrow">&#182;</a></h3>
+    <p>Carried the heaviest load and produced the only critical regression (I2&#39;s <code>clearTimeout</code> race), reading the per-<code>Watcher</code> <code>#restartTimeout</code> field carefully enough to spot that the <code>error</code> handler is the lone outlier among event handlers in clearing state before the stale-check. Also drove most of the secondary cleanup (mutation naming, JSDoc mismatch, stale comment, dead-branch pruning, unused <code>#namespace</code>) and surfaced the only design-level observation worth discussing (the periodic-reconnect behavior change). Severity calibration was accurate — Claude called the type widening a Suggestion and the consolidator promoted to Important on review of contract impact, so a slight under-call on that one. Inside the changed file set on every finding except the <code>Images.vue</code> mapping (which it correctly hoisted to a design observation, since the file is not in the diff).</p>
+    <h3 id="codex"><span class="pill pill-codex">Codex</span> <a href="#codex" class="pilcrow">&#182;</a></h3>
+    <p>Smaller harvest, surgical hits. The &quot;429 retry handles only the watch-client error shape&quot; finding (S3) was the kind of contract drift only an agent that traced both error sources (<code>watch.ts</code> error vs <code>ApiException</code>) would catch — a concrete, testable contribution. Re-raised the round-1 default-fallback issue (I1) with the cleanest framing and a working diff, and the <code>Images.vue</code> stale mapping (S1) for a third consecutive review. No false positives.</p>
+    <h3 id="gemini"><span class="pill pill-gemini">Gemini</span> <a href="#gemini" class="pilcrow">&#182;</a></h3>
+    <p>Delivered the type-widening insight (I3) — its strongest contribution this round, requiring TypeScript-evaluation reasoning the others missed (Claude got there too but landed on Suggestion). Also caught and explained the multi-line regex fix nicely as a design strength. Promoted the namespace-fallback question to Critical on <code>omitempty</code> grounds; the runtime model is narrower than that framing implies (server-side defaulting fills the field on read, so <code>omitempty</code> does not strip it on the wire), so the consolidator downgraded to Important. One severity calibration miss but the underlying finding was correct.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.7</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>15m 12s</td><td>6m 28s</td><td>8m 09s</td></tr>
+        <tr><td>Findings</td><td>2I 7S</td><td>1I 2S</td><td>2I 2S</td></tr>
+        <tr><td>Tool calls</td><td>40 (Bash 26, Read 14)</td><td>72 (shell 72)</td><td>29 (grep<em>search 15, run</em>shell<em>command 7, read</em>file 6)</td></tr>
+        <tr><td>Design observations</td><td>7</td><td>1</td><td>2</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>7</td><td>1</td><td>1</td></tr>
+        <tr><td>Files reviewed</td><td>10</td><td>10</td><td>10</td></tr>
+        <tr><td>Coverage misses</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>2I 7S</strong></td><td><strong>1I 2S</strong></td><td><strong>2I 2S</strong></td></tr>
+        <tr><td>Downgraded</td><td>0</td><td>0</td><td>1 (I→S)</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p>Claude carried the round on volume and unique insight, including the only currently-actionable regression (I2). Codex landed two precise findings that no one else caught (the 429 dual-error-shape problem and the <code>Images.vue</code> mapping consistency). Gemini&#39;s type-widening catch (I3) is the second most important finding of the round; its severity inflation on I1 is a recurring pattern across rounds and worth noting, but did not translate into a false positive — the underlying issue is real, just narrower than Critical.</p>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="skill-improvements">Skill improvements <a href="#skill-improvements" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><em></em>Treat <code>&lt;UnionType&gt;[number]</code> indexing as silent widening to <code>string</code>.<em></em> When a finding alleges that indexing a string-literal union with <code>[number]</code> widens to plain <code>string</code>, verify by mentally substituting a concrete union (<code>&#39;a&#39; | &#39;b&#39; | &#39;c&#39;</code>) and applying TypeScript&#39;s index access rules: literal types treated as char-indexable produce <code>string</code>. Flag this pattern in any callback or generic helper signature where the parameter was previously a precise union and the diff added <code>[number]</code>. Why: this is silent compile-time-safety loss with no runtime symptom, so it survives review unless someone reasons through the type-evaluation.</li>
+    </ul>
+    <h3 id="repo-context-updates">Repo context updates <a href="#repo-context-updates" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><em></em>[repo] [UPDATE] <code>setupResourceWatch</code> is now one-shot and reconnect lives in per-watcher <code>doReconnect</code> closures.<em></em> The round-1 repo-context note &quot;<code>setupResourceWatch</code> is now reachable from three triggers, not one&quot; is stale. Post-round-2, <code>setupResourceWatch</code> throws on the second entry (guard at <code>state._watchersInitialized.settled</code>), and the disconnect path no longer re-enters it; instead, each <code>Watcher</code> holds a per-instance <code>doReconnect</code> closure that calls <code>watcher.close(); watcher.start()</code>. Update the context note to: &quot;<code>setupResourceWatch</code> runs exactly once per module per session. Concurrent triggers are not a concern there. The reconnect path lives in the <code>Watcher</code>&#39;s <code>doneFn</code> → <code>doReconnect</code> closure; flag any change that re-enters <code>setupResourceWatch</code> from a second trigger.&quot;</li>
+      <li><em></em>[repo] [UPDATE] Watcher shutdown identity check uses <code>Object.is(watcher, this.#watcher)</code> for stale events; the <code>errorManuallyStopped</code> sentinel still flows through <code>Object.is(err, sentinel)</code>.<em></em> Round 1 documented the abort-sentinel propagation concern (<code>AbortController.abort(reason)</code> → <code>signal.reason</code>). The post-round-2 architecture supplements that with stale-watcher detection: each <code>Watcher.start()</code> captures the new inner <code>ListWatch</code> in a closure variable and gates every event handler on <code>Object.is(watcher, this.#watcher)</code>. When reviewing changes to <code>Watcher</code>, verify that <em>every</em> event handler runs the stale-check before mutating any per-<code>Watcher</code> field (<code>#restartTimeout</code>, <code>#loaded</code>, etc.). The current <code>error</code> handler at lines 640-642 violates this — see I2.</li>
+    </ul>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
