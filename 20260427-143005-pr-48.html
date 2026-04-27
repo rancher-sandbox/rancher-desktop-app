@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260427-143005-pr-48</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260427-143005-pr-48</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-04-27 14:30</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+      <tr><td>Round</td><td>2 (of PR <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/48" class="gh-ref" data-title="Update logs to binary message" data-state="open" data-type="pr">#48</a>)</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/48" class="gh-ref" data-title="Update logs to binary message" data-state="open" data-type="pr">#48</a> — Update logs to binary message</td></tr>
+      <tr><td>Branch</td><td><code>logs-2026-04-22</code></td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/0a1dd1eae"><code>0a1dd1eae</code></a> Store: rdd: remove unused statuses<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7efbdb7fa"><code>7efbdb7fa</code></a> Container-engine: Change state setting<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/26353abef"><code>26353abef</code></a> vue: logs: Switch to binary messages<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/86d0d5626"><code>86d0d5626</code></a> rdd-client: regenerate<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/ec0781feb"><code>ec0781feb</code></a> scripts/generate-rdd-client: Start rdd<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/309e4ebb6"><code>309e4ebb6</code></a> Status: use settled for progress bar</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.7 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; round 1&#39;s I1/S1 are cleanly resolved by the two new commits; the remaining concern is that <code>lastAction.state === &#39;Failed&#39;</code> is now reported by the daemon but never surfaced in the UI, so a Stop that fails server-side is silent.</td></tr>
+      <tr><td>Wall-clock time</td><td><code>30 min 47 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>Round 2 adds two new commits on top of the round 1 head: <code>Container-engine: Change state setting</code> (renames <code>containerSetState</code> → <code>containerRequestAction</code>, switches from <code>spec.state</code> to the <code>containers.rancherdesktop.io/action</code> metadata annotation, and broadens the action enum to <code>start</code>/<code>stop</code>/<code>pause</code>/<code>unpause</code>/<code>restart</code>) and <code>Store: rdd: remove unused statuses</code> (drops the unreferenced <code>created</code> and <code>running</code> getters). These are exactly the changes round 1&#39;s I1 and S1 asked for, and they cleanly resolve both findings. The migration also correctly keeps the explicit <code>MergePatch</code> content-type override so the JSON-patch default in the generated client does not kick in. The new gap exposed by the API migration is one Claude raised: actions are now asynchronous, the daemon reports their outcome through <code>status.lastAction.state</code> / <code>status.lastAction.error</code>, and the renderer never reads either field — a Stop that fails server-side leaves no UI trace. The remaining suggestions are minor: the <code>state</code>-named action parameter that should be <code>action</code>, a hard-coded annotation key string, a silently-dropped non-binary WebSocket frame, a now-stale <code>pkg/rdd-client/README.md</code> prerequisite section, and a pre-existing buffering concern in <code>ContainerLogs.vue</code> that this PR does not change but Gemini surfaced.</p>
+    <p><strong>Structure.</strong> 1 Important, 5 Suggestions. The Important finding was raised by Claude only; the daemon-async-feedback gap is non-obvious because the regenerated model is generated correctly — the renderer simply does not consume the new fields yet.</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+    <p>None.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> <code>lastAction.state === &#39;Failed&#39;</code> outcome never reaches the user <span class="pill pill-claude">Claude</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/store/container-engine.ts#L106-L144">pkg/rancher-desktop/store/container-engine.ts</a></div>
+      <pre data-start="106" data-line="111-139"><code class="language-ts">        console.error(&#39;Error setting up resource watch:&#39;, error);
+      }
+    }
+  },
+  /** Request the given container to transition to the provided state. */
+  containerRequestAction(
+    { rootState, commit },
+    { container, state }: {
+      container: RDDClient.IoRancherdesktopContainersV1alpha1Container,
+      state:     &#39;start&#39; | &#39;stop&#39; | &#39;pause&#39; | &#39;unpause&#39; | &#39;restart&#39;,
+    },
+  ) {
+    const config: RDDClient.KubeConfig = rootState[&#39;rdd-connection&#39;].config;
+    const client = config.makeApiClient(RDDClient.ContainersRancherdesktopIoV1alpha1Api);
+    const body: RecursivePartial&lt;RDDClient.IoRancherdesktopContainersV1alpha1Container&gt; = {
+      metadata: {
+        annotations: {
+          &#39;containers.rancherdesktop.io/action&#39;: state,
+        },
+      },
+    };
+
+    return client.patchNamespacedContainer(
+      {
+        name:            container.metadata!.name!,
+        namespace:       container.metadata!.namespace!,
+        body,
+        fieldValidation: &#39;Strict&#39;,
+      },
+      RDDClient.setHeaderOptions(&#39;Content-Type&#39;, RDDClient.PatchStrategy.MergePatch),
+    ).catch((err: Error) =&gt; {
+      commit(&#39;SET_ERROR&#39;, { error: err, source: &#39;containers&#39; });
+    });
+  },
+  /** Delete the given container. */
+  async containerDelete(
+    { rootState, commit },
+    { container }: {
+      container: RDDClient.IoRancherdesktopContainersV1alpha1Container,</code></pre>
+    <p>Under the previous <code>spec.state</code> model the patch carried the desired state and the daemon could (in principle) reject it synchronously through the HTTP response. Under the new annotation-based model the patch only writes the request annotation, so the HTTP path always succeeds; the daemon then reports the outcome asynchronously through <code>status.lastAction</code>.</p>
+    <p>The regenerated <code>IoRancherdesktopContainersV1alpha1ContainerStatusLastAction</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts#L18-L39"><code>pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts:18-39</code></a>) makes both fields explicit: <code>action</code>, <code>state</code> (<code>Succeeded</code> | <code>Failed</code>), <code>error</code>, <code>observedAt</code>, <code>completedAt</code>. A grep for <code>lastAction</code> across <code>pkg/rancher-desktop/</code> finds zero references — neither the action dispatcher in <code>containerSetState</code> (now <code>containerRequestAction</code>), nor any watcher, nor any UI component reads it. A user who clicks Stop on a container that the daemon then fails to stop sees no error banner, no state transition, and no log entry; the UI just keeps rendering the container as running.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts#L13-L44">pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts</a></div>
+      <pre data-start="13" data-line="18-39"><code class="language-typescript">import { HttpFile } from &#39;../http/http&#39;;
+
+/**
+* LastAction records the most recent action requested via the AnnotationAction annotation and its outcome. Persists after the action completes until overwritten by the next action.
+*/
+export class IoRancherdesktopContainersV1alpha1ContainerStatusLastAction {
+    /**
+    * Action is the action that was requested.
+    */
+    &#39;action&#39;: IoRancherdesktopContainersV1alpha1ContainerStatusLastActionActionEnum;
+    /**
+    * CompletedAt is when the action completed, regardless of outcome.
+    */
+    &#39;completedAt&#39;?: Date;
+    /**
+    * Error is the error message if the action failed.
+    */
+    &#39;error&#39;?: string;
+    /**
+    * ObservedAt is when the reconciler began processing the action annotation. Backlog may delay this relative to the user\&#39;s write time, and dispatch (especially restart\&#39;s grace period) extends the gap to CompletedAt.
+    */
+    &#39;observedAt&#39;?: Date;
+    /**
+    * State is the outcome of the action.
+    */
+    &#39;state&#39;: IoRancherdesktopContainersV1alpha1ContainerStatusLastActionStateEnum;
+
+    static readonly discriminator: string | undefined = undefined;
+
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
+    static readonly attributeTypeMap: Array&lt;{name: string, baseName: string, type: string, format: string}&gt; = [</code></pre>
+    <p>Fix: surface <code>lastAction.error</code> through the existing <code>SET_ERROR</code> channel when the most-recently-requested container&#39;s <code>status.lastAction.action</code> matches the dispatched action and <code>status.lastAction.state === &#39;Failed&#39;</code>. A minimal first cut is to remember the last <code>(name, namespace, action)</code> tuple inside <code>containerRequestAction</code>, and add a watcher (or <code>resourceWatchActions</code>-driven reactor) on the container that compares the next status update against that tuple. Bonus: also clear the previous error on success so the banner does not stick.</p>
+    <p>We classify this Important rather than Critical because the failure surface is not new — pre-PR, the <code>spec.state</code> patch was rejected on the wire by the new daemon and <code>containerSetState</code> already had no progress feedback path. This PR is the natural place to wire the new feedback channel in alongside the new request channel.</p>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> <code>state</code> parameter of <code>containerRequestAction</code> reads as a state but holds an action <span class="pill pill-claude">Claude</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/store/container-engine.ts#L106-L131">pkg/rancher-desktop/store/container-engine.ts</a></div>
+      <pre data-start="106" data-line="111-126"><code class="language-ts">        console.error(&#39;Error setting up resource watch:&#39;, error);
+      }
+    }
+  },
+  /** Request the given container to transition to the provided state. */
+  containerRequestAction(
+    { rootState, commit },
+    { container, state }: {
+      container: RDDClient.IoRancherdesktopContainersV1alpha1Container,
+      state:     &#39;start&#39; | &#39;stop&#39; | &#39;pause&#39; | &#39;unpause&#39; | &#39;restart&#39;,
+    },
+  ) {
+    const config: RDDClient.KubeConfig = rootState[&#39;rdd-connection&#39;].config;
+    const client = config.makeApiClient(RDDClient.ContainersRancherdesktopIoV1alpha1Api);
+    const body: RecursivePartial&lt;RDDClient.IoRancherdesktopContainersV1alpha1Container&gt; = {
+      metadata: {
+        annotations: {
+          &#39;containers.rancherdesktop.io/action&#39;: state,
+        },
+      },
+    };
+
+    return client.patchNamespacedContainer(
+      {
+        name:            container.metadata!.name!,
+        namespace:       container.metadata!.namespace!,</code></pre>
+    <p>The values <code>&#39;start&#39; | &#39;stop&#39; | &#39;pause&#39; | &#39;unpause&#39; | &#39;restart&#39;</code> are imperative verbs; the function was deliberately renamed from <code>containerSetState</code> to <code>containerRequestAction</code> to signal that the renderer no longer drives a desired state. The parameter name should follow. <code>state</code> is also confusing inside a Vuex action because <code>state</code> is the Vuex store-state convention; here it is destructured from the payload, not the context, but a casual reader has to look twice. Callers in <code>pkg/rancher-desktop/pages/Containers.vue:284,290</code> already pass <code>state: &#39;stop&#39;</code> / <code>state: &#39;start&#39;</code>, so the rename is mechanical.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/pages/Containers.vue#L279-L289">pkg/rancher-desktop/pages/Containers.vue</a></div>
+      <pre data-start="279" data-line="284"><code class="language-markup">            ],
+            stopContainer: (args?: Container[]) =&gt; {
+              const containers = Array.isArray(args) ? args : [container];
+
+              return Promise.all(containers.map(container =&gt;
+                this.containerRequestAction({ container, state: &#39;stop&#39; })));
+            },
+            startContainer: (args?: Container[]) =&gt; {
+              const containers = Array.isArray(args) ? args : [container];
+
+              return Promise.all(containers.map(container =&gt;</code></pre>
+      <pre><code class="language-diff">   containerRequestAction(
+     { rootState, commit },
+-    { container, state }: {
++    { container, action }: {
+       container: RDDClient.IoRancherdesktopContainersV1alpha1Container,
+-      state:     &#39;start&#39; | &#39;stop&#39; | &#39;pause&#39; | &#39;unpause&#39; | &#39;restart&#39;,
++      action:    &#39;start&#39; | &#39;stop&#39; | &#39;pause&#39; | &#39;unpause&#39; | &#39;restart&#39;,
+     },
+   ) {
+     ...
+     const body: RecursivePartial&lt;RDDClient.IoRancherdesktopContainersV1alpha1Container&gt; = {
+       metadata: {
+         annotations: {
+-          &#39;containers.rancherdesktop.io/action&#39;: state,
++          &#39;containers.rancherdesktop.io/action&#39;: action,
+         },
+       },
+     };</code></pre>
+    <p>…and update the two call sites in <code>pages/Containers.vue</code> accordingly.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> Hard-coded annotation key duplicates the server&#39;s <code>AnnotationAction</code> constant <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/store/container-engine.ts#L117-L129">pkg/rancher-desktop/store/container-engine.ts</a></div>
+      <pre data-start="117" data-line="122-124"><code class="language-ts">  ) {
+    const config: RDDClient.KubeConfig = rootState[&#39;rdd-connection&#39;].config;
+    const client = config.makeApiClient(RDDClient.ContainersRancherdesktopIoV1alpha1Api);
+    const body: RecursivePartial&lt;RDDClient.IoRancherdesktopContainersV1alpha1Container&gt; = {
+      metadata: {
+        annotations: {
+          &#39;containers.rancherdesktop.io/action&#39;: state,
+        },
+      },
+    };
+
+    return client.patchNamespacedContainer(
+      {</code></pre>
+    <p>Both regenerated docstrings (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1Container.ts#L30-L32"><code>pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1Container.ts:30-32</code></a> and <code>…/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts:16</code>) refer to &quot;the AnnotationAction annotation&quot; — the daemon clearly has a name for it. The OpenAPI generator does not emit non-schema constants, so an export must be added by hand; a small wrapper module under <code>pkg/rdd-client/</code> (alongside the existing patch helpers) is the natural home. The benefit is searchability: when the daemon renames or namespaces the annotation, a single grep finds the renderer dependency.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1Container.ts#L25-L37">pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1Container.ts</a></div>
+      <pre data-start="25" data-line="30-32"><code class="language-typescript">    /**
+    * Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    */
+    &#39;kind&#39;?: string;
+    &#39;metadata&#39;?: V1ObjectMeta;
+    /**
+    * Spec is reserved for future use. The Container API has no desired-state fields today: actions are requested via the AnnotationAction annotation on metadata instead.
+    */
+    &#39;spec&#39;?: any;
+    &#39;status&#39;?: IoRancherdesktopContainersV1alpha1ContainerStatus;
+
+    static readonly discriminator: string | undefined = undefined;
+</code></pre>
+      <pre><code class="language-ts">// pkg/rdd-client/annotations.ts
+export const AnnotationAction = &#39;containers.rancherdesktop.io/action&#39;;</code></pre>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> Non-<code>ArrayBuffer</code> WebSocket frames are dropped silently <span class="pill pill-claude">Claude</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/components/ContainerLogs.vue#L187-L252">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+      <pre data-start="187" data-line="192-247"><code class="language-ts">    resizeObserver.disconnect();
+  });
+  fitAddon.fit();
+});
+
+function isArrayBufferMessage(message: MessageEvent): message is MessageEvent&lt;ArrayBuffer&gt; {
+  return message.data instanceof ArrayBuffer;
+}
+
+// Start streaming logs from the container.  We want to set `immediate` so that
+// if `logURL` is already available by the time we set up the watcher, we don&#39;t
+// have to wait for another change to trigger the log streaming.
+watch([logURL, reconnectTrigger], async([logURL], [,], cleanUp) =&gt; {
+  if (!logURL) {
+    return;
+  }
+  errorMessage.value = undefined;
+  const streamAborter = new AbortController();
+  cleanUp(() =&gt; {
+    streamAborter.abort();
+    clearTimeout(revealTimeout);
+    clearTimeout(reconnectTimer);
+    clearTimeout(reconnectResetTimer);
+  });
+  streamAborter.signal.addEventListener(&#39;abort&#39;, () =&gt; {
+    buffer = [];
+    terminal?.reset();
+  });
+
+  // Wait a bit for the rendering to finish, so we don&#39;t end up creating many
+  // connections before Vue finished its thing.  `nextTick` still causes
+  // spurious events to fire, so use a longer timeout here.
+  await new Promise(resolve =&gt; setTimeout(resolve, 200));
+  if (streamAborter.signal.aborted) {
+    return;
+  }
+
+  try {
+    buffer = [];
+
+    // Authentication for the log stream is handled in the main process via the
+    // webRequest.onBeforeSendHeaders listener; see `@pkg/window/index.ts`.
+    const socket = new WebSocket(logURL);
+    socket.binaryType = &#39;arraybuffer&#39;;
+    streamAborter.signal.addEventListener(&#39;abort&#39;, () =&gt; socket.close());
+    socket.addEventListener(&#39;message&#39;, (event) =&gt; {
+      if (!isArrayBufferMessage(event)) {
+        return;
+      }
+      if (streamAborter.signal.aborted) {
+        // We can get here if we closed the connection at the WebSocket level
+        // (i.e. sent a &quot;close&quot; message), but the server hasn&#39;t paid attention
+        // to it yet and kept sending things to us.
+        socket.close();
+        return;
+      }
+      const t = terminal;
+      if (!t) {
+        buffer.push(event.data);
+        return;
+      }
+      errorMessage.value = undefined;
+      t.write(new Uint8Array(event.data));
+      if (waitingForInitialLogs.value) {
+        // If we&#39;re still waiting for the initial logs, delay the reveal
+        // until after all of the initial logs have streamed in.</code></pre>
+    <p>With <code>socket.binaryType = &#39;arraybuffer&#39;</code> (line 230) the contract is &quot;only binary frames&quot;. A text frame would indicate either a server protocol regression or a future server-pushed control message; either way, silently dropping it makes the next WebSocket-related bug ten times harder to diagnose. The previous <code>typeof event.data !== &#39;string&#39;</code> check had the same blind spot in the opposite direction. A <code>console.warn</code> matching the existing <code>console.error(&#39;WebSocket error:&#39;, event)</code> style at line 291 is enough to leave a crumb.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/components/ContainerLogs.vue#L286-L296">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+      <pre data-start="286" data-line="291"><code class="language-markup">          terminal?.scrollToBottom();
+        });
+      }, 500);
+    });
+    socket.addEventListener(&#39;error&#39;, (event) =&gt; {
+      console.error(&#39;WebSocket error:&#39;, event);
+      if (streamAborter.signal.aborted) {
+        // Do not set error on intentional aborts.
+        return;
+      }
+      let message = String(&#39;message&#39; in event ? event.message : event);</code></pre>
+      <pre><code class="language-diff"> socket.addEventListener(&#39;message&#39;, (event) =&gt; {
+   if (!isArrayBufferMessage(event)) {
++    console.warn(&#39;Dropped non-binary WebSocket frame:&#39;, typeof event.data, event.data);
+     return;
+   }</code></pre>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S4">
+        <span class="finding-num">S4.</span> <code>pkg/rdd-client/README.md</code> still tells contributors to start <code>dockerd</code> separately <span class="pill pill-codex">Codex</span><a href="#S4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rdd-client/README.md#L14-L26">pkg/rdd-client/README.md</a></div>
+      <pre data-start="14" data-line="19-21"><code class="language-md">## Building
+
+We do not actually install this as a separate package, so the only build step is
+for regenerating the API definitions.  To do so:
+
+- Have a running dockerd; at this point, this means running a separate instance
+  of Rancher Desktop, but in the future `rdd` is expected to be sufficient.
+- Ensure that `rdd` is in your `PATH`.
+- Run `yarn generate:rdd-client` from the [`rancher-desktop-app`] repository.
+
+## Usage
+
+We export a `KubeConfig` class; it is distinct from the one from</code></pre>
+    <p>The README still says callers need a running <code>dockerd</code> and a separate Rancher Desktop instance, but <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/scripts/generate-rdd-client.ts#L64"><code>scripts/generate-rdd-client.ts:64</code></a> now starts the RDD service itself and uses RDD as the docker backend (the rationale the author gave for the script&#39;s header comment update). The script does still invoke the <code>docker</code> CLI at lines 109/132/141/148, so the accurate prerequisite is &quot;<code>rdd</code> and <code>docker</code> on PATH; the script starts RDD.&quot; The current README leads contributors who follow it literally to a now-redundant setup step.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/scripts/generate-rdd-client.ts#L59-L69">scripts/generate-rdd-client.ts</a></div>
+      <pre data-start="59" data-line="64"><code class="language-typescript">    throw new Error(&#39;Failed to find free port&#39;);
+  }
+
+  await fs.promises.rm(outDir, { recursive: true, force: true });
+  await fs.promises.mkdir(outDir, { recursive: true });
+  await execFile(rddPath, [&#39;service&#39;, &#39;start&#39;]);
+
+  try {
+    const proxy = childProcess.spawn(rddPath, [&#39;ctl&#39;, &#39;proxy&#39;, `--port=${ port }`]);
+
+    try {</code></pre>
+      <pre><code class="language-diff">-- Have a running dockerd; at this point, this means running a separate instance
+-  of Rancher Desktop, but in the future `rdd` is expected to be sufficient.
+-- Ensure that `rdd` is in your `PATH`.
++- Ensure that `rdd` and `docker` are on your `PATH`; the generation script
++  starts the RDD service automatically and uses it as the docker backend.
+ - Run `yarn generate:rdd-client` from the [`rancher-desktop-app`] repository.</code></pre>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S5">
+        <span class="finding-num">S5.</span> <code>buffer</code> can grow without bound while initial logs stream continuously <span class="pill pill-gemini">Gemini</span><a href="#S5" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/components/ContainerLogs.vue#L8-L31">pkg/rancher-desktop/components/ContainerLogs.vue</a></div>
+      <pre data-start="8" data-line="13-26"><code class="language-vue">    &gt;
+      &lt;span class=&quot;icon icon-info-circle icon-lg&quot; /&gt;
+      {{ errorMessage }}
+    &lt;/banner&gt;
+
+    &lt;loading-indicator
+      v-if=&quot;!container || waitingForInitialLogs&quot;
+      class=&quot;content-state&quot;
+      data-testid=&quot;loading-indicator&quot;
+    &gt;
+      Loading logs...
+    &lt;/loading-indicator&gt;
+
+    &lt;div
+      v-else
+      ref=&quot;terminalContainer&quot;
+      class=&quot;terminal-container&quot;
+      data-testid=&quot;terminal&quot;
+    /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script lang=&quot;ts&quot; setup&gt;
+import { Banner } from &#39;@rancher/components&#39;;</code></pre>
+    <p>The terminal container only mounts (and the <code>terminalContainer</code> watch fires, creating the xterm <code>Terminal</code> and draining <code>buffer</code>) once <code>waitingForInitialLogs</code> flips to false. The <code>open</code> handler arms a 500 ms reveal timer; every incoming message clears that timer and re-arms a 200 ms one. While messages keep arriving faster than 200 ms apart, <code>waitingForInitialLogs</code> stays true, the terminal never mounts, and <code>buffer.push(event.data)</code> accumulates every chunk. For a container with hundreds of MB of historical logs streamed in a continuous burst, this can hold the whole backlog in renderer memory before xterm sees the first byte.</p>
+    <p>The behavior pre-dates this PR (the same pattern existed with <code>buffer = &#39;&#39;</code> and <code>buffer += event.data</code>), so we mark this <strong>gap, pre-existing</strong> rather than a regression — keep it on the radar but it does not block the PR. A cap (e.g., bounded ring buffer, or floor the reveal timer instead of resetting it) would close the long-tail risk.</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Annotation-based action over declarative state</strong> <em>(in-scope)</em> <span class="pill pill-claude">Claude</span>. The renderer-side action union (<code>&#39;start&#39; | &#39;stop&#39; | &#39;pause&#39; | &#39;unpause&#39; | &#39;restart&#39;</code>) mirrors the daemon&#39;s <code>IoRancherdesktopContainersV1alpha1ContainerStatusLastActionActionEnum</code> 1:1 (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts#L84-L90"><code>pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts:84-90</code></a>), so a future server-side action addition surfaces as a TypeScript widening rather than a runtime mismatch — assuming the renderer also adopts the constant from S2.</li>
+      <li><em></em>Explicit <code>MergePatch</code> content-type override survives the migration<em></em> <em>(in-scope)</em> <span class="pill pill-codex">Codex</span>. The <code>RDDClient.setHeaderOptions(&#39;Content-Type&#39;, RDDClient.PatchStrategy.MergePatch)</code> call at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/store/container-engine.ts#L135"><code>pkg/rancher-desktop/store/container-engine.ts:135</code></a> keeps the generated client&#39;s default <code>application/json-patch+json</code> from kicking in for an object-shaped patch body — exactly the trap captured in <code>deep-review-context.md</code>.</li>
+      <li><strong>Buffer-of-chunks instead of buffer-of-bytes</strong> <em>(in-scope)</em> <span class="pill pill-claude">Claude</span>. <code>let buffer: ArrayBuffer[] = []</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rancher-desktop/components/ContainerLogs.vue#L66"><code>ContainerLogs.vue:66</code></a>) preserves frame boundaries, avoids any string transcoding, and never has to worry about cutting a multibyte character in half. The drained loop at lines 177-180 is the minimal correct shape.</li>
+      <li><em></em>Single <code>Settled</code> condition collapses two getters<em></em> <em>(in-scope)</em> <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span>. The daemon now publishes &quot;running and not transitioning&quot; explicitly, so <code>BackendProgress.vue</code> no longer has to compose its own signal.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>No automated tests were added or updated. Risk-ranked gaps:</p>
+    <ol>
+      <li><strong>Container action failure feedback (highest)</strong> — the case underlying I1; a unit test on the <code>container-engine</code> Vuex module that injects a watch update with <code>status.lastAction = { action: &#39;stop&#39;, state: &#39;Failed&#39;, error: &#39;…&#39; }</code> and asserts the error banner appears would lock in the fix.</li>
+      <li><strong>Action payload contract</strong> <span class="pill pill-codex">Codex</span> — no test asserts that <code>containerRequestAction</code> writes <code>metadata.annotations[&#39;containers.rancherdesktop.io/action&#39;]</code> with the merge-patch content type. A small store-action test with a mock client would catch a future regression that drifts the annotation key or content type.</li>
+      <li><strong>Reconnect storm</strong> — issue <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/49" class="gh-ref" data-title="Logs disconnect every minute" data-state="open" data-type="issue">#49</a> is filed for the per-minute disconnect; once that root cause is found, a regression test that simulates a <code>close</code> event and verifies the buffer is cleared before the next stream&#39;s first chunk lands would lock in the fix.</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/pkg/rdd-client/README.md#L19-L21"><code>pkg/rdd-client/README.md:19-21</code></a> is now stale (S4); contributors who follow it run a separate Rancher Desktop instance unnecessarily.</li>
+      <li>The script header comment at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/0a1dd1eae0789ae0286bb17d4e96f861730f251d/scripts/generate-rdd-client.ts#L18"><code>scripts/generate-rdd-client.ts:18</code></a> (&quot;RDD will be automatically started.&quot;) is accurate but understates the side effect — the script also calls <code>rdd service stop</code> in its <code>finally</code> block. The author confirmed in round 1 that this is intentional; a one-line &quot;Note: this stops any currently-running RDD instance on completion&quot; would save a future contributor the surprise.</li>
+      <li>The generated docstrings on <code>IoRancherdesktopContainersV1alpha1Container.spec</code> and <code>IoRancherdesktopContainersV1alpha1ContainerStatusLastAction</code> correctly explain the new contract and pointed both Claude and Codex straight at the right migration path.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="commit-structure">Commit Structure <a href="#commit-structure" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>Six commits, each a single concept (<code>scripts/generate-rdd-client: Start rdd</code>, <code>rdd-client: regenerate</code>, <code>vue: logs: Switch to binary messages</code>, <code>Container-engine: Change state setting</code>, <code>Store: rdd: remove unused statuses</code>, <code>Status: use settled for progress bar</code>). The two new round-2 commits (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7efbdb7fa"><code>7efbdb7fa</code></a>, <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/0a1dd1eae"><code>0a1dd1eae</code></a>) are properly atomic. The progress-bar commit <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/309e4ebb6"><code>309e4ebb6</code></a> is logically a consequence of the rdd.ts cleanup but lives in front of it in history; harmless and bisects fine. The regenerated-client commit is properly isolated, which is what makes &quot;review with whitespace ignored&quot; feasible per the PR description.</p>
+    </div>
+    <hr>
+    <h2 id="unresolved-feedback">Unresolved Feedback <a href="#unresolved-feedback" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>These items were raised in round 1 and explicitly addressed by the author. They are not refiled in this round but are tracked here per the review template&#39;s prior-round suggestions gate:</p>
+    <ul>
+      <li><em></em>Round 1 I1 (<code>containerSetState</code> still patches <code>spec.state</code>)<em></em> — resolved in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7efbdb7fa"><code>7efbdb7fa</code></a>. <code>containerRequestAction</code> writes <code>metadata.annotations[&#39;containers.rancherdesktop.io/action&#39;]</code>; no remaining <code>spec.state</code> references in <code>pkg/rancher-desktop/</code>.</li>
+      <li><em></em>Round 1 S1 (<code>running</code> getter unreferenced)<em></em> — resolved in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/0a1dd1eae"><code>0a1dd1eae</code></a>. Both <code>created</code> and <code>running</code> getters are removed; no remaining call sites.</li>
+      <li><strong>Round 1 S2 (generator deletes the current client before proving startup)</strong> — author declined: &quot;git checkout reverts the changes anyway.&quot; Tradeoff accepted; not refiled.</li>
+      <li><strong>Round 1 S3 (script comment drops the Docker prerequisite)</strong> — author clarified that the dropped prerequisite was <code>dockerd</code>, not the <code>docker</code> CLI; RDD now provides dockerd. The script header comment is consistent with this. The remaining stale text lives in <code>pkg/rdd-client/README.md</code>, which is what S4 in this round flags.</li>
+      <li><em></em>Round 1 S4 (<code>rdd set running=true</code> not followed by a readiness probe)<em></em> — author response: &quot;It waits by default.&quot; Trusted; not refiled.</li>
+      <li><em></em>Round 1 S5 (<code>rdd service stop</code> in cleanup tears down a developer&#39;s running RDD)<em></em> — author response: &quot;It also <em>starts</em> RDD; <code>rdd service start</code> is easy enough to recover.&quot; jandubois noted this also forces a VM reboot, deferred to future application-settings work. Tradeoff accepted.</li>
+      <li><strong>Round 1 S6 (per-chunk xterm writes could be batched)</strong> — author response: &quot;Not worth the extra code; xterm batches internally.&quot; Tradeoff accepted.</li>
+      <li><strong>jandubois follow-up #1 (log refresh once a minute / WebSocket close storm)</strong> — deferred to issue <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/49" class="gh-ref" data-title="Logs disconnect every minute" data-state="open" data-type="issue">#49</a>.</li>
+      <li><strong>jandubois follow-up #2 (start-after-stop loses subsequent log lines)</strong> — author response: &quot;Intentional — auto-following a restarting container makes rapid restart failures harder to inspect.&quot; A configurable opt-in is future work.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="claude"><span class="pill pill-claude">Claude</span> <a href="#claude" class="pilcrow">&#182;</a></h3>
+    <p>Claude carried this review. It produced the only Important finding (the <code>lastAction.state === &#39;Failed&#39;</code> UX gap), three of the five Suggestions, and an &quot;Acknowledged Limitations&quot; section that traced every round 1 finding to its resolution or author response — saving the consolidator from having to reconstruct the prior-round audit by hand. Its I1 was the kind of finding that depends on understanding the new daemon contract end-to-end (the patch path AND the status-feedback path), and it was the only agent that spotted the renderer half is missing.</p>
+    <h3 id="codex"><span class="pill pill-codex">Codex</span> <a href="#codex" class="pilcrow">&#182;</a></h3>
+    <p>Codex contributed exactly one finding (S4, the stale README) and was the agent that most carefully respected the round 1 acknowledged-limitations boundary — it explicitly noted &quot;this does not re-litigate the prior script-comment feedback&quot; while still surfacing the genuinely-new stale-doc gap that the author&#39;s rationale exposed. Its Acknowledged Limitations section reconstructed the round 1 PR thread accurately.</p>
+    <h3 id="gemini"><span class="pill pill-gemini">Gemini</span> <a href="#gemini" class="pilcrow">&#182;</a></h3>
+    <p>Gemini raised one Important finding (the buffer growth scenario) that turned out to be a real concern but pre-existing — the same accumulation pattern existed before this PR with <code>buffer = &#39;&#39;</code> instead of <code>buffer: ArrayBuffer[]</code>. We downgraded it to a Suggestion (S5, gap, pre-existing) per the regression-label gate. Gemini&#39;s framing also missed nuance: it conflated <code>waitingForInitialLogs</code> with the terminal-mount lifecycle in its first explanation, but the underlying memory-growth observation against an unbounded continuous stream is correct. As in round 1, Gemini did not run <code>git blame</code> (daily quota), which is plausibly why the pre-existing nature of S5 was not caught at the agent level.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.7</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>13m 38s</td><td>4m 32s</td><td>3m 10s</td></tr>
+        <tr><td>Findings</td><td>1I 3S</td><td>1S</td><td>1S</td></tr>
+        <tr><td>Tool calls</td><td>35 (Grep 15, Read 14, Bash 6)</td><td>50 (shell 50)</td><td>17 (grep<em>search 11, read</em>file 6)</td></tr>
+        <tr><td>Design observations</td><td>3</td><td>1</td><td>1</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>4</td><td>1</td><td>1</td></tr>
+        <tr><td>Files reviewed</td><td>18</td><td>18</td><td>18</td></tr>
+        <tr><td>Coverage misses</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>1I 3S</strong></td><td><strong>1S</strong></td><td><strong>1S</strong></td></tr>
+        <tr><td>Downgraded</td><td>0</td><td>0</td><td>1 (I→S)</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Reconciliation.</strong> Gemini raised the <code>buffer</code> growth as Important; we downgraded it to S5 (Suggestion, gap, pre-existing) — the same accumulation pattern existed in the merge-base with <code>buffer = &#39;&#39;</code> and <code>buffer += event.data</code>, so this PR does not introduce or worsen the issue.</p>
+    <p>Claude provided the broadest coverage, the strongest single Important finding, and the most useful round 1 audit. Codex contributed a single high-signal stale-docs catch. Gemini surfaced one pre-existing concern, downgraded on regression-gate review.</p>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="skill-improvements">Skill improvements <a href="#skill-improvements" class="pilcrow">&#182;</a></h3>
+    <p>None this round. The prompt&#39;s existing dimensions and gates (the regression-label gate, the prior-round suggestions gate, the patch-content-type repo context entry) all caught the right things in the right places. No skill suggestion meets the &quot;broadly applicable, not derivable from this single PR&quot; bar.</p>
+    <h3 id="repo-context-updates">Repo context updates <a href="#repo-context-updates" class="pilcrow">&#182;</a></h3>
+    <p><em></em>ADD — UI must consume <code>status.lastAction</code> for any annotation-driven action.<em></em> When the renderer requests a container/resource action via the <code>…/action</code> metadata annotation, the daemon reports the outcome asynchronously through <code>status.lastAction.state</code> (<code>Succeeded</code>/<code>Failed</code>) and <code>status.lastAction.error</code>. The HTTP response to the patch only confirms that the request was recorded. Any new caller of <code>patchNamespacedContainer</code> (or sibling <code>patch*</code> APIs that take an annotation-shaped action) must either watch <code>status.lastAction</code> and surface failures, or document why no UI feedback is needed. The wire-level failure path no longer flows through <code>.catch</code> on the patch promise. Reviewers should grep for <code>lastAction</code> in any PR that adds an action-annotation caller.</p>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
