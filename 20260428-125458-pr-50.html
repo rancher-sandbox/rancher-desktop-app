@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260428-125458-pr-50</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260428-125458-pr-50</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-04-28 12:54</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+      <tr><td>Round</td><td>1</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/50" class="gh-ref" data-title="Containers: implement pause/unpause/restart" data-state="open" data-type="pr">#50</a> — Containers: implement pause/unpause/restart</td></tr>
+      <tr><td>Branch</td><td><code>container-actions</code></td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7c3f52b50"><code>7c3f52b50</code></a> Containers: implement pause/unpause/restart<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/a01849099"><code>a01849099</code></a> vuex: rddConnection: Suppress unneeded errors<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/b032c9b11"><code>b032c9b11</code></a> pages: ContainerInfo: Fix missing import</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.7 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; the asynchronous-action feedback gap (I1) needs either a fix or a documented decision per the repo&#39;s annotation-action convention. The other findings are smaller polish items.</td></tr>
+      <tr><td>Wall-clock time</td><td><code>18 min 5 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>This PR wires three new container actions (pause / unpause / restart) into the Containers UI by extending the existing <code>containerRequestAction</code> patch flow, plus two drive-by fixes: a missing <code>Banner</code> import in <code>ContainerInfo.vue</code> and <code>AbortError</code> suppression in the watcher&#39;s error handler. The mechanical wiring is correct and reuses the established annotation-action pattern.</p>
+    <p>The headline concern, which all three reviewers raised independently, is that none of the new action callers (nor the existing start/stop/delete callers they mirror) watches <code>status.lastAction</code> to surface daemon-side failures. Because the patch promise only confirms the daemon <em>recorded</em> the request, a failed pause/unpause/restart resolves cleanly with no banner and no log line. The repo&#39;s review context is explicit that any new annotation-action caller must either surface <code>status.lastAction</code> failures or document why no UI feedback is needed; this PR does neither.</p>
+    <p>Secondary concerns: the new <code>AbortError</code> branch is broad defense-in-depth that silently bypasses the reconnect path; <code>Restart</code> is disabled for stopped containers and <code>Stop</code> for paused containers (a UX edge worth confirming against the daemon&#39;s transition rules); pause/unpause/restart labels are hard-coded English while <code>Delete</code> is i18n&#39;d via a stale <code>images.*</code> key.</p>
+    <p>Structure: 3 commits, each one concept; 3 files (+60/−13).</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+    <p>None.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> New container actions never surface asynchronous backend failures <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/pages/Containers.vue#L311-L338">pkg/rancher-desktop/pages/Containers.vue</a></div>
+      <pre data-start="311" data-line="316-333"><code class="language-ts">              const containers = Array.isArray(args) ? args : [container];
+
+              return Promise.all(containers.map(container =&gt;
+                this.containerRequestAction({ container, state: &#39;stop&#39; })));
+            },
+            pauseContainer: (args?: Container[]) =&gt; {
+              const containers = Array.isArray(args) ? args : [container];
+
+              return Promise.all(containers.map(container =&gt;
+                this.containerRequestAction({ container, state: &#39;pause&#39; })));
+            },
+            unpauseContainer: (args?: Container[]) =&gt; {
+              const containers = Array.isArray(args) ? args : [container];
+
+              return Promise.all(containers.map(container =&gt;
+                this.containerRequestAction({ container, state: &#39;unpause&#39; })));
+            },
+            restartContainer: (args?: Container[]) =&gt; {
+              const containers = Array.isArray(args) ? args : [container];
+
+              return Promise.all(containers.map(container =&gt;
+                this.containerRequestAction({ container, state: &#39;restart&#39; })));
+            },
+            deleteContainer: (args?: Container[]) =&gt; {
+              const containers = Array.isArray(args) ? args : [container];
+
+              return Promise.all(containers.map(container =&gt;
+                this.containerDelete({ container })));</code></pre>
+    <p>The pause, unpause, and restart callbacks dispatch the action as a metadata annotation patch (<code>containers.rancherdesktop.io/action</code>) via <code>containerRequestAction</code>. The patch promise only confirms that the daemon <em>recorded</em> the annotation. The actual outcome arrives asynchronously through <code>status.lastAction.state</code> (<code>Succeeded</code> / <code>Failed</code>) and <code>status.lastAction.error</code>, defined in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts#L30-L39"><code>pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts:30-39</code></a>.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts#L25-L44">pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts</a></div>
+      <pre data-start="25" data-line="30-39"><code class="language-typescript">    */
+    &#39;completedAt&#39;?: Date;
+    /**
+    * Error is the error message if the action failed.
+    */
+    &#39;error&#39;?: string;
+    /**
+    * ObservedAt is when the reconciler began processing the action annotation. Backlog may delay this relative to the user\&#39;s write time, and dispatch (especially restart\&#39;s grace period) extends the gap to CompletedAt.
+    */
+    &#39;observedAt&#39;?: Date;
+    /**
+    * State is the outcome of the action.
+    */
+    &#39;state&#39;: IoRancherdesktopContainersV1alpha1ContainerStatusLastActionStateEnum;
+
+    static readonly discriminator: string | undefined = undefined;
+
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
+    static readonly attributeTypeMap: Array&lt;{name: string, baseName: string, type: string, format: string}&gt; = [</code></pre>
+    <p>Nothing in this PR (nor the existing start/stop/delete callers it mirrors) watches <code>status.lastAction</code>, so a failed pause/unpause/restart silently disappears: the bulk <code>Promise.all</code> resolves cleanly, no banner appears, and the only signal the user gets is that <code>status.status</code> does not transition. This is a <strong>gap</strong> rather than a fresh regression — start/stop/delete already had it — but the repo&#39;s review context is explicit that any new annotation-action caller must either watch <code>status.lastAction</code> and surface failures, or document why no UI feedback is needed. This PR is the natural place to either close the gap for all five actions or record a deferred decision.</p>
+    <p>Fix options:</p>
+    <ol>
+      <li>After dispatch, track the pending action keyed by container name. In a watcher on <code>containers</code>, when <code>status.lastAction.action</code> matches a pending request and <code>status.lastAction.state === &#39;Failed&#39;</code>, commit <code>SET_ERROR</code> with <code>status.lastAction.error</code>; clear the pending entry on either <code>Succeeded</code> or <code>Failed</code>.</li>
+      <li>If feedback is intentionally deferred, add a comment near <code>containerRequestAction</code> (or in <code>Containers.vue</code>) that records the contract and the intentional gap, so future callers do not repeat the omission.</li>
+    </ol>
+    <p>(important, gap)</p>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> <code>AbortError</code> suppression is broad and bypasses the reconnect path <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/store/rddConnection.ts#L647-L660">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="647" data-line="652-655"><code class="language-ts">      this.#loaded.catch(() =&gt; { /* ignore */ });
+      if (Object.is(err, errorManuallyStopped)) {
+        // The watcher errored out because we called stop(); do not propagate
+        // this as an actual error.
+        return;
+      } else if (err instanceof DOMException &amp;&amp; err.name === &#39;AbortError&#39;) {
+        // Connection aborted; suppress this error assuming we just stopped.
+        return;
+      } else if (err.statusCode === 429) {
+        // We can get this if we request too early (when the backend restarts),
+        // with a message of &quot;storage is (re)initializing&quot;.  Just retry.
+        let delay = 0.1;
+        try {
+          const body = JSON.parse(err.body);</code></pre>
+    <p>Three independent angles converge here:</p>
+    <p>The new branch silently swallows any <code>DOMException</code> named <code>AbortError</code> and returns before <code>this.#loaded.reject(err)</code> and <code>this.#doneFn(err)</code>. <code>doneFn</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/store/rddConnection.ts#L426-L445"><code>pkg/rancher-desktop/store/rddConnection.ts:426-445</code></a>) is what schedules the reconnect; an aborted watch that is <em>not</em> a deliberate stop therefore stalls silently with no log line and no recovery attempt.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/store/rddConnection.ts#L421-L450">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="421" data-line="426-445"><code class="language-typescript">              };
+              const result = await listFn(client, listOptions);
+              commit(&#39;rdd-connection/SET_ERROR&#39;, undefined, { root: true });
+              return result;
+            },
+            (error) =&gt; { // doneFn
+              commit(&#39;rdd-connection/SET_ERROR&#39;, error, { root: true });
+              if (error) {
+                resourceOptions.callback?.(error, r.name);
+                console.error(`${ r.name }:`, error);
+              } else {
+                console.error(`${ r.name }: Closing connection without error`);
+              }
+              // The old config is no longer valid.
+              const doReconnect = async() =&gt; {
+                // None of these are expected to throw.
+                await dispatch(&#39;rdd-connection/fetchConfig&#39;, undefined, { root: true });
+                watcher.close();
+                if (state._watchers[r.name]?.refCount &gt; 0) {
+                  watcher.start();
+                }
+              };
+              clearTimeout(reconnectTimeout);
+              reconnectTimeout = setTimeout(doReconnect, 1_000);
+            },
+            rootState[&#39;rdd-connection&#39;].watch,
+            commit,
+            undefined, // namespace
+            () =&gt; r.labelSelector?.(actionContext),
+            () =&gt; r.fieldSelector?.(actionContext),</code></pre>
+    <p>The repo&#39;s review context confirms that <code>AbortController.abort(reason)</code> propagates <code>signal.reason</code> verbatim through <code>fetch</code> in modern Node, so <code>errorManuallyStopped</code> survives to the existing <code>Object.is(err, errorManuallyStopped)</code> check at line 648. Every deliberate stop in this codebase passes <code>errorManuallyStopped</code> (<code>Watcher.close()</code> at line 710, <code>Watcher.start()</code> at line 618, plus the internal <code>_stop()</code> paths in <code>cache.ts</code>). The new branch is therefore defense-in-depth against a path that no current caller produces — but it lacks a log line, so a real default-<code>AbortError</code> would die quietly.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/store/rddConnection.ts#L613-L623">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="613" data-line="618"><code class="language-typescript">    // worry about any issues from ListWatch restart.
+  }
+
+  start() {
+    // Stop any existing watcher before starting a new one.
+    this.#watcher?.stop(errorManuallyStopped);
+    const watcher = new RDDClient.ListWatch&lt;T&gt;(
+      this.#path(),
+      this.#watch,
+      this.#listFn,
+      false,</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/store/rddConnection.ts#L643-L653">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="643" data-line="648"><code class="language-typescript">        return;
+      }
+      clearTimeout(this.#restartTimeout);
+      this.#loaded.reset();
+      this.#loaded.catch(() =&gt; { /* ignore */ });
+      if (Object.is(err, errorManuallyStopped)) {
+        // The watcher errored out because we called stop(); do not propagate
+        // this as an actual error.
+        return;
+      } else if (err instanceof DOMException &amp;&amp; err.name === &#39;AbortError&#39;) {
+        // Connection aborted; suppress this error assuming we just stopped.</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/store/rddConnection.ts#L705-L712">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="705" data-line="710"><code class="language-typescript">    clearTimeout(this.#restartTimeout);
+    clearTimeout(this.#notifyDelay);
+    this.#notifyDelay = undefined;
+    this.#loaded.reset();
+    this.#loaded.catch(() =&gt; { /* ignore */ });
+    return this.#watcher?.stop(errorManuallyStopped);
+  }
+}</code></pre>
+    <p>The same suppression is missing from the sibling <code>.catch()</code> on <code>this.#watcher.start()</code> at lines 672-680. If a future code path produces a default <code>AbortError</code> during initial watch setup (a race where <code>close()</code> fires while <code>doneHandler</code> is still awaiting <code>watch.watch(...)</code>), the catch would propagate it as a real error.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/store/rddConnection.ts#L667-L685">pkg/rancher-desktop/store/rddConnection.ts</a></div>
+      <pre data-start="667" data-line="672-680"><code class="language-typescript">      this.#loaded.reject(err);
+      this.#doneFn(err);
+    });
+    // `#watcher.start()` returns a promise that is only resolved when the
+    // connection ends, so do not await on it here.
+    this.#watcher.start().catch(err =&gt; {
+      if (!Object.is(watcher, this.#watcher)) {
+        // A stale watcher ends; ignore it.
+        return;
+      }
+      console.debug(`Watch ${ this.#type } ended:`, err);
+      this.#doneFn(err);
+      this.#loaded.reject(err);
+    });
+  }
+
+  get loaded(): Promise&lt;void&gt; {
+    return this.#loaded;
+  }</code></pre>
+    <p>Fix: pick one of these (in order of preference):</p>
+    <ol>
+      <li>Add a <code>console.debug</code> line so the suppression leaves a trace, and reword the comment to acknowledge the assumption is a heuristic (&quot;If this fires on a path we did not stop ourselves, the watcher will silently stall — no known path triggers this today&quot;).</li>
+      <li>Move stop-aware suppression into <code>ListWatch.doneHandler</code> where <code>stopped</code> is known, and remove the broad <code>AbortError</code> special case from <code>Watcher</code>.</li>
+    </ol>
+      <pre><code class="language-diff">       } else if (err instanceof DOMException &amp;&amp; err.name === &#39;AbortError&#39;) {
+-        // Connection aborted; suppress this error assuming we just stopped.
++        // Connection aborted with no reason; deliberate stops pass
++        // errorManuallyStopped (caught above), so this branch is defensive.
++        // If it fires on a path we did not stop ourselves, the watcher
++        // stalls silently — no known path triggers this today.
++        console.debug(`${ this.#type } watch: ignoring default AbortError`);
+         return;
+       }</code></pre>
+    <p>(suggestion, regression)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> <code>Restart</code> is disabled for stopped containers; <code>Stop</code> is disabled for paused containers <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/pages/Containers.vue#L263-L300">pkg/rancher-desktop/pages/Containers.vue</a></div>
+      <pre data-start="263" data-line="268-295"><code class="language-ts">                action:     &#39;startContainer&#39;,
+                enabled:    this.isStopped(container),
+                bulkable:   true,
+                bulkAction: &#39;startContainer&#39;,
+              },
+              {
+                label:      &#39;Stop&#39;,
+                action:     &#39;stopContainer&#39;,
+                enabled:    this.isRunning(container),
+                bulkable:   true,
+                bulkAction: &#39;stopContainer&#39;,
+              },
+              {
+                label:      &#39;Pause&#39;,
+                action:     &#39;pauseContainer&#39;,
+                enabled:    this.isRunning(container),
+                bulkable:   true,
+                bulkAction: &#39;pauseContainer&#39;,
+              },
+              {
+                label:      &#39;Unpause&#39;,
+                action:     &#39;unpauseContainer&#39;,
+                enabled:    this.isPaused(container),
+                bulkable:   true,
+                bulkAction: &#39;unpauseContainer&#39;,
+              },
+              {
+                label:      &#39;Restart&#39;,
+                action:     &#39;restartContainer&#39;,
+                enabled:    this.isRunning(container),
+                bulkable:   true,
+                bulkAction: &#39;restartContainer&#39;,
+              },
+              {
+                label:      this.t(&#39;images.manager.table.action.delete&#39;),
+                action:     &#39;deleteContainer&#39;,
+                enabled:    this.isStopped(container),
+                bulkable:   true,</code></pre>
+    <p>Two UX edges flow from gating both <code>Stop</code> and <code>Restart</code> on <code>isRunning</code>:</p>
+    <p>A <em>paused</em> container has no <code>Stop</code> action available — the user must <code>Unpause</code> first, then <code>Stop</code>. Docker accepts <code>docker stop</code> on a paused container directly (it kills through the paused state).</p>
+    <p>A <em>stopped</em> (<code>exited</code> / <code>created</code>) container has no <code>Restart</code> action — the user has to use <code>Start</code>. Restart-on-stopped is a routine Docker workflow.</p>
+    <p>If the daemon enforces these specific transitions and the UI faithfully mirrors them, that is fine. Otherwise broaden the guards: <code>Stop</code> on <code>running || paused</code>, <code>Restart</code> on <code>running || paused || stopped</code>. Confirm against the daemon&#39;s transition rules before locking the buttons out.</p>
+    <p>(suggestion, gap)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> Pause/Unpause/Restart labels are hard-coded English; <code>Delete</code> uses a stale <code>images.*</code> i18n key <span class="pill pill-claude">Claude</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/pages/Containers.vue#L264-L307">pkg/rancher-desktop/pages/Containers.vue</a></div>
+      <pre data-start="264" data-line="269-302"><code class="language-ts">                enabled:    this.isStopped(container),
+                bulkable:   true,
+                bulkAction: &#39;startContainer&#39;,
+              },
+              {
+                label:      &#39;Stop&#39;,
+                action:     &#39;stopContainer&#39;,
+                enabled:    this.isRunning(container),
+                bulkable:   true,
+                bulkAction: &#39;stopContainer&#39;,
+              },
+              {
+                label:      &#39;Pause&#39;,
+                action:     &#39;pauseContainer&#39;,
+                enabled:    this.isRunning(container),
+                bulkable:   true,
+                bulkAction: &#39;pauseContainer&#39;,
+              },
+              {
+                label:      &#39;Unpause&#39;,
+                action:     &#39;unpauseContainer&#39;,
+                enabled:    this.isPaused(container),
+                bulkable:   true,
+                bulkAction: &#39;unpauseContainer&#39;,
+              },
+              {
+                label:      &#39;Restart&#39;,
+                action:     &#39;restartContainer&#39;,
+                enabled:    this.isRunning(container),
+                bulkable:   true,
+                bulkAction: &#39;restartContainer&#39;,
+              },
+              {
+                label:      this.t(&#39;images.manager.table.action.delete&#39;),
+                action:     &#39;deleteContainer&#39;,
+                enabled:    this.isStopped(container),
+                bulkable:   true,
+                bulkAction: &#39;deleteContainer&#39;,
+              },
+            ],
+            startContainer: (args?: Container[]) =&gt; {
+              const containers = Array.isArray(args) ? args : [container];
+
+              return Promise.all(containers.map(container =&gt;</code></pre>
+    <p>The new labels follow the existing hard-coded English convention (<code>Info</code>, <code>Start</code>, <code>Stop</code> were already untranslated), so this is pre-existing inconsistency. Two cleanup options:</p>
+    <ol>
+      <li>Add <code>containers.manage.table.action.{start,stop,pause,unpause,restart,delete}</code> keys and route all six labels through <code>this.t(...)</code>.</li>
+      <li>Accept that this page is English-only and replace the lone <code>this.t(&#39;images.manager.table.action.delete&#39;)</code> with a literal <code>&#39;Delete&#39;</code>.</li>
+    </ol>
+    <p>Either way, the cross-page reference to the <code>images.*</code> namespace is stale and should go away.</p>
+    <p>(suggestion, gap)</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S4">
+        <span class="finding-num">S4.</span> Bulk action error reporting collapses N failures into one error slot <span class="pill pill-claude">Claude</span><a href="#S4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/pkg/rancher-desktop/store/container-engine.ts#L128-L140">pkg/rancher-desktop/store/container-engine.ts</a></div>
+      <pre data-start="128" data-line="133-135"><code class="language-ts">        namespace:       container.metadata!.namespace!,
+        body,
+        fieldValidation: &#39;Strict&#39;,
+      },
+      RDDClient.setHeaderOptions(&#39;Content-Type&#39;, RDDClient.PatchStrategy.MergePatch),
+    ).catch((err: Error) =&gt; {
+      commit(&#39;SET_ERROR&#39;, { error: err, source: &#39;containers&#39; });
+    });
+  },
+  /** Delete the given container. */
+  async containerDelete(
+    { rootState, commit },
+    { container }: {</code></pre>
+    <p><code>Promise.all</code> over multiple <code>containerRequestAction</code> calls in the bulk handlers (the new pause/unpause/restart paths and the existing start/stop/delete) all commit into the same <code>SET_ERROR</code> slot. If pause fails on three of five selected containers, the user sees a single banner with whichever rejection committed last; there is no per-container attribution. Pre-existing pattern that the new bulk-capable actions inherit and amplify.</p>
+    <p>(suggestion, gap)</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Thin extension of an existing pattern</strong> <code>(in-scope)</code> <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> — Reuses <code>containerRequestAction</code> rather than adding parallel patch code per operation. The annotation format stays centralized and the new feature surface area stays small.</li>
+      <li><em></em>Type tightening on <code>RowItem</code><em></em> <code>(in-scope)</code> <span class="pill pill-claude">Claude</span> — <code>stopContainer?</code> / <code>startContainer?</code> / <code>deleteContainer?</code> / <code>viewInfo?</code> moved from optional to required, matching reality (the row mapping always provides them). Better IDE feedback.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>No Jest specs cover <code>pages/Containers.vue</code> or <code>pages/containers/ContainerInfo.vue</code>, consistent with how other pages in <code>pages/</code> are not unit-tested today. The existing container e2e suite is under <code>test.describe.fixme</code> in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/e2e/containers.e2e.spec.ts#L13"><code>e2e/containers.e2e.spec.ts:13</code></a>, and the page object action union at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7c3f52b502d665c1c7cf27e2260e2ec92a148078/e2e/pages/containers-page.ts#L3"><code>e2e/pages/containers-page.ts:3</code></a> still only lists <code>info</code>, <code>stop</code>, <code>start</code>, and <code>delete</code>. This PR adds no test gap relative to convention.</p>
+    <p>Risk-ranked scenarios that would benefit from coverage if/when these pages get tests:</p>
+    <ol>
+      <li>Daemon-side action failure propagation through <code>status.lastAction</code> (covers I1).</li>
+      <li>Pause/unpause/restart action dispatch builds the correct <code>state</code> payload for a single row and an array of rows.</li>
+      <li><code>enabled</code> predicates flip correctly across <code>running → paused → running</code> transitions.</li>
+      <li>The <code>AbortError</code> suppression branch in <code>rddConnection.ts</code> does not stall the watcher when a real error path produces a <code>DOMException</code>-shaped error (covers S1).</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>No external documentation references the new actions, and the labels are user-facing strings rather than docstring-level concerns. The <code>Banner</code> import fix in <code>ContainerInfo.vue</code> is mechanical. Consider adding a one-line comment near <code>containerRequestAction</code> clarifying the daemon&#39;s async-result contract (<code>status.lastAction</code>), so future callers do not repeat the gap noted in I1.</p>
+    </div>
+    <hr>
+    <h2 id="commit-structure">Commit Structure <a href="#commit-structure" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>Each commit carries a single concept:</p>
+    <ul>
+      <li><code>b032c9b11 pages: ContainerInfo: Fix missing import</code> — required for the file to compile.</li>
+      <li><code>a01849099 vuex: rddConnection: Suppress unneeded errors</code> — adds the <code>AbortError</code> branch and the comment refresh on <code>console.debug</code>.</li>
+      <li><code>7c3f52b50 Containers: implement pause/unpause/restart</code> — the headline feature.</li>
+    </ul>
+    <p>The two drive-by commits are independent of the headline change. Splitting them into a separate PR would have been cleaner, but the bundling is mild scope creep, not a problem.</p>
+    </div>
+    <hr>
+    <h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>None — PR <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/50" class="gh-ref" data-title="Containers: implement pause/unpause/restart" data-state="open" data-type="pr">#50</a> has no review comments yet, and no in-code TODOs within the changed lines defer behavior addressed by these findings. (The dismissed items from parent PR <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/47" class="gh-ref" data-title="Get Kubernetes namespace from app" data-state="merged" data-type="pr">#47</a> cover namespace handling and do not overlap with this PR.)</p>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="claude"><span class="pill pill-claude">Claude</span> <a href="#claude" class="pilcrow">&#182;</a></h3>
+    <p>Claude landed every consolidated finding, including the three that no other agent raised (S2 disabled-button UX, S3 stale i18n key, S4 bulk-error collapse). Its analysis of the <code>AbortError</code> branch traced the abort chain end-to-end and aligned cleanly with the repo&#39;s &quot;AbortController sentinel propagation&quot; context — confidently identifying the new branch as defense-in-depth rather than a load-bearing fix. Severity calibration matched the consolidation: I1 marked Important and gap (correctly distinguishing the inherited gap from a fresh regression), and the AbortError finding correctly rated as Suggestion.</p>
+    <h3 id="codex"><span class="pill pill-codex">Codex</span> <a href="#codex" class="pilcrow">&#182;</a></h3>
+    <p>Codex contributed the same I1 (status.lastAction) and an overlapping S1 (AbortError), but added little outside that. It mislabeled I1 as a &quot;regression&quot; when the same gap existed for start/stop/delete already — the consolidator downgraded the label to &quot;gap&quot; with reconciliation. Its proposed fix for S1 (move the <code>stopped</code> check into <code>ListWatch.doneHandler</code>) is structurally cleaner than Claude&#39;s instrumentation suggestion, and worth considering if a deeper fix is wanted. Notably, Codex was the only agent to inline the parent-PR dismissed-comment context into its review, which helped confirm no overlap with prior decisions.</p>
+    <h3 id="gemini"><span class="pill pill-gemini">Gemini</span> <a href="#gemini" class="pilcrow">&#182;</a></h3>
+    <p>Gemini caught I1 (as I2 in its own listing) and contributed a unique angle on the AbortError handling: the same suppression is missing from the <code>.catch()</code> block on <code>this.#watcher.start()</code>. That observation folded into S1 as a third bullet. Gemini originally rated this Important, but the consolidator downgraded it to Suggestion — the path it describes (a race where <code>close()</code> fires while <code>doneHandler</code> is still in initial setup) is not a known trigger today, and Claude&#39;s end-to-end abort-chain trace shows the existing <code>errorManuallyStopped</code> sentinel covers the deliberate-stop case. Gemini did not run <code>git blame</code> (consistent with its known daily quota behavior); the regression-vs-pre-existing distinction was carried by Claude and Codex.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.7</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>13m 26s</td><td>3m 37s</td><td>3m 11s</td></tr>
+        <tr><td>Findings</td><td>1I 4S</td><td>1I 1S</td><td>1I 1S</td></tr>
+        <tr><td>Tool calls</td><td>37 (Grep 16, Read 12, Bash 9)</td><td>35 (shell 35)</td><td>14 (grep<em>search 7, read</em>file 5, run<em>shell</em>command 2)</td></tr>
+        <tr><td>Design observations</td><td>2</td><td>1</td><td>0</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>3</td><td>0</td><td>1</td></tr>
+        <tr><td>Files reviewed</td><td>3</td><td>3</td><td>3</td></tr>
+        <tr><td>Coverage misses</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>1I 4S</strong></td><td><strong>1I 1S</strong></td><td><strong>1I 1S</strong></td></tr>
+        <tr><td>Downgraded</td><td>0</td><td>0</td><td>1 (I→S)</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p>Overall, Claude provided the most value on this review — it raised every consolidated finding, contributed three unique items, and its severity calibration matched the consolidation without adjustment. Codex and Gemini converged with Claude on the headline I1 but contributed little outside it; Gemini&#39;s <code>.catch()</code> observation was the one genuinely new angle from the non-Claude agents.</p>
+    <p><strong>Reconciliation:</strong></p>
+    <ul>
+      <li>Codex I1 &quot;regression&quot; → &quot;gap&quot; — same omission existed for start/stop/delete before this PR.</li>
+      <li>Gemini I1 (Important) → S1 third bullet (Suggestion) — defense-in-depth path, not a known live trigger; merged into the consolidated AbortError suggestion.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>No skill-improvement or repo-context-update suggestions for this review. The repo context&#39;s &quot;Annotation-driven action results flow through status.lastAction&quot; entry already drove the I1 consolidation, and &quot;AbortController sentinel propagation&quot; already anchored the S1 downgrade. Both worked exactly as intended.</p>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
