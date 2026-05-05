@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260505-102050-pr-55</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Supply-chain Summary table — first column gets breathing room,
+ * numeric middle columns center, header keeps its label on one line. */
+.summary-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0 0.8rem; font-size: 0.92rem; }
+.summary-table th, .summary-table td {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #d5d9e0;
+  vertical-align: top;
+  text-align: left;
+}
+.summary-table th { background: rgba(255, 255, 255, 0.65); font-weight: 600; white-space: nowrap; }
+.summary-table td:first-child { min-width: 11rem; white-space: nowrap; }
+.summary-table th:not(:first-child):not(:last-child),
+.summary-table td:not(:first-child):not(:last-child) { text-align: center; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Supply-chain issue rows — used by issueList for bullets that
+ * uniformly start with a `file:line` reference. The location renders
+ * in a dark bar above the description so the eye picks up the path
+ * separately from the prose. */
+.issue-list { margin: 0.6rem 0; }
+.issue-row {
+  margin-bottom: 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.55);
+}
+.issue-loc {
+  background: #2d333b;
+  color: #adbac7;
+  padding: 0.3rem 0.7rem;
+  font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+}
+.issue-loc a { color: #7ee787; text-decoration: none; }
+.issue-loc a:hover { text-decoration: underline; }
+.issue-loc code { background: none; padding: 0; color: inherit; font-size: 1em; }
+.issue-desc { padding: 0.55rem 0.8rem; }
+.issue-desc code { font-size: 0.85em; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260505-102050-pr-55</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-05-05 10:20</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+      <tr><td>Round</td><td>1 (of target)</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/55" class="gh-ref" data-title="Paths: Use rdd to find paths" data-state="open" data-type="pr">#55</a> — Paths: Use rdd to find paths</td></tr>
+      <tr><td>Branch</td><td><code>paths/rdd</code></td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/f10ad50bf"><code>f10ad50bf</code></a> Paths: Use rdd to find paths</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.7 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Rework</span> &mdash; multiple critical regressions break TypeScript compilation, packaged-build asset resolution, and existing test infrastructure</td></tr>
+      <tr><td>Wall-clock time</td><td><code>27 min 38 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>This PR replaces <code>rdctl paths</code> with <code>rdd service paths</code> and reshapes the <code>Paths</code> interface around RDD-provided keys (<code>dir</code>, <code>log_dir</code>, <code>cache</code>, <code>config</code>, …). The migration is substantially incomplete: several production and test files still reference the old <code>Paths</code> properties (<code>appHome</code>, <code>deploymentProfileUser</code>, <code>getRdctlPath</code>), one property name silently changes meaning (<code>config</code>: settings dir → kubeconfig file), and the new <code>paths.resources</code> getter no longer appends the <code>resources/</code> subdirectory that <code>electron-builder</code> packages assets under, breaking icon, preload, and tray-icon resolution in packaged builds. Several unmigrated callers will fail TypeScript compilation; the rest will break at runtime. Structure (Critical 4, Important 6, Suggestions 6).</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+      <div class="finding-title" id="C1">
+        <span class="finding-num">C1.</span> <code>snapshots.ts</code> imports the deleted <code>getRdctlPath</code> <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#C1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/main/snapshots/snapshots.ts#L2-L12">pkg/rancher-desktop/main/snapshots/snapshots.ts</a></div>
+      <pre data-start="2" data-line="7"><code class="language-typescript">import util from &#39;util&#39;;
+
+import { Snapshot, SpawnResult } from &#39;@pkg/main/snapshots/types&#39;;
+import { spawnFile } from &#39;@pkg/utils/childProcess&#39;;
+import Logging from &#39;@pkg/utils/logging&#39;;
+import { getRdctlPath } from &#39;@pkg/utils/paths&#39;;
+import { executable } from &#39;@pkg/utils/resources&#39;;
+
+const console = Logging.snapshots;
+
+function parseLines(line: string): string[] {</code></pre>
+    <p>The PR removes <code>getRdctlPath</code> from <code>paths.ts</code> and replaces it with <code>getRDDPath</code>, but <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/main/snapshots/snapshots.ts#L7"><code>snapshots.ts:7</code></a> still imports the old name. The TypeScript compile breaks (<code>Module &#39;&quot;@pkg/utils/paths&quot;&#39; has no exported member &#39;getRdctlPath&#39;</code>), and any runtime call to the snapshot subsystem hits an undefined export. This file is reachable through <code>pages/snapshots/create.vue</code> and the snapshot IPC handlers.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/main/snapshots/snapshots.ts#L2-L12">pkg/rancher-desktop/main/snapshots/snapshots.ts</a></div>
+      <pre data-start="2" data-line="7"><code class="language-typescript">import util from &#39;util&#39;;
+
+import { Snapshot, SpawnResult } from &#39;@pkg/main/snapshots/types&#39;;
+import { spawnFile } from &#39;@pkg/utils/childProcess&#39;;
+import Logging from &#39;@pkg/utils/logging&#39;;
+import { getRdctlPath } from &#39;@pkg/utils/paths&#39;;
+import { executable } from &#39;@pkg/utils/resources&#39;;
+
+const console = Logging.snapshots;
+
+function parseLines(line: string): string[] {</code></pre>
+    <p>Fix: migrate to <code>executable(&#39;rdctl&#39;)</code> from <code>@pkg/utils/resources</code>, or delete <code>snapshots.ts</code> along with the rest of the rdctl-backed UI plumbing in this PR (the commit message says &quot;I want to get rid of (most of) rdctl&quot;). A minimal patch to keep the build green:</p>
+      <pre><code class="language-diff">-import { getRdctlPath } from &#39;@pkg/utils/paths&#39;;
+ import { executable } from &#39;@pkg/utils/resources&#39;;
+...
+-      const rdctlPath = getRdctlPath();
+-      return await spawnFile(rdctlPath || &#39;&#39;, commandArgs, { stdio: [&#39;ignore&#39;, &#39;pipe&#39;, &#39;pipe&#39;] });
++      return await spawnFile(executable(&#39;rdctl&#39;), commandArgs, { stdio: [&#39;ignore&#39;, &#39;pipe&#39;, &#39;pipe&#39;] });</code></pre>
+    </div>
+    <div class="card card-critical">
+      <div class="finding-title" id="C2">
+        <span class="finding-num">C2.</span> Removed <code>Paths</code> properties still used by production and test code <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#C2" class="pilcrow">&#182;</a>
+      </div>
+    <p>The new <code>Paths</code> interface (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L16-L49"><code>pkg/rancher-desktop/utils/paths.ts:16-49</code></a>) exports only <code>args_file</code>, <code>config</code>, <code>dir</code>, <code>docker_socket</code>, <code>lima_home</code>, <code>log_dir</code>, <code>pid_file</code>, <code>short_dir</code>, <code>tls_dir</code>, <code>rdd</code>, <code>resources</code>, <code>cache</code>. The following call sites still reference removed names:</p>
+    <table>
+      <thead><tr><th>File:line</th><th>Property</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/main/credentialServer/httpCredentialHelperServer.ts#L48"><code>pkg/rancher-desktop/main/credentialServer/httpCredentialHelperServer.ts:48</code></a></td><td><code>paths.appHome</code></td><td>TS error</td></tr>
+        <tr><td><code>e2e/utils/TestUtils.ts:42,43,98,99</code></td><td><code>paths.deploymentProfileUser</code></td><td>TS error</td></tr>
+        <tr><td><code>e2e/utils/ProfileUtils.ts:37,67</code></td><td><code>paths.deploymentProfileUser</code></td><td>TS error</td></tr>
+        <tr><td><code>e2e/utils/ProfileUtils.ts:152,153,173,174</code></td><td><code>paths.deploymentProfileSystem</code>, <code>paths.altDeploymentProfileSystem</code></td><td>TS error</td></tr>
+        <tr><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/e2e/credentials-server.e2e.spec.ts#L254"><code>e2e/credentials-server.e2e.spec.ts:254</code></a></td><td><code>paths.appHome</code></td><td>TS error</td></tr>
+        <tr><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/e2e/backend.e2e.spec.ts#L57"><code>e2e/backend.e2e.spec.ts:57</code></a></td><td><code>paths.appHome</code></td><td>TS error</td></tr>
+      </tbody>
+    </table>
+      <pre><code class="language-typescript">// pkg/rancher-desktop/main/credentialServer/httpCredentialHelperServer.ts
+export function getServerCredentialsPath(): string {
+  return path.join(paths.appHome, SERVER_FILE_BASENAME);
+}</code></pre>
+    <p><code>yarn lint:typescript:nofix</code> should fail on every row above. The credential server is currently dead-at-runtime (only its <code>ServerState</code> type is consumed elsewhere), but the e2e helpers run on every CI run. The reference to <code>paths.extensionRoot</code> in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/protocols.ts#L84"><code>pkg/rancher-desktop/utils/protocols.ts:84</code></a> lives inside the new <code>/* … */</code> block introduced by this PR, so it is inert (see I1).</p>
+    <p>Fix: in the same PR, either delete the dead modules whose backend this PR is removing (<code>commandLineOptions.ts</code>, <code>httpCredentialHelperServer.ts</code>) or migrate them to the new path keys. The e2e helpers must be repointed at the new RDD-provided paths or marked skipped if the underlying behavior no longer exists.</p>
+    </div>
+    <div class="card card-critical">
+      <div class="finding-title" id="C3">
+        <span class="finding-num">C3.</span> <code>paths.config</code> silently changes meaning from settings directory to kubeconfig file <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#C3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L14-L25">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="14" data-line="19-20"><code class="language-typescript"> * sync with the output of `rdd service paths`.
+ */
+interface RDDPaths {
+  /** RDD: file holding server arguments. */
+  readonly args_file:     string;
+  /** RDD: Kubernetes connection configuration file. */
+  readonly config:        string;
+  /** RDD: application data directory. */
+  readonly dir:           string;
+  /** RDD: Docker socket file. */
+  readonly docker_socket: string;
+  /** RDD: Lima home directory. */</code></pre>
+    <p>Pre-PR, <code>paths.config</code> was a directory holding <code>settings.json</code>. The new <code>RDDPaths.config</code> is documented as the kubeconfig <strong>file</strong>. The type stays <code>string</code>, so TypeScript catches nothing, but every caller that joins <code>&#39;settings.json&#39;</code> onto <code>paths.config</code> now produces a path like <code>~/.rd/config/settings.json</code> (creating <code>settings.json</code> inside what is supposed to be a file).</p>
+    <p>Affected call sites:</p>
+    <ul>
+      <li><code>pkg/rancher-desktop/config/commandLineOptions.ts:80,90</code> — error messages reference <code>${ join(paths.config, &#39;settings.json&#39;) }</code>.</li>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/e2e/utils/TestUtils.ts#L131-L136"><code>e2e/utils/TestUtils.ts:131-136</code></a> — calls <code>fs.mkdirSync(paths.config)</code> and writes <code>settings.json</code> there.</li>
+      <li><code>e2e/utils/ProfileUtils.ts:26,103</code> — reads <code>path.join(paths.config, &#39;settings.json&#39;)</code>.</li>
+    </ul>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/config/commandLineOptions.ts#L75-L85">pkg/rancher-desktop/config/commandLineOptions.ts</a></div>
+      <pre data-start="75" data-line="80"><code class="language-typescript">      // Ignore unrecognized command-line options until we get to one we recognize
+      if (processingExternalArguments) {
+        console.warn(`Unrecognized command-line argument ${ arg }`);
+        continue;
+      }
+      throw new Error(`Can&#39;t evaluate command-line argument ${ arg } -- no such entry in current settings at ${ join(paths.config, &#39;settings.json&#39;) }`);
+    }
+
+    processingExternalArguments = false;
+    const currentValueType = typeof currentValue;
+    let finalValue: any = value;</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/e2e/utils/TestUtils.ts#L126-L141">e2e/utils/TestUtils.ts</a></div>
+      <pre data-start="126" data-line="131-136"><code class="language-typescript">  };
+  const settingsData: Settings = _.merge({}, defaultSettings, defaultOverrides, overrides);
+
+  const settingsJson = JSON.stringify(settingsData);
+  const fileSettingsName = &#39;settings.json&#39;;
+  const settingsFullPath = path.join(paths.config, fileSettingsName);
+
+  if (!fs.existsSync(settingsFullPath)) {
+    fs.mkdirSync(paths.config, { recursive: true });
+    fs.writeFileSync(path.join(paths.config, fileSettingsName), settingsJson);
+    console.log(`Default settings file successfully created at ${ paths.config }/${ fileSettingsName }`);
+  } else {
+    try {
+      const contents = fs.readFileSync(settingsFullPath, { encoding: &#39;utf-8&#39; });
+      const settings: Settings = JSON.parse(contents.toString());
+      const desiredSettings: Settings = _.merge({}, settings, defaultOverrides, overrides);</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/e2e/utils/ProfileUtils.ts#L21-L31">e2e/utils/ProfileUtils.ts</a></div>
+      <pre data-start="21" data-line="26"><code class="language-typescript">import { CURRENT_SETTINGS_VERSION } from &#39;@pkg/config/settings&#39;;
+import * as childProcess from &#39;@pkg/utils/childProcess&#39;;
+import paths from &#39;@pkg/utils/paths&#39;;
+
+export async function clearSettings(): Promise&lt;void&gt; {
+  const fullPath = path.join(paths.config, &#39;settings.json&#39;);
+
+  await fs.promises.rm(fullPath, { force: true });
+}
+
+export async function clearUserProfile(): Promise&lt;void&gt; {</code></pre>
+    <p>Fix: rename the RDD field at the type boundary (e.g., <code>kubeconfig</code> or <code>connection_config</code>) and reinstate a separate app-level <code>config</code> (or <code>configDir</code>) that returns the platform-specific settings directory. This change keeps the JSON contract with <code>rdd</code> clean and prevents silent semantic conflicts on the renderer side.</p>
+    </div>
+    <div class="card card-critical">
+      <div class="finding-title" id="C4">
+        <span class="finding-num">C4.</span> <code>paths.resources</code> is missing the <code>resources/</code> suffix in production builds <span class="pill pill-codex">Codex</span><a href="#C4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L137-L154">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="137" data-line="142-149"><code class="language-typescript">
+/**
+ * Paths which do not depend on the platform.
+ */
+const platformAgnosticPaths: PlatformAgnosticPaths = {
+  // Use a getter here so we can override `NODE_ENV` and `process.resourcesPath` in tests.
+  get resources() {
+    if (process.env.NODE_ENV === &#39;production&#39;) {
+      return process.resourcesPath;
+    }
+    // When under test, we do not have `process.resourcesPath`; use a fallback.
+    return process.resourcesPath ?? path.join(process.cwd(), &#39;resources&#39;);
+  },
+};
+
+/**
+ * Fallback paths, in case we are unable to find them (e.g. we&#39;re running build
+ * scripts).</code></pre>
+    <p><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/packaging/electron-builder.yml#L10-L11"><code>packaging/electron-builder.yml:10-11</code></a> packages the local <code>resources/</code> directory into the Electron <code>Resources</code> folder via <code>extraResources</code>, so packaged builds layout assets at <code>&lt;process.resourcesPath&gt;/resources/...</code>. <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/scripts/package.ts#L97"><code>scripts/package.ts:97</code></a> confirms this: <code>path.join(context.appOutDir, &#39;resources/resources/linux/${ leaf }&#39;)</code>. Pre-PR, <code>rdctl paths</code> returned <code>&lt;resourcesPath&gt;/resources</code> for the <code>resources</code> field (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/src/go/rdctl/pkg/paths/paths_test.go#L22"><code>src/go/rdctl/pkg/paths/paths_test.go:22</code></a>: <code>assert.Equal(t, filepath.Join(dir, &quot;resources&quot;), actual)</code>). The new getter omits that suffix.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/packaging/electron-builder.yml#L5-L16">packaging/electron-builder.yml</a></div>
+      <pre data-start="5" data-line="10-11"><code class="language-yaml">appId: io.rancherdesktop.app
+asar: true
+asarUnpack:
+- &#39;**/*.node&#39;
+electronLanguages: [ en-US ]
+extraResources:
+- resources/
+- &#39;!resources/darwin/lima*.tgz&#39;
+- &#39;!resources/darwin/qemu*.tgz&#39;
+- &#39;!resources/linux/lima*.tgz&#39;
+- &#39;!resources/linux/qemu*.tgz&#39;
+- &#39;!resources/linux/staging/&#39;</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/scripts/package.ts#L92-L102">scripts/package.ts</a></div>
+      <pre data-start="92" data-line="97"><code class="language-typescript">      ...context.packager.platformSpecificBuildOptions,
+      compression: undefined,
+    };
+    const helper = new LinuxTargetHelper(context.packager);
+    const leaf = `${ context.packager.executableName }.desktop`;
+    const destination = path.join(context.appOutDir, `resources/resources/linux/${ leaf }`);
+
+    await helper.writeDesktopEntry(options, context.packager.executableName, destination);
+  }
+
+  /**</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/src/go/rdctl/pkg/paths/paths_test.go#L17-L24">src/go/rdctl/pkg/paths/paths_test.go</a></div>
+      <pre data-start="17" data-line="22"><code class="language-go">func TestGetResourcesPath(t *testing.T) {
+	dir := t.TempDir()
+	rdctlPathOverride = filepath.Join(dir, &quot;resources&quot;, runtime.GOOS, &quot;bin&quot;, &quot;rdctl&quot;)
+	actual, err := GetResourcesPath()
+	if assert.NoError(t, err) {
+		assert.Equal(t, filepath.Join(dir, &quot;resources&quot;), actual)
+	}
+}</code></pre>
+    <p>Every existing consumer joins paths onto <code>paths.resources</code> expecting the suffix to be there:</p>
+    <ul>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/background.ts#L113"><code>background.ts:113</code></a> — <code>path.join(paths.resources, &#39;icons&#39;, &#39;logo-square-512.png&#39;)</code></li>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/window/index.ts#L235"><code>pkg/rancher-desktop/window/index.ts:235</code></a> — <code>path.join(paths.resources, &#39;preload.js&#39;)</code></li>
+      <li><code>pkg/rancher-desktop/main/tray.ts:113-117,122-125</code> — tray icons</li>
+    </ul>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/background.ts#L108-L118">background.ts</a></div>
+      <pre data-start="108" data-line="113"><code class="language-typescript">    // TODO: Update this to 2021-... as dev progresses
+    // also needs to be updated in electron-builder.yml
+    copyright:          &#39;Copyright © 2021-2026 SUSE LLC&#39;,
+    applicationName:    `${ Electron.app.name } by SUSE`,
+    applicationVersion: `Version ${ process.env.RD_VERSION }`,
+    iconPath:           path.join(paths.resources, &#39;icons&#39;, &#39;logo-square-512.png&#39;),
+  });
+  // TODO: Tray.getInstance().show();
+
+  window.openMain();
+}</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/window/index.ts#L230-L240">pkg/rancher-desktop/window/index.ts</a></div>
+      <pre data-start="230" data-line="235"><code class="language-typescript">    const id = `rdx-preload-${ currentExtension.id }`;
+
+    if (!session.getPreloadScripts().some(script =&gt; script.id === id)) {
+      session.registerPreloadScript({
+        id,
+        filePath: path.join(paths.resources, &#39;preload.js&#39;),
+        type:     &#39;frame&#39;,
+      });
+    }
+
+    webRequest.onBeforeSendHeaders((details, callback) =&gt; {</code></pre>
+    <p>In a packaged build this resolves to <code>&lt;resourcesPath&gt;/icons/...</code> instead of <code>&lt;resourcesPath&gt;/resources/icons/...</code>, so all icons, the renderer preload, and the tray badge silently miss.</p>
+    <p>The new <code>paths.spec.ts:155-164</code> test happens to assert <code>actual.resources === undefined</code> when <code>process.resourcesPath</code> is unset; it never asserts the packaged <code>resources/resources</code> layout.</p>
+    <p>Fix:</p>
+      <pre><code class="language-diff"> get resources() {
+   if (process.env.NODE_ENV === &#39;production&#39;) {
+-    return process.resourcesPath;
++    return path.join(process.resourcesPath, &#39;resources&#39;);
+   }
+   // When under test, we do not have `process.resourcesPath`; use a fallback.
+   return process.resourcesPath ?? path.join(process.cwd(), &#39;resources&#39;);
+ },</code></pre>
+    <p>Add a packaged-path test that reflects the <code>electron-builder</code> layout.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> Extension protocol handler is now a no-op <span class="pill pill-codex">Codex</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/protocols.ts#L68-L94">pkg/rancher-desktop/utils/protocols.ts</a></div>
+      <pre data-start="68" data-line="73-89"><code class="language-typescript"> */
+function setupExtensionProtocolHandler(partition?: string): Promise&lt;void&gt; {
+  const scheme = &#39;x-rd-extension&#39;;
+  const session = partition ? Electron.session.fromPartition(partition) : Electron.session.defaultSession;
+
+  if (!session.protocol.isProtocolHandled(scheme)) {
+    // TODO: implement extensions
+    /*
+    session.protocol.handle(
+      scheme,
+      (request) =&gt; {
+        const url = new URL(request.url);
+        // Re-encoding the extension ID here also ensures it doesn&#39;t contain any
+        // directory traversal etc. issues.
+        const extensionID = Buffer.from(url.hostname, &#39;hex&#39;).toString(&#39;base64url&#39;);
+        const resourcePath = path.normalize(url.pathname);
+        const filepath = path.join(paths.extensionRoot, extensionID, resourcePath);
+
+        return Electron.net.fetch(pathToFileURL(filepath).toString());
+      });
+    */
+  }
+
+  return Promise.resolve();
+}
+
+export function setupProtocolHandlers() {</code></pre>
+    <p>The handler body is commented out because <code>paths.extensionRoot</code> no longer exists, but the rest of the app still emits <code>x-rd-extension://</code> URLs:</p>
+    <ul>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/window/index.ts#L334"><code>pkg/rancher-desktop/window/index.ts:334</code></a> — loads extension dashboard tabs.</li>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/components/NavIconExtension.vue#L27"><code>pkg/rancher-desktop/components/NavIconExtension.vue:27</code></a> — fetches extension icons.</li>
+      <li><code>e2e/extensions.e2e.spec.ts:138,164</code> — exercises the scheme.</li>
+    </ul>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/window/index.ts#L329-L339">pkg/rancher-desktop/window/index.ts</a></div>
+      <pre data-start="329" data-line="334"><code class="language-typescript">  if (!currentExtension) {
+    return;
+  }
+  const { id, relPath } = currentExtension;
+
+  const url = `x-rd-extension://${ id }/ui/dashboard-tab/${ relPath }`;
+
+  view?.webContents
+    .loadURL(url)
+    .then(() =&gt; {
+      lastOpenExtension = currentExtension;</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/components/NavIconExtension.vue#L22-L32">pkg/rancher-desktop/components/NavIconExtension.vue</a></div>
+      <pre data-start="22" data-line="27"><code class="language-markup">  data() {
+    return { imageError: false };
+  },
+  computed: {
+    imageUri(): string {
+      return `x-rd-extension://${ hexEncode(this.extensionId) }/icon.svg`;
+    },
+    isKnownMonochrome(): boolean {
+      return !!this.extensionId &amp;&amp; knownMonochromeIcons.includes(this.extensionId.split(&#39;:&#39;)[0]);
+    },
+  },</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/e2e/extensions.e2e.spec.ts#L133-L143">e2e/extensions.e2e.spec.ts</a></div>
+      <pre data-start="133" data-line="138"><code class="language-typescript">    }
+  });
+
+  test(&#39;use extension protocol handler&#39;, async() =&gt; {
+    const result = await page.evaluate(async() =&gt; {
+      const data = await fetch(&#39;x-rd-extension://72642f657874656e73696f6e2f65766572797468696e67/ui/dashboard-tab/ui/index.html&#39;);
+
+      return await data.text();
+    });
+
+    expect(result).toContain(&#39;ddClient&#39;);</code></pre>
+    <p><code>setupProtocolHandlers()</code> still calls <code>setupExtensionProtocolHandler()</code>, so callers see a resolved setup path while the scheme stays unhandled. Although the <code>// TODO: implement extensions</code> comment acknowledges the gap, the PR description does not mention that this PR breaks extension loading at runtime.</p>
+    <p>Fix: keep the handler registered and replace only the path source. If the new <code>extensionRoot</code> lives under <code>paths.dir</code>, derive it there:</p>
+      <pre><code class="language-diff">-      const filepath = path.join(paths.extensionRoot, extensionID, resourcePath);
++      const filepath = path.join(paths.dir, &#39;extensions&#39;, extensionID, resourcePath);</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I2">
+        <span class="finding-num">I2.</span> <code>paths.resources</code> typed <code>string</code> but can be <code>undefined</code> in production <span class="pill pill-claude">Claude</span><a href="#I2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L137-L154">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="137" data-line="142-149"><code class="language-typescript">
+/**
+ * Paths which do not depend on the platform.
+ */
+const platformAgnosticPaths: PlatformAgnosticPaths = {
+  // Use a getter here so we can override `NODE_ENV` and `process.resourcesPath` in tests.
+  get resources() {
+    if (process.env.NODE_ENV === &#39;production&#39;) {
+      return process.resourcesPath;
+    }
+    // When under test, we do not have `process.resourcesPath`; use a fallback.
+    return process.resourcesPath ?? path.join(process.cwd(), &#39;resources&#39;);
+  },
+};
+
+/**
+ * Fallback paths, in case we are unable to find them (e.g. we&#39;re running build
+ * scripts).</code></pre>
+    <p><code>Paths.resources</code> is typed <code>string</code> (line 44), but the production branch returns <code>process.resourcesPath</code> directly with no guard. The new test at <code>paths.spec.ts:155-164</code> asserts <code>actual.resources === undefined</code> when <code>process.resourcesPath</code> is unset — i.e., the undefined branch is documented behavior. Every existing caller feeds the value into <code>path.join</code>, which throws <code>TypeError: Path must be a string. Received undefined</code> on first access.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L39-L49">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="39" data-line="44"><code class="language-typescript"> */
+interface RDAPaths {
+  /** RDA: path to the RDD executable. */
+  readonly rdd:       string;
+  /** RDA: resources directory. */
+  readonly resources: string;
+  /** RDA: cache directory. */
+  readonly cache:     string;
+}
+
+export interface Paths extends RDDPaths, RDAPaths { }</code></pre>
+    <p>In packaged Electron <code>process.resourcesPath</code> is always set, so this is latent rather than active; combined with C4, however, the production branch needs a defensive guard regardless. Either tighten the return type to <code>string | undefined</code> and update each caller, or throw with a clear message:</p>
+      <pre><code class="language-diff">   get resources() {
+-    if (process.env.NODE_ENV === &#39;production&#39;) {
+-      return process.resourcesPath;
++    if (process.env.NODE_ENV === &#39;production&#39;) {
++      if (!process.resourcesPath) {
++        throw new Error(&#39;process.resourcesPath is not set in production&#39;);
++      }
++      return path.join(process.resourcesPath, &#39;resources&#39;);
+     }</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I3">
+        <span class="finding-num">I3.</span> <code>cachedRDDPath</code> persists across tests and never re-validates <span class="pill pill-claude">Claude</span><a href="#I3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L46-L93">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="46" data-line="51-88"><code class="language-typescript">  readonly cache:     string;
+}
+
+export interface Paths extends RDDPaths, RDAPaths { }
+
+let cachedRDDPath: string | undefined;
+
+/**
+ * Get the path to the RDD executable.
+ * @param useCached Use the cached path, if available.
+ */
+export function getRDDPath(useCached = true): string {
+  const exeName = process.platform === &#39;win32&#39; ? &#39;rdd.exe&#39; : &#39;rdd&#39;;
+
+  if (useCached &amp;&amp; cachedRDDPath) {
+    return cachedRDDPath;
+  }
+
+  cachedRDDPath = (() =&gt; {
+    if (electron.app?.isPackaged) {
+      const packagedPath = path.join(
+        process.resourcesPath, &#39;resources&#39;, process.platform, &#39;bin&#39;, exeName);
+      try {
+        fs.accessSync(packagedPath, fs.constants.X_OK);
+        return packagedPath;
+      } catch { /* ignore */ }
+    }
+
+    const relativePath = path.join(
+      process.cwd(), &#39;resources&#39;, process.platform, &#39;bin&#39;, exeName);
+    try {
+      fs.accessSync(relativePath, fs.constants.X_OK);
+      return relativePath;
+    } catch { /* ignore */ }
+
+    return which.sync(exeName, { nothrow: true }) ?? undefined;
+  })();
+
+  if (!cachedRDDPath) {
+    throw new Error(`Unable to find Rancher Desktop Daemon executable (${ exeName })`);
+  }
+  return cachedRDDPath;
+}
+
+type PlatformSpecificPaths = Pick&lt;RDAPaths, &#39;cache&#39;&gt;;
+type PlatformAgnosticPaths = Pick&lt;RDAPaths, &#39;resources&#39;&gt;;
+
+/**</code></pre>
+    <p>The module-level cache survives between Jest tests: every <code>getRDDPath(false)</code> call in <code>paths.spec.ts</code> writes the cache, so a later default-cached caller sees stale state. The function also never re-checks that the cached path still resolves — a user who replaces or removes RDD between calls keeps the old path forever.</p>
+    <p>Fix: drop the cache (a single <code>accessSync</code> is cheap), expose a <code>resetCache()</code> helper for tests, or reset the cache in <code>beforeEach</code>/<code>afterEach</code> in <code>paths.spec.ts</code>.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I4">
+        <span class="finding-num">I4.</span> Linux/Win32 <code>log_dir</code> fallback produces a directory literally named <code>log_dir</code> <span class="pill pill-claude">Claude</span><a href="#I4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L154-L210">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="154" data-line="159-205"><code class="language-typescript"> * scripts).
+ * @note These are not used in production.
+ * @returns A mapping of path names to functions that return the path (where
+ * callbacks exist); if the platform is unsupported, throws an error.
+ */
+function getPlatformSpecificFallbacks(platform: supportedPlatforms): Partial&lt;Record&lt;keyof Paths, () =&gt; string&gt;&gt; {
+  // For some of the paths, we just tack the property name to the `dir` path.
+  const getters: { dir: () =&gt; string } &amp; Partial&lt;Record&lt;keyof Paths, () =&gt; string&gt;&gt; = ({
+    darwin: {
+      dir() {
+        return path.join(os.homedir(), &#39;Library&#39;, &#39;Application Support&#39;, &#39;rancher-desktop&#39;);
+      },
+      cache() {
+        return path.join(os.homedir(), &#39;Library&#39;, &#39;Caches&#39;, &#39;rancher-desktop&#39;);
+      },
+      log_dir() {
+        return path.join(os.homedir(), &#39;Library&#39;, &#39;Logs&#39;, &#39;rancher-desktop&#39;);
+      },
+    },
+    linux: {
+      dir() {
+        return path.join(os.homedir(), &#39;.local&#39;, &#39;share&#39;, &#39;rancher-desktop&#39;);
+      },
+      cache() {
+        return path.join(os.homedir(), &#39;.cache&#39;, &#39;rancher-desktop&#39;);
+      },
+    },
+    win32: {
+      dir() {
+        return path.join(process.env.LOCALAPPDATA || path.join(os.homedir(), &#39;AppData&#39;, &#39;Local&#39;), &#39;rancher-desktop&#39;);
+      },
+    },
+    [TEST_PLATFORM]: {
+      dir() {
+        return path.join(os.tmpdir(), &#39;rancher-desktop&#39;);
+      },
+    },
+  } satisfies Record&lt;supportedPlatforms, Partial&lt;Record&lt;keyof Paths, () =&gt; string&gt;&gt;&gt;)[platform];
+
+  if (!getters) {
+    throw new UnsupportedPlatformError(platform);
+  }
+
+  const fallbackKeys = [&#39;cache&#39;, &#39;log_dir&#39;] as const;
+  for (const key of fallbackKeys) {
+    getters[key as keyof typeof getters] ||= () =&gt; {
+      return path.join(getters.dir(), key);
+    };
+  }
+
+  return getters;
+}
+
+/**
+ * Get the paths used by Rancher Desktop.
+ * @note This is only exported for testing; consumers should use the default export.
+ * @param rddOverride The path to the RDD executable; if not provided, it will</code></pre>
+    <p>Only the darwin fallback table defines <code>log_dir</code> explicitly. The synthesizer at lines 199-201 fills the gap by joining the literal property name onto <code>dir</code>, so the Linux and Win32 fallback paths land at <code>&lt;dir&gt;/log_dir</code>. Pre-PR the corresponding paths were <code>&lt;dir&gt;/logs</code>. The <code>@note These are not used in production.</code> comment softens the impact, but <code>yarn dev</code> without RDD installed leaks logs into a directory named <code>log_dir</code>.</p>
+    <p>Fix: spell out <code>log_dir</code> fallbacks in each platform table:</p>
+      <pre><code class="language-diff">   linux: {
+     dir() { ... },
+     cache() { ... },
++    log_dir() {
++      return path.join(os.homedir(), &#39;.local&#39;, &#39;share&#39;, &#39;rancher-desktop&#39;, &#39;logs&#39;);
++    },
+   },</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I5">
+        <span class="finding-num">I5.</span> <code>getPaths()</code> swallows the underlying cause when returning the fallback Proxy <span class="pill pill-claude">Claude</span><a href="#I5" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L237-L275">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="237" data-line="242-272"><code class="language-typescript">      ...Object.getOwnPropertyDescriptors(rddPaths),
+      ...Object.getOwnPropertyDescriptors(platformAgnosticPaths),
+      ...Object.getOwnPropertyDescriptors(platformSpecificPaths),
+      rdd: { value: rddPath, enumerable: true },
+    } satisfies { [K in keyof Paths]: PropertyDescriptor });
+  } catch (cause) {
+    if (cause instanceof UnsupportedPlatformError) {
+      throw cause;
+    }
+    // Delay throwing the error until we actually access the paths; this way we
+    // can track down where we actually use the path, as well as handle fallbacks.
+    return new Proxy({} as Paths, {
+      get(target, prop) {
+        if (typeof prop !== &#39;string&#39; || prop === &#39;then&#39; || prop in Object.prototype) {
+          // Do not handle these; they are not things we expect in paths.
+          return Reflect.get(target, prop);
+        }
+        if (prop === &#39;rdd&#39; &amp;&amp; rddOverride) {
+          // If there&#39;s an override for RDD, use all the time.  However, do not
+          // try to find it otherwise, as that may be the cause of the error.
+          return rddOverride;
+        }
+        if (prop in platformAgnosticPaths) {
+          return platformAgnosticPaths[prop as keyof PlatformAgnosticPaths];
+        }
+        if (process.env.NODE_ENV !== &#39;production&#39;) {
+          const platform = platformOverride ?? process.platform as supportedPlatforms;
+          const fallbacks = getPlatformSpecificFallbacks(platform);
+          if (fallbacks?.[prop as keyof Paths]) {
+            return fallbacks[prop as keyof Paths]?.();
+          }
+        }
+        throw new Error(`Unable to determine path for ${ String(prop) }: ${ String(cause) }`, { cause });
+      },
+    });
+  }
+}
+
+export default getPaths();</code></pre>
+    <p>The catch collapses all causes (RDD missing, RDD crashed, RDD returned bogus JSON, RDD returned a non-zero status) into a single Proxy that defers throwing. Construction emits no log line and no telemetry, so a developer who sees <code>~/.local/share/rancher-desktop/log_dir/background.log</code> has no idea why the fallback fired. Combined with I4, missing-RDD turns into a silent pile of files in the wrong place.</p>
+    <p>Fix: <code>console.warn</code> the underlying <code>cause</code> once when the catch fires, before returning the Proxy. Capturing the cause in a module-level var also lets a debug helper surface it in the renderer.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I6">
+        <span class="finding-num">I6.</span> Production fallback skipped — app dies on missing RDD with no error dialog <span class="pill pill-gemini">Gemini</span><a href="#I6" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L257-L274">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="257" data-line="262-269"><code class="language-typescript">          return rddOverride;
+        }
+        if (prop in platformAgnosticPaths) {
+          return platformAgnosticPaths[prop as keyof PlatformAgnosticPaths];
+        }
+        if (process.env.NODE_ENV !== &#39;production&#39;) {
+          const platform = platformOverride ?? process.platform as supportedPlatforms;
+          const fallbacks = getPlatformSpecificFallbacks(platform);
+          if (fallbacks?.[prop as keyof Paths]) {
+            return fallbacks[prop as keyof Paths]?.();
+          }
+        }
+        throw new Error(`Unable to determine path for ${ String(prop) }: ${ String(cause) }`, { cause });
+      },
+    });
+  }
+}
+</code></pre>
+    <p>The Proxy gates fallbacks behind <code>NODE_ENV !== &#39;production&#39;</code>. In a packaged production build with RDD missing or broken, every property access (starting with <code>paths.dir</code> in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/background.ts#L27"><code>background.ts:27</code></a>) throws synchronously before logging is initialized — there is no opportunity to surface a dialog to the user. Pre-PR behavior was similarly fatal, but the fallback infrastructure already exists; gating it on <code>NODE_ENV</code> is a deliberate but undocumented choice.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/background.ts#L22-L32">background.ts</a></div>
+      <pre data-start="22" data-line="27"><code class="language-typescript">// https://www.electronjs.org/docs/latest/breaking-changes#changed-gtk-4-is-default-when-running-gnome
+if (process.platform === &#39;linux&#39;) {
+  Electron.app.commandLine.appendSwitch(&#39;gtk-version&#39;, &#39;3&#39;);
+}
+
+Electron.app.setPath(&#39;userData&#39;, path.join(paths.dir, &#39;electron&#39;));
+Electron.app.setPath(&#39;cache&#39;, paths.cache);
+Electron.app.setAppLogsPath(paths.log_dir);
+
+const console = Logging.background;
+</code></pre>
+    <p>Fix: allow at least one fallback path (e.g., a temp dir) in production so the main process can boot far enough to display an error dialog, or document the constraint and add a top-level catch that shows a friendly diagnostic.</p>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> Replace empty extending interface with type alias <span class="pill pill-claude">Claude</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L44-L54">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="44" data-line="49"><code class="language-typescript">  readonly resources: string;
+  /** RDA: cache directory. */
+  readonly cache:     string;
+}
+
+export interface Paths extends RDDPaths, RDAPaths { }
+
+let cachedRDDPath: string | undefined;
+
+/**
+ * Get the path to the RDD executable.</code></pre>
+    <p>ESLint with <code>@typescript-eslint/no-empty-object-type</code> flags this. Use a type alias instead:</p>
+      <pre><code class="language-diff">-export interface Paths extends RDDPaths, RDAPaths { }
++export type Paths = RDDPaths &amp; RDAPaths;</code></pre>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> <code>TEST_PLATFORM</code> symbol leaks into production module <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L91-L103">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="91" data-line="96-98"><code class="language-typescript">type PlatformAgnosticPaths = Pick&lt;RDAPaths, &#39;resources&#39;&gt;;
+
+/**
+ * TEST_PLATFORM is a special platform name for testing.
+ */
+export const TEST_PLATFORM = Symbol(&#39;test-platform&#39;);
+
+type supportedPlatforms = &#39;darwin&#39; | &#39;linux&#39; | &#39;win32&#39; | typeof TEST_PLATFORM;
+
+class UnsupportedPlatformError extends Error {
+  constructor(platform: supportedPlatforms) {
+    super(`Unsupported platform: ${ String(platform) }`);
+    this.name = UnsupportedPlatformError.name;</code></pre>
+    <p>A test-only sentinel widens the production type union. The <code>getPaths(rddOverride, platformOverride)</code> signature already accepts a real platform (<code>&#39;darwin&#39; | &#39;linux&#39; | &#39;win32&#39;</code>); the &quot;fallback paths if RDD fails&quot; tests would still pass when parameterized over real platforms, since the assertions cover the fallback table, not the platform identity.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> Unused RDD-provided fields <span class="pill pill-claude">Claude</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+    <p><code>args_file</code>, <code>docker_socket</code>, <code>lima_home</code>, <code>pid_file</code>, <code>short_dir</code>, <code>tls_dir</code> round-trip through JSON and <code>Object.defineProperties</code> with no caller in the workspace. Drop the keys until a consumer arrives.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S4">
+        <span class="finding-num">S4.</span> Reinstate <code>dockerCliSymlinks</code> and <code>limaOverrides</code> diagnostics under the new path names <span class="pill pill-gemini">Gemini</span><a href="#S4" class="pilcrow">&#182;</a>
+      </div>
+    <p>The PR deletes both diagnostics files outright, presumably because <code>paths.lima</code> and <code>paths.integration</code> no longer exist. <code>paths.lima_home</code> is available from <code>RDDPaths</code>, and the integration path can be derived from <code>~/.rd/bin</code> (or <code>paths.dir</code>). If these checks remain useful to users, restore them with the new path resolution.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S5">
+        <span class="finding-num">S5.</span> Trailing semicolon on function declaration <span class="pill pill-claude">Claude</span><a href="#S5" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/paths.ts#L131-L141">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="131" data-line="136"><code class="language-typescript">      get cache() {
+        return path.join(rdd.dir, &#39;cache&#39;);
+      },
+    },
+  } satisfies Record&lt;supportedPlatforms, PlatformSpecificPaths&gt;)[platform];
+};
+
+/**
+ * Paths which do not depend on the platform.
+ */
+const platformAgnosticPaths: PlatformAgnosticPaths = {</code></pre>
+    <p>Function declarations don&#39;t take a trailing semicolon; existing style in the file omits it.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S6">
+        <span class="finding-num">S6.</span> Test mutates <code>process.resourcesPath</code> before snapshotting <span class="pill pill-claude">Claude</span><a href="#S6" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/__tests__/paths.spec.ts#L41-L51">pkg/rancher-desktop/utils/__tests__/paths.spec.ts</a></div>
+      <pre data-start="41" data-line="46"><code class="language-typescript">    await fs.promises.rm(resourcesPath, { recursive: true });
+  });
+  describe(&#39;when packaged&#39;, () =&gt; {
+    beforeEach(() =&gt; {
+      // The tests run under Node.JS, so `process.resourcesPath` is not set.
+      (process as any).resourcesPath ||= resourcesPath;
+      jest.replaceProperty(process, &#39;resourcesPath&#39;, resourcesPath);
+      jest.replaceProperty(modules.electron.app, &#39;isPackaged&#39;, true);
+    });
+    it(&#39;should return packaged path if it exists&#39;, () =&gt; {
+      const actual = getRDDPath(false);</code></pre>
+    <p>The <code>||=</code> line mutates global <code>process</code> before <code>replaceProperty</code> snapshots it. <code>Object.defineProperty(process, &#39;resourcesPath&#39;, { value, configurable: true })</code> in <code>beforeAll</code> plus a clean <code>replaceProperty</code> per test would isolate state without leaking.</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="concerns">Concerns <a href="#concerns" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Synchronous spawn at module-load time gates app startup</strong> <span class="pill pill-claude">Claude</span> (in-scope). <code>paths.ts</code> ends with <code>export default getPaths()</code>, which forks <code>rdd service paths</code> and blocks until it returns. <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/background.ts#L16"><code>background.ts:16</code></a> and <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/logging.ts#L230"><code>logging.ts:230</code></a> import <code>paths</code> immediately, so every Electron main-process bootstrap pays a synchronous fork+wait. The pre-PR design did the same with <code>rdctl paths</code>, so this is not a regression — but the cost is now on the critical path of the daemon-rewrite and worth revisiting. A lazy accessor that memoizes on first read would keep the API the same and defer the cost. No timeout option is passed to <code>spawnSync</code> either; a stuck RDD locks the main process until the OS times out.</li>
+      <li><strong>Path semantics conflict between RDD and RDA</strong> <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> (in-scope). Inheriting <code>RDDPaths</code> and re-exporting it as the application&#39;s <code>Paths</code> couples the renderer/main code to the daemon&#39;s internal naming scheme. RDD&#39;s <code>config</code> (kubeconfig file) collides with the app&#39;s historical <code>config</code> (settings dir); RDD&#39;s <code>dir</code> overlaps with the old <code>appHome</code>. An adapter layer that translates the raw RDD JSON into an explicit <code>AppPaths</code> type (with disambiguated names like <code>kubeconfig</code>, <code>dataDir</code>) would prevent C2 and C3 from recurring on every future field rename or addition.</li>
+    </ul>
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Lazy property getters keep test mocks cheap</strong> <span class="pill pill-claude">Claude</span> (in-scope). <code>platformSpecificPaths</code> and <code>platformAgnosticPaths</code> use getters so values that are not read are not computed. A test only needs to mock the slice it exercises.</li>
+      <li><em></em>Splitting <code>Paths</code> into <code>RDDPaths</code> + <code>RDAPaths</code><em></em> <span class="pill pill-claude">Claude</span> (in-scope) makes the source of each field explicit and helps when negotiating the JSON contract with the daemon.</li>
+      <li><strong>Move toward daemon-owned path authority</strong> <span class="pill pill-codex">Codex</span> (in-scope). Routing log and user-data initialization through RDD-derived <code>dir</code> / <code>log_dir</code> is the right direction for issue <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/33" class="gh-ref" data-title="RDA: Use RDD paths" data-state="open" data-type="issue">#33</a>; it puts startup paths behind the daemon&#39;s path authority instead of duplicating platform rules in the app.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>The new tests cover the four <code>spawnSync</code> failure modes for <code>getPaths</code> and the resolution chain for <code>getRDDPath</code> (packaged → relative → PATH → throw). Gaps, ranked:</p>
+    <ol>
+      <li><strong>Platform-specific cache and log_dir overrides</strong> — <code>getPaths</code> &quot;should return all paths&quot; only covers <code>TEST_PLATFORM</code>. The darwin/linux cache formulae and the darwin <code>log_dir</code> override go untested. (See S6 / Claude I5.)</li>
+      <li><strong>Packaged production resource layout</strong> — the new <code>paths.spec.ts:155-164</code> asserts <code>paths.resources === undefined</code> rather than the <code>&lt;resourcesPath&gt;/resources</code> layout that <code>electron-builder</code> packages under (C4).</li>
+      <li><strong>End-to-end coverage of the new path surface</strong> — no test imports the full app <code>Paths</code> object and exercises remaining consumers (snapshots, credential server, deployment profile helpers, <code>commandLineOptions</code>). C1, C2, and C3 would all surface.</li>
+      <li><em></em>Cache pollution between <code>getRDDPath</code> calls<em></em> — no test asserts that a stale <code>cachedRDDPath</code> is or isn&#39;t returned to a later caller (I3).</li>
+      <li><strong>Extension protocol regression</strong> — no test verifies <code>x-rd-extension://...</code> is actually handled after <code>setupProtocolHandlers()</code> (I1).</li>
+    </ol>
+    <p>E2E test runs against this PR almost certainly fail at compile time (C1, C2), so no runtime test coverage of the migration is in evidence.</p>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li>The <code>RDDPaths</code> interface comments are precise and well-formatted.</li>
+      <li><code>getPaths</code> JSDoc (lines 207-213) documents <code>rddOverride</code> and the throw, but not <code>platformOverride</code> or the silent Proxy-fallback on RDD failure. Add a <code>@returns</code> line noting the Proxy semantics.</li>
+      <li>The note <code>@note These are not used in production.</code> (line 155) is inaccurate: dev callers that hit the fallback Proxy <em>do</em> use these paths, and (per I6) a misconfigured production install can hit them too.</li>
+      <li>No CHANGELOG entry captures the migration of <code>~/.local/share/rancher-desktop/logs</code> to whatever RDD now reports. This path is user-visible.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="commit-structure">Commit Structure <a href="#commit-structure" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>Single commit, single concept (paths migration). Clean.</p>
+    </div>
+    <hr>
+    <h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/f10ad50bfedd6669639eb952ed7020e8ad40e08f/pkg/rancher-desktop/utils/protocols.ts#L74-L89"><code>pkg/rancher-desktop/utils/protocols.ts:74-89</code></a> — the <code>// TODO: implement extensions</code> comment introduced by this PR acknowledges that the extension protocol handler is now stubbed out. I1 promotes this to an Important finding because active callers still emit <code>x-rd-extension://</code> URLs that fail at runtime.</li>
+      <li>The PR description notes &quot;I&#39;m doing this earlier because I want to get rid of (most of) rdctl.&quot; Issue <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/33" class="gh-ref" data-title="RDA: Use RDD paths" data-state="open" data-type="issue">#33</a> contains an upstream acknowledgment that log directory structure is loose for now.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="claude"><span class="pill pill-claude">Claude</span> <a href="#claude" class="pilcrow">&#182;</a></h3>
+    <p>Most thorough of the three. Caught the largest set of unique findings, including the <code>cachedRDDPath</code> pollution across tests (I3), the literal <code>log_dir</code> fallback on Linux/Win32 (I4), and the silent error suppression in the fallback Proxy (I5). Misjudged C3 (sync spawn at module load) as a regression — the pre-PR code did the same — though the underlying design concern remains valid and surfaces in the Design Observations section instead. Missed C4 (the <code>paths.resources</code> off-by-one), which Codex caught.</p>
+    <h3 id="codex"><span class="pill pill-codex">Codex</span> <a href="#codex" class="pilcrow">&#182;</a></h3>
+    <p>Caught the highest-impact unique finding: <code>paths.resources</code> is missing the <code>/resources</code> suffix in production (C4). Cross-referenced <code>packaging/electron-builder.yml</code> and <code>scripts/package.ts</code> to verify the packaged layout, which neither other agent did. Also caught I1 (extension protocol now a no-op) by tracing actual <code>x-rd-extension://</code> callers — not just the type-only reference. Compact output, no noise.</p>
+    <h3 id="gemini"><span class="pill pill-gemini">Gemini</span> <a href="#gemini" class="pilcrow">&#182;</a></h3>
+    <p>Solid baseline coverage on the obvious regressions (C1, C2, C3) and caught I6 (production-fallback gap). Missed both C4 and I1, the two findings that required tracing beyond the diff into the packaging config and renderer call sites. No <code>git blame</code> runs; no inspection of the build/test pipeline.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.7</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>20m 37s</td><td>7m 34s</td><td>—</td></tr>
+        <tr><td>Findings</td><td>3C 5I 6S</td><td>1C 3I</td><td>3C 1I 1S</td></tr>
+        <tr><td>Tool calls</td><td>48 (Read 21, Grep 16, Bash 11)</td><td>86 (shell 86)</td><td>—</td></tr>
+        <tr><td>Design observations</td><td>2</td><td>1</td><td>1</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>5</td><td>2</td><td>1</td></tr>
+        <tr><td>Files reviewed</td><td>11</td><td>11</td><td>11</td></tr>
+        <tr><td>Coverage misses</td><td>1</td><td>0</td><td>2</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>3C 5I 6S</strong></td><td><strong>1C 3I</strong></td><td><strong>3C 1I 1S</strong></td></tr>
+        <tr><td>Downgraded</td><td>1 (I→S)</td><td>0</td><td>0</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Reconciliation</strong></p>
+    <ul>
+      <li>Claude C3 &quot;Synchronous spawnSync runs at module load&quot; was labelled <code>(critical, regression)</code> but the pre-PR code already ran <code>spawnSync(rdctlPath, [&#39;paths&#39;])</code> synchronously at module load. The underlying concern (no timeout, lazy-load opportunity) is preserved as a Design Observation; the regression label is dropped.</li>
+    </ul>
+    <p>Codex provided the single highest-value finding (C4); Claude provided the largest pool of supporting findings (I3, I4, I5, plus all the suggestions); Gemini&#39;s contribution overlapped substantially with the others but the C2 / C3 attributions held up under verification. All three are needed: Codex for the build-config cross-reference, Claude for the breadth, Gemini for the consensus on regressions.</p>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="skill-improvements">Skill improvements <a href="#skill-improvements" class="pilcrow">&#182;</a></h3>
+    <p>None. The findings here arose from the existing dimensions and verification gates; no general principle from this review generalizes to other repos.</p>
+    <h3 id="repo-context-updates">Repo context updates <a href="#repo-context-updates" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><em></em>Add: electron-builder packaging layout for <code>paths.resources</code>.<em></em> When the renderer or main process joins paths onto <code>paths.resources</code> (icons, preload, tray badges, binaries), the packaged build expects the <code>resources/</code> subdirectory under <code>process.resourcesPath</code> because <code>packaging/electron-builder.yml</code> uses <code>extraResources: - resources/</code> and <code>scripts/package.ts</code> writes <code>resources/resources/&lt;platform&gt;/...</code>. Any change that derives <code>paths.resources</code> directly from <code>process.resourcesPath</code> without appending <code>&#39;resources&#39;</code> breaks every asset reference in packaged builds. Verify packaged-path test coverage alongside any change to the <code>resources</code> getter.</li>
+    </ul>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
