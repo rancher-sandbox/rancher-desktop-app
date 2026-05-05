@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260505-125612-pr-51</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Supply-chain Summary table — first column gets breathing room,
+ * numeric middle columns center, header keeps its label on one line. */
+.summary-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0 0.8rem; font-size: 0.92rem; }
+.summary-table th, .summary-table td {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #d5d9e0;
+  vertical-align: top;
+  text-align: left;
+}
+.summary-table th { background: rgba(255, 255, 255, 0.65); font-weight: 600; white-space: nowrap; }
+.summary-table td:first-child { min-width: 11rem; white-space: nowrap; }
+.summary-table th:not(:first-child):not(:last-child),
+.summary-table td:not(:first-child):not(:last-child) { text-align: center; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Supply-chain issue rows — used by issueList for bullets that
+ * uniformly start with a `file:line` reference. The location renders
+ * in a dark bar above the description so the eye picks up the path
+ * separately from the prose. */
+.issue-list { margin: 0.6rem 0; }
+.issue-row {
+  margin-bottom: 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.55);
+}
+.issue-loc {
+  background: #2d333b;
+  color: #adbac7;
+  padding: 0.3rem 0.7rem;
+  font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+}
+.issue-loc a { color: #7ee787; text-decoration: none; }
+.issue-loc a:hover { text-decoration: underline; }
+.issue-loc code { background: none; padding: 0; color: inherit; font-size: 1em; }
+.issue-desc { padding: 0.55rem 0.8rem; }
+.issue-desc code { font-size: 0.85em; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260505-125612-pr-51</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-05-05 12:56</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+      <tr><td>Round</td><td>1 (of target)</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/51" class="gh-ref" data-title="Show action state" data-state="open" data-type="pr">#51</a> — Show action state</td></tr>
+      <tr><td>Branch</td><td><code>container-actions-report</code></td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7e9420a14"><code>7e9420a14</code></a> pages/containers: Show action state</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.7 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; small UI addition is sound, but the page-header status badge needs the same treatment so the failure indicator survives the navigation from list to detail.</td></tr>
+      <tr><td>Wall-clock time</td><td><code>11 min 29 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>PR <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/51" class="gh-ref" data-title="Show action state" data-state="open" data-type="pr">#51</a> surfaces asynchronous container action failures by adding an <code>icon-error</code> glyph and a tooltip carrying <code>status.lastAction.error</code> to the state badge in the containers table. The wiring matches the daemon&#39;s annotation-driven action contract (<code>status.lastAction.state</code> / <code>status.lastAction.error</code>) and reuses the existing <code>BadgeState.icon</code> prop and <code>v-tooltip</code> pattern from <code>Volumes.vue</code> and <code>Images.vue</code>.</p>
+    <p>Structure: zero critical, one important (gap on the detail page), three suggestions (one correctness gap, one CSS scoping, one stylistic).</p>
+    <p>The important issue is a feature gap, not a regression: the same badge component (<code>ContainerStatusBadge.vue</code>) is registered as the <code>ContainerInfo.vue</code> page header action via the <code>action</code> prop and is not updated by this PR, so the failure indicator vanishes the moment the user clicks into a container&#39;s detail view. The suggestions are minor; one is worth taking together with the I1 fix because the fix lives in the same code path (drive the icon off <code>state === &#39;Failed&#39;</code> rather than off the optional error string).</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+    <p>None.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> Page-header status badge omits the action-error affordance <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/components/ContainerStatusBadge.vue#L1-L12">pkg/rancher-desktop/components/ContainerStatusBadge.vue</a></div>
+      <pre data-start="1" data-line="2-7"><code class="language-vue">&lt;template&gt;
+  &lt;badge-state
+    v-if=&quot;currentContainer&quot;
+    :color=&quot;isRunning ? &#39;bg-success&#39; : &#39;bg-darker&#39;&quot;
+    :label=&quot;containerState&quot;
+    data-testid=&quot;container-state&quot;
+  /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { BadgeState } from &#39;@rancher/components&#39;;
+import { defineComponent } from &#39;vue&#39;;</code></pre>
+    <p><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L177"><code>pkg/rancher-desktop/pages/containers/ContainerInfo.vue:177</code></a> registers <code>ContainerStatusBadge</code> as the page-header <code>action</code>, and the title bar renders that component for every container detail page. The PR teaches the table badge to surface <code>status.lastAction.error</code>, but the header badge still shows only color and label, so the failure indicator vanishes the moment the user clicks from the list into a container&#39;s details — the place where the user is most likely to want the error.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L172-L182">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+      <pre data-start="172" data-line="177"><code class="language-markup">// Watchers
+watch(containerName, (name) =&gt; {
+  store.dispatch(&#39;page/setHeader&#39;, {
+    title:       name || &#39;Container Info&#39;,
+    description: &#39;&#39;,
+    action:      &#39;ContainerStatusBadge&#39;,
+  });
+}, { immediate: true });
+
+watch(activeTab, (tab) =&gt; {
+  if (tab === &#39;tab-shell&#39;) {</code></pre>
+    <p>The repo&#39;s &quot;Indirect component consumers&quot; guidance flags exactly this case: components registered as page-header actions are not imported by the page that changed and must be traced when the table&#39;s per-row state grows.</p>
+    <p>Fix: add the same icon-and-tooltip wiring to <code>ContainerStatusBadge</code>, keying off the failed state rather than off the optional error string (see S1).</p>
+      <pre><code class="language-vue">&lt;badge-state
+  v-if=&quot;currentContainer&quot;
+  v-tooltip=&quot;{ content: actionError }&quot;
+  :icon=&quot;actionFailed ? &#39;icon-error&#39; : &#39;&#39;&quot;
+  :color=&quot;isRunning ? &#39;bg-success&#39; : &#39;bg-darker&#39;&quot;
+  :label=&quot;containerState&quot;
+  data-testid=&quot;container-state&quot;
+/&gt;</code></pre>
+      <pre><code class="language-ts">actionFailed() {
+  return this.currentContainer?.status?.lastAction?.state === &#39;Failed&#39;;
+},
+actionError() {
+  return this.currentContainer?.status?.lastAction?.error;
+},</code></pre>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> Icon hinges on the optional error string, not the failed state <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/pages/Containers.vue#L47-L57">pkg/rancher-desktop/pages/Containers.vue</a></div>
+      <pre data-start="47" data-line="52"><code class="language-ts">        &lt;td&gt;
+          &lt;badge-state
+            v-tooltip=&quot;{
+              content: row.actionError,
+            }&quot;
+            :icon=&quot;row.actionError ? &#39;icon-error&#39; : &#39;&#39;&quot;
+            :color=&quot;isRunning(row) ? &#39;bg-success&#39; : &#39;bg-darker&#39;&quot;
+            :label=&quot;row.status?.status || &#39;unknown&#39;&quot;
+          /&gt;
+        &lt;/td&gt;
+      &lt;/template&gt;</code></pre>
+      <pre><code class="language-vue">:icon=&quot;row.actionError ? &#39;icon-error&#39; : &#39;&#39;&quot;</code></pre>
+    <p>The generated <code>LastAction</code> model marks <code>error</code> as optional (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts#L30"><code>pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts:30</code></a>). When the daemon reports <code>state: &#39;Failed&#39;</code> without an error message, <code>actionError</code> collapses to <code>undefined</code>, the icon disappears, and the failure becomes visually indistinguishable from success. The schema docstring promises &quot;Error is the error message if the action failed,&quot; but a defensive renderer should not rely on a backend invariant for the visible-or-not boundary.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts#L25-L35">pkg/rdd-client/gen/models/IoRancherdesktopContainersV1alpha1ContainerStatusLastAction.ts</a></div>
+      <pre data-start="25" data-line="30"><code class="language-typescript">    */
+    &#39;completedAt&#39;?: Date;
+    /**
+    * Error is the error message if the action failed.
+    */
+    &#39;error&#39;?: string;
+    /**
+    * ObservedAt is when the reconciler began processing the action annotation. Backlog may delay this relative to the user\&#39;s write time, and dispatch (especially restart\&#39;s grace period) extends the gap to CompletedAt.
+    */
+    &#39;observedAt&#39;?: Date;
+    /**</code></pre>
+    <p>Fix: split the two concerns. Drive the icon off <code>state === &#39;Failed&#39;</code>, and let the tooltip degrade to no-tooltip when <code>error</code> is undefined (FloatingVue handles this already, as <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/pages/Containers.vue#L441-L447"><code>pkg/rancher-desktop/pages/Containers.vue:441-447</code></a> shows).</p>
+      <pre><code class="language-diff">-:icon=&quot;row.actionError ? &#39;icon-error&#39; : &#39;&#39;&quot;
++:icon=&quot;row.actionFailed ? &#39;icon-error&#39; : &#39;&#39;&quot;</code></pre>
+    <p>…with a separate <code>actionFailed: container.status.lastAction?.state === &#39;Failed&#39;</code> on the row item. Codex&#39;s original report classified this as a regression; pre-existing behavior was no error indication at all, so it is more accurately a coverage gap that the PR partially closes.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> <code>.badge-state :deep(.icon)</code> reaches every badge on the page <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/pages/Containers.vue#L516-L530">pkg/rancher-desktop/pages/Containers.vue</a></div>
+      <pre data-start="516" data-line="521-525"><code class="language-scss">          display: none;
+        }
+      }
+    }
+  }
+  .badge-state {
+    :deep(.icon) {
+      vertical-align: middle;
+    }
+  }
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;</code></pre>
+    <p>Today the only <code>BadgeState</code> instance under <code>.containers</code> is the state column, so this selector behaves as intended. Any future column or header that also uses <code>BadgeState</code> inherits the alignment whether it wants it or not. The rule exists only because the new error icon needs aligning with the label, so its scope should match its purpose.</p>
+    <p>Fix: scope the rule to the state cell (or wrap the badge in an intent-naming class).</p>
+      <pre><code class="language-diff">-  .badge-state {
+-    :deep(.icon) {
+-      vertical-align: middle;
+-    }
+-  }
++  .state-cell :deep(.badge-state .icon) {
++    vertical-align: middle;
++  }</code></pre>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> IIFE wraps a single conditional <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/pages/Containers.vue#L242-L256">pkg/rancher-desktop/pages/Containers.vue</a></div>
+      <pre data-start="242" data-line="247-251"><code class="language-ts">            id:               container.metadata.name!,
+            imageName: (() =&gt; {
+              const image = this.images?.find(image =&gt; image.status?.id === container.status?.image);
+              return image?.status?.repoTag ?? container.status?.image;
+            })(),
+            actionError: (() =&gt; {
+              if (container.status.lastAction?.state === &#39;Failed&#39;) {
+                return container.status.lastAction.error;
+              }
+            })(),
+            projectGroup:     (() =&gt; {
+              const labels = container.status.labels ?? {};
+              const k8sPodName = labels[&#39;io.kubernetes.pod.name&#39;];
+              const k8sNamespace = labels[&#39;io.kubernetes.pod.namespace&#39;];
+              const composeProject = labels[&#39;com.docker.compose.project&#39;];</code></pre>
+    <p>The neighboring <code>imageName</code> and <code>projectGroup</code> IIFEs hold multi-line logic; this one wraps a single conditional that a ternary expresses directly. TypeScript narrows <code>lastAction</code> through the optional-chained equality, so the simpler form keeps the type safety.</p>
+    <p>Fix:</p>
+      <pre><code class="language-diff">-actionError: (() =&gt; {
+-  if (container.status.lastAction?.state === &#39;Failed&#39;) {
+-    return container.status.lastAction.error;
+-  }
+-})(),
++actionError: container.status.lastAction?.state === &#39;Failed&#39;
++  ? container.status.lastAction.error
++  : undefined,</code></pre>
+    <p>If S1 is taken, this collapses further into a pair of straight property reads.</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><em></em>Reads from <code>status.lastAction</code> instead of the patch promise<em></em> <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> (in-scope) — Action failures arrive asynchronously through the lastAction subresource, so a <code>.catch</code> on the patch request would never see them. The PR honors that contract.</li>
+      <li><em></em>Reuses <code>BadgeState</code>&#39;s existing <code>icon</code> prop<em></em> <span class="pill pill-claude">Claude</span> (in-scope) — The badge component already accepts an icon string; the PR uses it directly rather than introducing a parallel widget.</li>
+      <li><em></em>Tooltip wiring matches the established <code>{ content: undefined }</code> pattern<em></em> <span class="pill pill-claude">Claude</span> (in-scope) — <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/pages/Volumes.vue#L48"><code>pkg/rancher-desktop/pages/Volumes.vue:48</code></a> and <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/pkg/rancher-desktop/pages/Containers.vue#L441-L447"><code>pkg/rancher-desktop/pages/Containers.vue:441-447</code></a> already exercise FloatingVue&#39;s no-tooltip-when-undefined behavior, so the new caller relies on a code path the page already proves.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>No unit, component, or e2e test covers the new badge decoration. This matches the rest of <code>pkg/rancher-desktop/pages/</code> (no Vue page carries a <code>.spec.ts</code>), and the existing containers e2e suite at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/7e9420a141de0838851b2aa67bb27fbb89372606/e2e/containers.e2e.spec.ts#L13"><code>e2e/containers.e2e.spec.ts:13</code></a> is gated with <code>test.describe.fixme</code>. The gap is therefore consistent with surrounding practice rather than a regression introduced by this PR.</p>
+    <p>Risk-ranked untested scenarios:</p>
+    <ol>
+      <li><em></em><code>Failed</code> with no <code>error</code><em></em> — covered by S1; the renderer silently shows nothing.</li>
+      <li><strong>List/detail parity</strong> — covered by I1; only the table reflects the failure.</li>
+      <li><strong>State transitions</strong> — <code>Failed → Succeeded</code> clears the icon (visible by reading the template; no automated assertion).</li>
+      <li><strong>Stale failure</strong> — <code>lastAction</code> persists until the next action overwrites it (per the CRD docstring), so a long-since-failed action keeps the indicator. By design, but worth a Playwright assertion in a follow-up.</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>No user-facing documentation needs updating. <code>BadgeState.icon</code>, <code>v-tooltip</code>, and the <code>LastAction</code> schema are all documented at their definition sites.</p>
+    </div>
+    <hr>
+    <h2 id="commit-structure">Commit Structure <a href="#commit-structure" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>One commit, one file, one narrowly scoped change. The commit message describes both the trigger (<code>lastAction.state === &#39;Failed&#39;</code>) and the user-visible effect (icon plus tooltip).</p>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="claude"><span class="pill pill-claude">Claude</span> <a href="#claude" class="pilcrow">&#182;</a></h3>
+    <p>Claude produced the fullest writeup, with three suggestions, the most detailed design-observation list, and the cleanest verification trail (read the generated <code>LastAction</code> model, traced the <code>v-tooltip</code> precedent in <code>Volumes.vue</code> and <code>Images.vue</code>, and confirmed <code>BadgeState.icon</code> exists in <code>@rancher/components</code>). It missed the page-header parity issue that both other agents caught — a notable gap given the repo context&#39;s &quot;Indirect component consumers&quot; guidance specifically calls out this pattern. Strong on first-order correctness inside the diff, weak on tracing outward to indirect consumers.</p>
+    <h3 id="codex"><span class="pill pill-codex">Codex</span> <a href="#codex" class="pilcrow">&#182;</a></h3>
+    <p>Codex was the most disciplined reporter: tight headings, every finding tied to a file:line citation, and a long Acknowledged Limitations block that connected this PR to the prior-round PR <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/50" class="gh-ref" data-title="Containers: implement pause/unpause/restart" data-state="merged" data-type="pr">#50</a> commentary. It caught the I1 page-header parity issue cleanly. Its one suggestion (the optional-error gap) lined up with Claude&#39;s S1, though Codex labeled it as a regression, which the consolidator downgraded to a coverage gap.</p>
+    <h3 id="gemini"><span class="pill pill-gemini">Gemini</span> <a href="#gemini" class="pilcrow">&#182;</a></h3>
+    <p>Gemini produced the shortest review and the only one that mislabeled the file scope (&quot;ContainerInfo.vue: Trivial&quot; — that file is not modified by this commit; the GitHub PR-vs-main file list misled it). It caught the I1 issue and matched Claude&#39;s IIFE-style suggestion. As is standard for this repo, Gemini did not run <code>git blame</code> (daily quota), so any regression-vs-pre-existing distinction came from Claude and Codex.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.7</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>6m 40s</td><td>4m 43s</td><td>—</td></tr>
+        <tr><td>Findings</td><td>3S</td><td>1I 1S</td><td>1I 1S</td></tr>
+        <tr><td>Tool calls</td><td>48 (Bash 35, Grep 9, Read 4)</td><td>41 (shell 41)</td><td>—</td></tr>
+        <tr><td>Design observations</td><td>3</td><td>1</td><td>0</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>Files reviewed</td><td>3</td><td>3</td><td>4</td></tr>
+        <tr><td>Coverage misses</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>3S</strong></td><td><strong>1I 1S</strong></td><td><strong>1I 1S</strong></td></tr>
+        <tr><td>Downgraded</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Reconciliation</strong></p>
+    <ul>
+      <li>Codex P1 S1 (icon depends on optional error): regression → suggestion (gap). Reason: pre-existing behavior was no error indication, so this PR&#39;s partial coverage is a gap, not a regression.</li>
+    </ul>
+    <p>Claude was the strongest reviewer for this PR despite missing I1 — its findings were each independently grounded and its design-observation list was the most useful. Codex was the most efficient: every word it wrote pulled weight. Gemini provided independent confirmation of I1, which was the most consequential finding, even though its individual finding count was the lowest.</p>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="skill-improvements">Skill improvements <a href="#skill-improvements" class="pilcrow">&#182;</a></h3>
+    <p>None worth raising. The repo-context &quot;Indirect component consumers&quot; rule already covers the pattern that produced I1; Claude simply did not apply it. That is model behavior, not a prompt gap.</p>
+    <h3 id="repo-context-updates">Repo context updates <a href="#repo-context-updates" class="pilcrow">&#182;</a></h3>
+    <p>None. The existing entry on indirect component consumers fired correctly here (Codex and Gemini both caught the missing header update by following it). No stale entries surfaced during this review.</p>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
