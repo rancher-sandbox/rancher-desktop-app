@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260528-233502-pr-59</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+.pill-qwen { background: #fed7aa; color: #9a3412; }
+.pill-gemma { background: #fef9c3; color: #854d0e; }
+.pill-glm { background: #cffafe; color: #155e75; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Supply-chain Summary table — first column gets breathing room,
+ * numeric middle columns center, header keeps its label on one line. */
+.summary-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0 0.8rem; font-size: 0.92rem; }
+.summary-table th, .summary-table td {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #d5d9e0;
+  vertical-align: top;
+  text-align: left;
+}
+.summary-table th { background: rgba(255, 255, 255, 0.65); font-weight: 600; white-space: nowrap; }
+.summary-table td:first-child { min-width: 11rem; white-space: nowrap; }
+.summary-table th:not(:first-child):not(:last-child),
+.summary-table td:not(:first-child):not(:last-child) { text-align: center; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Supply-chain issue rows — used by issueList for bullets that
+ * uniformly start with a `file:line` reference. The location renders
+ * in a dark bar above the description so the eye picks up the path
+ * separately from the prose. */
+.issue-list { margin: 0.6rem 0; }
+.issue-row {
+  margin-bottom: 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.55);
+}
+.issue-loc {
+  background: #2d333b;
+  color: #adbac7;
+  padding: 0.3rem 0.7rem;
+  font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+}
+.issue-loc a { color: #7ee787; text-decoration: none; }
+.issue-loc a:hover { text-decoration: underline; }
+.issue-loc code { background: none; padding: 0; color: inherit; font-size: 1em; }
+.issue-desc { padding: 0.55rem 0.8rem; }
+.issue-desc code { font-size: 0.85em; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260528-233502-pr-59</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-05-28 23:35</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+      <tr><td>Round</td><td>1 (of pr-59)</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/59" class="gh-ref" data-title="Merge Rancher Desktop changes up to 85e5b671a80e2d7916009ba3a6f31fe5e78d17cd" data-state="open" data-type="pr">#59</a> — Merge Rancher Desktop changes up to 85e5b671a</td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/104aba371"><code>104aba371</code></a> Fix merge errors<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7b9d1cdde"><code>7b9d1cdde</code></a> Merge upstream/main into upstream/2026-05-27<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/85e5b671a"><code>85e5b671a</code></a> Merge <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/10249" class="gh-ref">#10249</a> deskboard/steve-embedded</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.8 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Rework</span> &mdash; a guaranteed runtime crash on the default container view, a broken dependency tool that fails CI lint, and the headline dashboard feature unresolvable in packaged builds</td></tr>
+      <tr><td>Wall-clock time</td><td><code>26 min 35 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>This large upstream merge moves the dashboard onto an embedded steve server (resolves <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/27" class="gh-ref" data-title="Restore feature: Dashboard" data-state="open" data-type="issue">#27</a>) and folds in many upstream fixes. Several merge artifacts ship broken: the container Info tab (now the default tab) throws on open against store API that no longer exists; <code>scripts/dependencies/global.ts</code> imports modules that were never split out, failing CI lint and <code>yarn rddepman</code>; the new steve binary resolves to the wrong packaged path; and the new seccomp injection is bypassable by valid flag orderings.</p>
+    <p>All three reviewers independently flagged the Info-tab crash. Codex caught the packaged-path and electron-manifest issues; Gemini alone caught the seccomp bypass; Claude alone caught the download-overwrite regression and the extension-URL hardening gap. One Gemini finding (dashboard.ts unhandled rejection) was a false positive against code that does not exist in the file.</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+      <div class="finding-title" id="C1">
+        <span class="finding-num">C1.</span> Container Info tab throws against nonexistent store API <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#C1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/components/ContainerInspect.vue#L253-L263">pkg/rancher-desktop/components/ContainerInspect.vue</a></div>
+      <pre data-start="253" data-line="258"><code class="language-ts">
+&lt;script setup lang=&quot;ts&quot;&gt;
+import { ref, computed, watch } from &#39;vue&#39;;
+import { useStore } from &#39;vuex&#39;;
+
+import type { ContainerInspectData } from &#39;@pkg/store/container-engine&#39;;
+
+const props = defineProps&lt;{
+  containerId: string;
+  namespace:   string | undefined;
+}&gt;();</code></pre>
+    <p>The merge rewrote <code>container-engine.ts</code> to the RDD resource-watch pattern (state at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/store/container-engine.ts#L53"><code>store/container-engine.ts:53</code></a>), but the upstream docker-inspect surface never came with it: <code>inspectData</code>, <code>fetchContainerInspect</code>, and <code>ContainerInspectData</code> exist only in <code>ContainerInspect.vue</code>. At runtime <code>store.state[&#39;container-engine&#39;].inspectData</code> is <code>undefined</code>, so <code>inspectData[props.containerId]</code> throws <code>TypeError</code> in the <code>data</code> computed (line 267). <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L154"><code>ContainerInfo.vue:154</code></a> defaults <code>activeTab</code> to <code>&#39;tab-info&#39;</code> and <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L103"><code>ContainerInfo.vue:103</code></a> renders <code>&lt;container-inspect&gt;</code> for that tab, so every container detail view crashes on open. No <code>vue-tsc</code> typecheck and a <code>fixme</code>&#39;d e2e suite let it through.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/store/container-engine.ts#L48-L58">pkg/rancher-desktop/store/container-engine.ts</a></div>
+      <pre data-start="48" data-line="53"><code class="language-typescript">  }),
+] as const;
+
+type resourceNames = ResourceNames&lt;typeof resources&gt;;
+
+export const state = () =&gt; ({
+  ...resourceState(resources),
+  currentNamespace: undefined as string | undefined,
+  error:            undefined as undefined | { error: Error, source: resourceNames },
+});
+</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L98-L108">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+      <pre data-start="98" data-line="103"><code class="language-markup">            /&gt;
+          &lt;/button&gt;
+        &lt;/li&gt;
+      &lt;/template&gt;
+      &lt;div class=&quot;tab-content&quot;&gt;
+        &lt;container-inspect
+          v-if=&quot;containerId &amp;&amp; activeTab === &#39;tab-info&#39;&quot;
+          :container-id=&quot;containerId&quot;
+          :namespace=&quot;namespace&quot;
+        /&gt;
+        &lt;container-logs</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L149-L159">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+      <pre data-start="149" data-line="154"><code class="language-markup">const containerShell = ref&lt;InstanceType&lt;typeof ContainerShell&gt; | null&gt;(null);
+const searchInput = ref&lt;HTMLInputElement | null&gt;(null);
+
+// Reactive data
+const searchTerm = ref(&#39;&#39;);
+const activeTab = ref&lt;&#39;tab-info&#39; | &#39;tab-logs&#39; | &#39;tab-shell&#39;&gt;(&#39;tab-info&#39;);
+const shellEverActivated = ref(false);
+
+// Vuex integration
+const supportsNamespaces = computed(() =&gt; store.getters[&#39;container-engine/supportsNamespaces&#39;]);
+const namespace = computed(() =&gt; store.getters[&#39;container-engine/currentNamespace&#39;]);</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/components/ContainerInspect.vue#L262-L272">pkg/rancher-desktop/components/ContainerInspect.vue</a></div>
+      <pre data-start="262" data-line="267"><code class="language-markup">  namespace:   string | undefined;
+}&gt;();
+
+const store = useStore();
+const data = computed&lt;ContainerInspectData | undefined&gt;(
+  () =&gt; store.state[&#39;container-engine&#39;].inspectData[props.containerId],
+);
+const loading = ref(true);
+const error = ref&lt;string | null&gt;(null);
+
+const fetchInspect = async() =&gt; {</code></pre>
+    <p>Fix: port the inspect path into <code>container-engine.ts</code> (add <code>inspectData</code> state, a <code>fetchContainerInspect</code> action over the RDD/container API, and export <code>ContainerInspectData</code>), or drop the Info tab until the store backing exists.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> <code>global.ts</code> imports modules and classes that do not exist <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/dependencies/global.ts#L4-L39">scripts/dependencies/global.ts</a></div>
+      <pre data-start="4" data-line="9-38"><code class="language-ts">import { Electron } from &#39;@/scripts/dependencies/electron&#39;;
+import * as tools from &#39;@/scripts/dependencies/tools&#39;;
+import { Wix } from &#39;@/scripts/dependencies/wix&#39;;
+import { VersionedDependency } from &#39;@/scripts/lib/dependencies&#39;;
+
+import { AlpineLimaISO, Lima, Qemu, SocketVMNet } from &#39;@/scripts/dependencies/lima&#39;;
+import { MobyOpenAPISpec } from &#39;@/scripts/dependencies/moby-openapi&#39;;
+import { Moproxy, WSLDistro } from &#39;@/scripts/dependencies/wsl&#39;;
+
+export const globalDependencies: VersionedDependency[] = [
+  new tools.KuberlrAndKubectl(),
+  new tools.Helm(),
+  new tools.DockerCLI(),
+  new tools.DockerBuildx(),
+  new tools.DockerCompose(),
+  new tools.DockerProvidedCredHelpers(),
+  new tools.GoLangCILint(),
+  new tools.CheckSpelling(),
+  new tools.Trivy(),
+  new tools.Steve(),
+  new tools.ECRCredHelper(),
+  new Lima(),
+  new Qemu(),
+  new SocketVMNet(),
+  new AlpineLimaISO(),
+  new WSLDistro(),
+  new Wix(),
+  new MobyOpenAPISpec(),
+  new Moproxy(),
+  new Electron(),
+  new tools.WasmShims(),
+  new tools.CertManager(),
+  new tools.SpinOperator(),
+  new tools.SpinCLI(),
+  new tools.SpinKubePlugin(),
+];</code></pre>
+    <p><code>scripts/dependencies/</code> has no <code>lima.ts</code>, <code>moby-openapi.ts</code>, or <code>wsl.ts</code>, and <code>tools.ts</code> exports only <code>GoLangCILint</code>, <code>CheckSpelling</code>, and <code>Steve</code> — not the 13 <code>tools.*</code> classes referenced at lines 14-38. The file is new in this PR and <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/rddepman.ts#L10"><code>rddepman.ts:10</code></a> imports <code>globalDependencies</code>. <code>tsconfig.json</code> includes <code>**/*</code>, so <code>yarn lint:nofix</code> (run by <code>test.yaml</code>) fails the TypeScript check, and the scheduled <code>rddepman.yaml</code> job fails at module load. The shipped app is unaffected — <code>postinstall.ts</code> references only existing classes. Codex rated this critical (CI blocker); Claude rated it important (tooling, not product runtime).</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/rddepman.ts#L5-L15">scripts/rddepman.ts</a></div>
+      <pre data-start="5" data-line="10"><code class="language-typescript">import { Octokit } from &#39;octokit&#39;;
+import semver from &#39;semver&#39;;
+
+import { getExtensions } from &#39;./lib/extension-data&#39;;
+
+import { globalDependencies } from &#39;@/scripts/dependencies/global&#39;;
+import {
+  getOctokit,
+  iterateIterator,
+  GitHubDependency,
+  Version,</code></pre>
+    <p>Fix: reduce <code>globalDependencies</code> to the dependencies this fork manages (<code>GoLangCILint</code>, <code>CheckSpelling</code>, <code>Steve</code>, <code>Wix</code>, <code>Electron</code>, plus extensions) and delete the dead imports. Add a smoke test that imports <code>rddepman.ts</code>.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I2">
+        <span class="finding-num">I2.</span> <code>downloadTarGZ</code>/<code>downloadZip</code> overwrite the destination unconditionally <span class="pill pill-claude">Claude</span><a href="#I2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/lib/download.ts#L218-L246">scripts/lib/download.ts</a></div>
+      <pre data-start="218" data-line="223-241"><code class="language-ts">  // Re-extract on every postinstall so destPath always reflects the
+  // current archive, even after a version bump that re-downloaded
+  // tgzPath above.  copyFile overwrites destPath unconditionally,
+  // so a postinstall run while Rancher Desktop or another shell
+  // holds the binary fails with EBUSY/EPERM on Windows or ETXTBSY
+  // on Linux.
+  const workDir = fs.mkdtempSync(path.join(os.tmpdir(), `rd-${ path.basename(destPath, &#39;.exe&#39;) }-`));
+  const args = [&#39;tar&#39;, &#39;-zxf&#39;, tgzPath, &#39;--directory&#39;, workDir, fileToExtract];
+
+  try {
+    if (os.platform().startsWith(&#39;win&#39;)) {
+      // On Windows, force use the bundled bsdtar.
+      // We may find GNU tar on the path, which looks at the Windows-style path
+      // and considers C:\Temp to be a reference to a remote host named `C`.
+      const systemRoot = process.env.SystemRoot;
+
+      if (!systemRoot) {
+        throw new Error(&#39;Could not find system root&#39;);
+      }
+      args[0] = path.join(systemRoot, &#39;system32&#39;, &#39;tar.exe&#39;);
+    }
+    await simpleSpawn(args[0], args.slice(1));
+    await fs.promises.copyFile(path.join(workDir, fileToExtract), destPath);
+    await fs.promises.chmod(destPath, mode);
+  } finally {
+    fs.rmSync(workDir, { recursive: true, maxRetries: 10 });
+  }
+
+  return destPath;</code></pre>
+    <p>At the merge-base, both functions returned early when <code>destPath</code> existed (default <code>overwrite=false</code>), never touching a held binary. The refactor dropped that guard and now re-extracts and copies onto <code>destPath</code> on every postinstall. The comment predicts the exact failure (EBUSY/EPERM on Windows, ETXTBSY on Linux), so it is acknowledged — but the change makes a previously-absent failure happen on every run, which promotes it past the acknowledgment gate. The refactor does fix a real bug (stale binary after a version bump), so reverting wholesale is wrong.</p>
+    <p>Fix: skip the extract/copy when <code>destPath</code> exists and <code>download()</code> was a cache hit (archive unchanged); re-extract only when the archive was re-fetched. This needs <code>download()</code> to signal whether it re-downloaded.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I3">
+        <span class="finding-num">I3.</span> Packaged steve binary resolves one directory above where it is bundled <span class="pill pill-codex">Codex</span><a href="#I3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/backend/steve.ts#L78-L88">pkg/rancher-desktop/backend/steve.ts</a></div>
+      <pre data-start="78" data-line="83"><code class="language-ts">      console.warn(`Steve process is running without a port. Restarting...`);
+      this.stop();
+    }
+
+    const osSpecificName = /^win/i.test(os.platform()) ? &#39;steve.exe&#39; : &#39;steve&#39;;
+    const stevePath = path.join(paths.resources, os.platform(), &#39;internal&#39;, osSpecificName);
+    const childProcess = spawn(stevePath, [&#39;--context&#39;, &#39;rancher-desktop-2&#39;],
+      { stdio: [&#39;ignore&#39;, &#39;pipe&#39;, &#39;pipe&#39;], windowsHide: true });
+    this.process = childProcess;
+
+    const { stdout, stderr } = childProcess;</code></pre>
+    <p><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/packaging/electron-builder.yml#L11"><code>electron-builder.yml:11</code></a> packages the local <code>resources/</code> directory via <code>extraResources: - resources/</code>, landing files at <code>&lt;resourcesPath&gt;/resources/…</code>. But <code>paths.resources</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/utils/paths.ts#L143-L144"><code>utils/paths.ts:143-144</code></a>) returns bare <code>process.resourcesPath</code> when packaged, while <code>getRDDPath</code> in the same file (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/utils/paths.ts#L66"><code>paths.ts:66</code></a>) joins <code>process.resourcesPath, &#39;resources&#39;, …</code>. The new steve consumer therefore looks in <code>&lt;resourcesPath&gt;/&lt;platform&gt;/internal/steve</code> rather than <code>&lt;resourcesPath&gt;/resources/&lt;platform&gt;/internal/steve</code>, so a packaged build cannot start the dashboard — the headline feature. The <code>getRDDPath</code> special-case is the tell that the shared getter is inconsistent; the same getter also feeds tray icons, <code>preload.js</code>, and bin paths, so verify the fix against a real packaged build before changing the getter.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/packaging/electron-builder.yml#L6-L16">packaging/electron-builder.yml</a></div>
+      <pre data-start="6" data-line="11"><code class="language-yaml">asar: true
+asarUnpack:
+- &#39;**/*.node&#39;
+electronLanguages: [ en-US ]
+extraResources:
+- resources/
+- &#39;!resources/darwin/lima*.tgz&#39;
+- &#39;!resources/darwin/qemu*.tgz&#39;
+- &#39;!resources/linux/lima*.tgz&#39;
+- &#39;!resources/linux/qemu*.tgz&#39;
+- &#39;!resources/linux/staging/&#39;</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/utils/paths.ts#L138-L149">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="138" data-line="143-144"><code class="language-typescript">/**
+ * Paths which do not depend on the platform.
+ */
+const platformAgnosticPaths: PlatformAgnosticPaths = {
+  get resources() {
+    if (electron.app?.isPackaged) {
+      return process.resourcesPath;
+    }
+    // In `yarn dev`, `process.resourcesPath` is
+    // `.../Electron.app/Contents/Resources` (and other similar paths on other
+    // platforms); we need to use the project directory instead.
+    return path.join(process.cwd(), &#39;resources&#39;);</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/utils/paths.ts#L61-L71">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="61" data-line="66"><code class="language-typescript">    return cachedRDDPath;
+  }
+
+  cachedRDDPath = (() =&gt; {
+    if (electron.app?.isPackaged) {
+      const packagedPath = path.join(
+        process.resourcesPath, &#39;resources&#39;, process.platform, &#39;bin&#39;, exeName);
+      try {
+        fs.accessSync(packagedPath, fs.constants.X_OK);
+        return packagedPath;
+      } catch { /* ignore */ }</code></pre>
+    <p>Fix: align <code>paths.resources</code> with <code>getRDDPath</code> (join <code>&#39;resources&#39;</code> when packaged) and audit the other consumers, or join <code>&#39;resources&#39;</code> locally in <code>steve.ts</code>. Update <code>paths.spec.ts</code> to assert the packaged suffix.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I4">
+        <span class="finding-num">I4.</span> Seccomp injection is bypassable by valid flag orderings <span class="pill pill-gemini">Gemini</span><a href="#I4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/src/go/nerdctl-stub/seccomp.go#L44-L74">src/go/nerdctl-stub/seccomp.go</a></div>
+      <pre data-start="44" data-line="49-73"><code class="language-go">func seccompInjectionPos(args []string) int {
+	rootOpts := commands[&quot;&quot;].options
+
+	// Skip over global flags (and their values) to reach the subcommand.
+	i := 0
+	for i &lt; len(args) &amp;&amp; strings.HasPrefix(args[i], &quot;-&quot;) {
+		flag := args[i]
+		if strings.Contains(flag, &quot;=&quot;) {
+			i++ // --flag=value: value is inline, no extra element
+		} else if handler, ok := rootOpts[flag]; ok &amp;&amp; handler != nil {
+			i += 2 // flag takes a separate value argument
+		} else {
+			i++ // boolean flag
+		}
+	}
+
+	if i &gt;= len(args) {
+		return -1
+	}
+
+	switch args[i] {
+	case runCmd, createCmd:
+		return i + 1
+	case containerCmd:
+		// &quot;container&quot; has no options of its own; the next element is the subcommand.
+		if i+1 &lt; len(args) &amp;&amp; (args[i+1] == runCmd || args[i+1] == createCmd) {
+			return i + 2
+		}
+	}
+	return -1
+}</code></pre>
+    <p><code>seccompInjectionPos</code> re-scans args with a simplified loop instead of reusing the structure <code>parse()</code> built. A global flag between <code>container</code> and <code>run</code> defeats it: <code>nerdctl container --namespace default run alpine</code> reconstructs (via <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/src/go/nerdctl-stub/parse_args.go#L254"><code>parse_args.go:254</code></a>) to <code>[&quot;container&quot;,&quot;--namespace&quot;,&quot;default&quot;,&quot;run&quot;,…]</code>, and the <code>containerCmd</code> branch requires <code>run</code> immediately after <code>container</code>, returns <code>-1</code>, and skips injection. Bunched short flags taking a value (<code>-dn value</code>) fail the same way. The Docker seccomp profile then silently does not apply, weakening the CVE mitigation. Common forms work, and the user can disable seccomp anyway, so this is important, not critical. New in this PR and untested — <code>seccomp_test.go</code> has no interspersed-flag case.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/src/go/nerdctl-stub/parse_args.go#L249-L259">src/go/nerdctl-stub/parse_args.go</a></div>
+      <pre data-start="249" data-line="254"><code class="language-go">	result, err := commands[&quot;&quot;].parse(os.Args[1:])
+	if err != nil {
+		_ = cleanupParseArgs()
+		return nil, err
+	}
+	result.args = injectSeccompOpt(result.args)
+	return result, nil
+}
+
+// ignoredArgHandler handles arguments that do not contain paths.
+func ignoredArgHandler(input string) (string, []cleanupFunc, error) {</code></pre>
+    <p>Fix: derive the injection point from the parsed command structure rather than re-scanning, or handle flags between <code>container</code> and the subcommand plus bunched short options. Add test cases for both orderings.</p>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> ContainerInspect ignores namespace changes and masks fetch errors <span class="pill pill-claude">Claude</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/components/ContainerInspect.vue#L286-L296">pkg/rancher-desktop/components/ContainerInspect.vue</a></div>
+      <pre data-start="286" data-line="291"><code class="language-ts">  } finally {
+    loading.value = false;
+  }
+};
+
+watch(() =&gt; props.containerId, fetchInspect, { immediate: true });
+
+// Computed helpers
+const displayName = computed(() =&gt; (data.value?.Name ?? &#39;&#39;).replace(/^\//, &#39;&#39;));
+const shortId = computed(() =&gt; (data.value?.Id ?? &#39;&#39;).substring(0, 12));
+const envVars = computed(() =&gt; data.value?.Config.Env ?? []);</code></pre>
+    <p>The watcher keys only on <code>props.containerId</code>, but <code>fetchInspect</code> also reads <code>props.namespace</code>; a namespace change with the same id will not refetch. Separately, <code>data</code> is a store-backed computed, so a failed refetch sets <code>error.value</code> while the template still renders the previous container&#39;s data (the error branch shows only when <code>data</code> is falsy), hiding the failure. This matters once C1 is fixed.</p>
+    <p>Fix: <code>watch([() =&gt; props.containerId, () =&gt; props.namespace], fetchInspect, { immediate: true })</code>, and scope <code>data</code> to the current id so a failed fetch surfaces the error.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> Extension-supplied URL goes into an <code>href</code> without scheme validation <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/pages/extensions/installed.vue#L112-L132">pkg/rancher-desktop/pages/extensions/installed.vue</a></div>
+      <pre data-start="112" data-line="117-127"><code class="language-ts">    },
+    extensionDescription(ext: { labels?: Record&lt;string, string&gt; }): string {
+      return this.extensionLabel(ext, LABEL_DESCRIPTION);
+    },
+    extensionLink(ext: ExtensionMetadataSource): string {
+      const preferredURL = this.extensionLabel(ext, LABEL_MORE_INFO);
+
+      if (preferredURL) {
+        return preferredURL;
+      }
+
+      if (!/^[^./]+\//.test(ext.id)) {
+        return `https://${ ext.id }`;
+      }
+
+      return `https://hub.docker.com/extensions/${ ext.id }`;
+    },
+    browseExtensions() {
+      this.$emit(&#39;click:browse&#39;);
+    },
+    async uninstall(installed: ExtensionState) {</code></pre>
+    <p><code>extensionLink</code> returns the <code>io.rancherdesktop.extension.more-info</code> label verbatim and the template binds it to <code>:href=&quot;row.moreInfo&quot;</code> with <code>target=&quot;_blank&quot;</code>. <code>rel=&quot;noopener noreferrer&quot;</code> is set, but the scheme is unconstrained, so a malicious or typo&#39;d label could yield a <code>javascript:</code> or <code>file:</code> href. Installed extensions are semi-trusted, so the risk is low.</p>
+    <p>Fix: validate the scheme in <code>extensionLink</code> and fall back to the docker-hub URL for anything that is not <code>http:</code>/<code>https:</code>.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> Electron manifest version lags <code>package.json</code> <span class="pill pill-codex">Codex</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+    <p><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/package.json#L131"><code>package.json:131</code></a> installs Electron <code>42.2.0</code> while <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/assets/dependencies.yaml#L23"><code>dependencies.yaml:23</code></a> still records <code>42.1.0</code>. The download is <strong>not</strong> unverified: <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/dependencies/electron.ts#L66"><code>electron.ts:66</code></a> always checks the archive against electron&#39;s own bundled <code>checksums.json</code>. Only the recorded-vs-upstream cross-check (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/dependencies/electron.ts#L56"><code>electron.ts:56</code></a>) is skipped when versions differ, and the comment at <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/dependencies/electron.ts#L26-L31"><code>electron.ts:26-31</code></a> documents this dependabot-window lag as intentional. The residual concern is that the window stays open until <code>rddepman</code> (broken by I1) is fixed and rerun.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/package.json#L126-L136">package.json</a></div>
+      <pre data-start="126" data-line="131"><code class="language-json">    &quot;babel-loader&quot;: &quot;10.1.1&quot;,
+    &quot;cross-env&quot;: &quot;10.1.0&quot;,
+    &quot;cross-spawn&quot;: &quot;7.0.6&quot;,
+    &quot;css-loader&quot;: &quot;7.1.4&quot;,
+    &quot;ejs&quot;: &quot;5.0.2&quot;,
+    &quot;electron&quot;: &quot;42.2.0&quot;,
+    &quot;electron-builder&quot;: &quot;26.8.1&quot;,
+    &quot;eslint&quot;: &quot;10.4.0&quot;,
+    &quot;eslint-plugin-vue&quot;: &quot;10.9.1&quot;,
+    &quot;extract-zip&quot;: &quot;2.0.1&quot;,
+    &quot;glob&quot;: &quot;^13.0.3&quot;,</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/assets/dependencies.yaml#L18-L28">pkg/rancher-desktop/assets/dependencies.yaml</a></div>
+      <pre data-start="18" data-line="23"><code class="language-yaml">  checksums:
+    qemu-9.2.0.rd2-darwin-x86_64.tar.gz: sha256:c25f85aa32993b1974705a21515890a66a72f773d2f1a01758c207d827ace47d
+    qemu-9.2.0.rd2-darwin-aarch64.tar.gz: sha256:1e65ce4c9c15da404732b446d434f05b373438d9a9ebf01a6082b3634cb0b3b1
+    qemu-9.2.0.rd2-linux-x86_64.tar.gz: sha256:03c39317c9c87118853e4261d0fd082a724ef9617196b2921519a4e4794e9e8d
+electron:
+  version: 42.1.0
+  checksums:
+    electron-v42.1.0-darwin-x64.zip: sha256:63b938cbe6696f67f172d8f7cb6c31a58c38853d03d33f047fcba8c628cc700f
+    electron-v42.1.0-darwin-arm64.zip: sha256:98d097299eb08094d0df3312b2d6e8677069d8defdab891143628d4f82f46117
+    electron-v42.1.0-linux-x64.zip: sha256:882047343a9e203c6cfc5d39b166ea9e025dd256943e0d3711f86725ad0e3bd9
+    electron-v42.1.0-linux-arm64.zip: sha256:1e700f7f3daef794cc45235e51c1172664aed49a4e7737b8896ddc398bff4d7d</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/dependencies/electron.ts#L21-L36">scripts/dependencies/electron.ts</a></div>
+      <pre data-start="21" data-line="26-31"><code class="language-typescript">  private get version(): Promise&lt;string&gt; {
+    return import(&#39;electron/package.json&#39;).then(({ version }) =&gt; version);
+  }
+
+  async download(context: DownloadContext): Promise&lt;void&gt; {
+    // We don&#39;t actually use the version or checksums we recorded; instead, we
+    // use the ones embedded from the electron package.  This is to avoid errors
+    // running `yarn install` in the dependabot PRs where `package.json`
+    // has been updated but before the next rddepman run (where we update the
+    // checksums).  However, we can at least check if the versions match, and if
+    // yes, that the checksum is correct.
+    const arch = context.isM1 ? &#39;arm64&#39; : &#39;x64&#39;;
+    const version = await this.version;
+    const { checksums: recordedChecksums, version: recordedVersion } = context.dependencies.electron;
+    const baseURL = this.getBaseURL(version);
+    const archiveName = `electron-v${ version }-${ context.platform }-${ arch }.zip`;</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/dependencies/electron.ts#L51-L71">scripts/dependencies/electron.ts</a></div>
+      <pre data-start="51" data-line="56-66"><code class="language-typescript">      throw new Error(`Upstream checksum is missing for ${ archiveName }`);
+    }
+    // If the version in the dependency manifest matches the version installed
+    // via `package.json`, check that the recorded checksum matches the upstream
+    // checksum; this ensures upstream hasn&#39;t been tampered with.
+    if (recordedVersion === version) {
+      const recordedChecksum = recordedChecksums[archiveName]?.replace(/^.*?:/, &#39;&#39;);
+      if (recordedChecksum !== expectedChecksum) {
+        throw new Error(`
+          Upstream checksum for Electron archive ${ archiveName }
+          is ${ expectedChecksum }, does not match recorded checksum ${ recordedChecksum }.
+          `.replace(/\s+/g, &#39; &#39;));
+      }
+    }
+
+    await download(url, archivePath, { expectedChecksum });
+    await simpleSpawn(&#39;unzip&#39;, [&#39;-q&#39;, &#39;-o&#39;, archivePath, &#39;-d&#39;, outPath]);
+    await fs.promises.access(path.join(outPath, executable), fs.constants.X_OK);
+    // @electron/get writes this marker file to indicate that the download is complete.
+    await fs.promises.writeFile(path.join(path.dirname(outPath), &#39;path.txt&#39;), executable);
+  }</code></pre>
+    <p>Fix: after restoring <code>rddepman</code> (I1), regenerate the electron entry so the manifest catches up to <code>42.2.0</code>. Consider a CI guard for package/manifest parity.</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="concerns">Concerns <a href="#concerns" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Centralize packaged resource-path handling</strong> <code>(in-scope)</code> <span class="pill pill-codex">Codex</span> — I3 should be fixed in <code>paths.resources</code>, not locally in <code>steve.ts</code>, so every asset consumer resolves the same packaged directory. <code>getRDDPath</code> already special-cases the <code>resources</code> join, which is the inconsistency to remove.</li>
+      <li><strong>Stale namespace mapping</strong> <code>(future)</code> <span class="pill pill-gemini">Gemini</span> — <code>pages/Images.vue</code> still maps the namespace from <code>rdd-connection</code> (<code>mapTypedState(&#39;rdd-connection&#39;, { kubeNamespace: &#39;namespace&#39; })</code>). The <code>rdd/kubernetesNamespace</code> getter is now the source of truth; this and similar references should repoint at it. Pre-existing, outside this PR.</li>
+    </ul>
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Steve readiness probe</strong> <code>(in-scope)</code> <span class="pill pill-codex">Codex</span> <span class="pill pill-claude">Claude</span> — <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/backend/steve.ts#L215"><code>steve.ts:215</code></a> waits on <code>/v1/namespaces</code> rather than treating an open port as ready, so the dashboard does not load before the schema controllers register.</li>
+      <li><strong>Digest-pinned downloads</strong> <code>(in-scope)</code> <span class="pill pill-claude">Claude</span> — <code>scripts/lib/dependencies.ts</code> hashes the as-downloaded bytes before any local mutation, and <code>fetchUpstreamChecksums</code> anchors hex width per algorithm and refuses basename aliases on collision.</li>
+      <li><strong>Updater hardening</strong> <code>(in-scope)</code> <span class="pill pill-claude">Claude</span> — <code>getSha512Sum</code> rejects non-128-hex bodies and <code>triggerUpdateCheck</code> rearms the timer after a transient failure, both with explanatory comments and unit tests.</li>
+      <li><strong>Container action flow</strong> <code>(in-scope)</code> <span class="pill pill-codex">Codex</span> — container actions use merge-patch annotations and report results through <code>status.lastAction</code>, preserving the asynchronous action-result contract.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ol>
+      <li><strong>The C1 crash is caught by no test.</strong> CI runs no <code>vue-tsc</code>/type-check over <code>.vue</code> files, the Container Info e2e suite is <code>test.describe.fixme(...)</code> (skipped), and <code>Containers.spec.ts</code> exercises only <code>getContainerActions</code>, never the Info-tab path.</li>
+      <li><strong>I1 has no test.</strong> A broken-import regression in <code>global.ts</code> surfaces only when <code>rddepman</code> runs. A smoke test that imports <code>globalDependencies</code> and constructs each entry would have caught it.</li>
+      <li><strong>The seccomp bypass (I4) is untested.</strong> <code>seccomp_test.go</code> covers <code>container run</code> but no interspersed-flag (<code>container --namespace x run</code>) or bunched-short-flag ordering.</li>
+      <li><strong>The held-binary path (I2) is untested.</strong> Neither the always-copy path nor the codesign cache-drop branch in <code>download.ts</code> has coverage.</li>
+      <li><strong>Packaged dashboard startup (I3) is untested.</strong> A package smoke test should assert steve resolves under <code>process.resourcesPath/resources</code>.</li>
+      <li>The dashboard and Container Info e2e suites must be un-<code>fixme</code>&#39;d once their backing code works, to cover the headline feature.</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p><code>ContainerInspect.vue</code> imports a documented type (<code>ContainerInspectData</code>) that does not exist, so the doc-level contract breaks with the runtime one (C1). <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/pkg/rancher-desktop/components/Nav.vue#L48"><code>Nav.vue:48</code></a> still carries a <code>TODO</code> pointing at issue <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/27" class="gh-ref" data-title="Restore feature: Dashboard" data-state="open" data-type="issue">#27</a>, which this PR resolves; remove it once the dashboard path works. The new dependency-manifest code is unusually well-commented.</p>
+    </div>
+    <hr>
+    <h2 id="commit-structure">Commit Structure <a href="#commit-structure" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>The branch tip <code>104aba371 &quot;Fix merge errors&quot;</code> is a fixup whose stated purpose is repairing merge breakage, yet it leaves C1, I1, and I3 unresolved — all squarely in its scope. Acceptable history hygiene for a large upstream merge, but these should be fixed before merge and folded into the relevant merge-resolution changes rather than deferred.</p>
+    </div>
+    <hr>
+    <h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><em></em><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/e2e/dashboard.e2e.spec.ts#L6"><code>e2e/dashboard.e2e.spec.ts:6</code></a><em></em> — <code>test.describe.fixme(&#39;Dashboard&#39;, …)</code>; dashboard e2e coverage is intentionally disabled for now.</li>
+      <li><strong>Container Info e2e suite</strong> — also <code>fixme</code>; intentionally disabled.</li>
+      <li><em></em><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/src/go/networking/cmd/host/switch_windows.go#L146"><code>src/go/networking/cmd/host/switch_windows.go:146</code></a><em></em> <span class="pill pill-codex">Codex</span> — a comment notes a nonce-exchange would be the more direct fix; the host-only workaround is deliberate and consistent with the surrounding code. (Outside the changed-files set.)</li>
+    </ul>
+    <p>&gt; The <code>download.ts</code> re-extract comment (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/104aba3711dba8ad46bbc5abe6130d910b1b8500/scripts/lib/download.ts#L218"><code>download.ts:218</code></a>) acknowledges the held-binary failure, but the change makes a previously-absent failure happen on every run, so it is raised as I2 rather than left here.</p>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p><strong>[Claude]</strong> — Produced the most complete coverage summary and the only two findings on the build tooling that nobody else raised: the download-overwrite regression (I2) and the extension-URL hardening gap (S2). It identified the packaged-path discrepancy but hedged it as a future design observation, where Codex committed to it as a bug (I3). It missed the seccomp bypass, marking <code>seccomp.go</code> clean. No false positives.</p>
+    <p><strong>[Codex]</strong> — Sharpest on build and release correctness: it uniquely caught the packaged steve path (I3) and the electron manifest lag, and rated the <code>global.ts</code> breakage critical for its CI impact. It over-stated the electron finding as a verification skip when the archive is still checksum-verified against electron&#39;s bundled digests, so it was downgraded to S3. It also missed the seccomp bypass. Evidence-led tracing throughout, with no false positives.</p>
+    <p><strong>[Gemini]</strong> — The only reviewer to catch the seccomp injection bypass (I4), a real security-mitigation gap the other two marked clean — its standout contribution. It also produced the review&#39;s only false positive (an unhandled-rejection claim quoted against <code>dashboard.ts</code> code that is not in the file) and listed the packaged-path handling as a strength, the exact inverse of Codex&#39;s correct I3. It skipped <code>git blame</code> (daily quota) and marked many changed files Trivial that the others reviewed, so its coverage was the thinnest.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.8</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>10m 06s</td><td>14m 08s</td><td>9m 37s</td></tr>
+        <tr><td>Findings</td><td>1C 2I 2S</td><td>1C 2I 1S</td><td>1C 1I</td></tr>
+        <tr><td>Tool calls</td><td>64 (Bash 48, Read 16)</td><td>107 (shell 106, plan 1)</td><td>—</td></tr>
+        <tr><td>Design observations</td><td>4</td><td>4</td><td>3</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>Unique insights</td><td>3</td><td>2</td><td>1</td></tr>
+        <tr><td>Files reviewed</td><td>109</td><td>109</td><td>109</td></tr>
+        <tr><td>Coverage misses</td><td>1</td><td>1</td><td>3</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>1C 2I 2S</strong></td><td><strong>1C 2I 1S</strong></td><td><strong>1C 1I</strong></td></tr>
+        <tr><td>Downgraded</td><td>0</td><td>2 (I→S)</td><td>1 (I→S)</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>1</td></tr>
+      </tbody>
+    </table>
+    <p>All three converged on the one guaranteed crash (C1). Beyond it, the agents were complementary rather than redundant: Codex owned packaging/release correctness, Claude owned the build-script regressions, and Gemini alone found the security bypass. Codex and Claude carried the most weight here — between them they covered every build-blocking issue — but Gemini&#39;s lone seccomp catch was the highest-value single finding, and dropping it would have shipped a silent mitigation bypass.</p>
+    <p>Reconciliation: Codex <code>global.ts</code> critical → important I1 (CI/tooling impact, not product runtime); Codex electron important → suggestion S3 (archive still checksum-verified; documented dependabot window); Gemini seccomp critical → important I4 (uncommon trigger, user can disable seccomp anyway); Gemini dashboard.ts unhandled-rejection suggestion → dropped (false positive, quoted code absent from the file).</p>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="skill-improvements">Skill improvements <a href="#skill-improvements" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li>When a security control (seccomp, AppArmor, capability drop, a forced <code>--security-opt</code>) is enforced by injecting a flag or argument into a command line, verify the injection point is computed from the tool&#39;s canonical parse result, not a separate simplified re-scan. A re-scan that diverges from the real parser creates silent bypasses: enumerate the invocation forms the underlying tool accepts — global flags interspersed at any position, bunched short options that take a value, subcommand aliases — and confirm the injection still fires for each. Flag any control-injecting code that re-implements argument parsing instead of reusing the parsed structure, because the bypass fails open and is invisible to the user.</li>
+    </ul>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
