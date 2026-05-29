@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260529-113208-pr-59</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+.pill-qwen { background: #fed7aa; color: #9a3412; }
+.pill-gemma { background: #fef9c3; color: #854d0e; }
+.pill-glm { background: #cffafe; color: #155e75; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Supply-chain Summary table — first column gets breathing room,
+ * numeric middle columns center, header keeps its label on one line. */
+.summary-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0 0.8rem; font-size: 0.92rem; }
+.summary-table th, .summary-table td {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #d5d9e0;
+  vertical-align: top;
+  text-align: left;
+}
+.summary-table th { background: rgba(255, 255, 255, 0.65); font-weight: 600; white-space: nowrap; }
+.summary-table td:first-child { min-width: 11rem; white-space: nowrap; }
+.summary-table th:not(:first-child):not(:last-child),
+.summary-table td:not(:first-child):not(:last-child) { text-align: center; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Supply-chain issue rows — used by issueList for bullets that
+ * uniformly start with a `file:line` reference. The location renders
+ * in a dark bar above the description so the eye picks up the path
+ * separately from the prose. */
+.issue-list { margin: 0.6rem 0; }
+.issue-row {
+  margin-bottom: 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.55);
+}
+.issue-loc {
+  background: #2d333b;
+  color: #adbac7;
+  padding: 0.3rem 0.7rem;
+  font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+}
+.issue-loc a { color: #7ee787; text-decoration: none; }
+.issue-loc a:hover { text-decoration: underline; }
+.issue-loc code { background: none; padding: 0; color: inherit; font-size: 1em; }
+.issue-desc { padding: 0.55rem 0.8rem; }
+.issue-desc code { font-size: 0.85em; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260529-113208-pr-59</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-05-29 11:32</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app">rancher-sandbox/rancher-desktop-app</a></td></tr>
+      <tr><td>Round</td><td>2 (of pr-59)</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/mook-as">@mook-as</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/59" class="gh-ref" data-title="Merge Rancher Desktop changes up to 85e5b671a80e2d7916009ba3a6f31fe5e78d17cd" data-state="open" data-type="pr">#59</a> — Merge Rancher Desktop changes up to 85e5b671a</td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/5284e1a8d"><code>5284e1a8d</code></a> Address AI reviews<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/104aba371"><code>104aba371</code></a> Fix merge errors<br><a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/85e5b671a"><code>85e5b671a</code></a> Merge <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/10249" class="gh-ref">#10249</a> deskboard/steve-embedded</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.8 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; round-1 blockers resolved, but the steve-path fix overshot: <code>paths.spec.ts</code> now fails CI, and steve is orphaned on quit</td></tr>
+      <tr><td>Wall-clock time</td><td><code>29 min 2 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>Round 2 of the embedded-steve dashboard merge. The author addressed every round-1 finding in <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/5284e1a8d"><code>5284e1a8d</code></a>: the broken Container Info tab is disabled, <code>global.ts</code>&#39;s phantom imports are removed, and <code>paths.resources</code> now joins <code>resources/</code>. But that path fix overshot — it throws on an undefined <code>resourcesPath</code>, so <code>paths.spec.ts</code> fails CI right now. Two real steve-lifecycle gaps also surfaced: the process is never stopped on quit, and the dashboard window keeps a stale port across restarts.</p>
+    <p>The CI <code>test</code> job is red (paths.spec.ts); <code>lint</code> and <code>package</code> pass on all platforms, confirming the disabled Info tab does not break the build or lint. Three reviewers independently flagged the orphaned-steve gap. The author dismissed or deferred the remaining round-1 items (download overwrite, seccomp bypass, extension URL, electron lag) to upstream or as out-of-scope; those are recorded under Acknowledged Limitations.</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+    <p>None.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> <code>paths.resources</code> throws on an undefined <code>resourcesPath</code>, breaking <code>paths.spec.ts</code> <span class="pill pill-codex">Codex</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/utils/paths.ts#L137-L150">pkg/rancher-desktop/utils/paths.ts</a></div>
+      <pre data-start="137" data-line="142-145"><code class="language-ts">
+/**
+ * Paths which do not depend on the platform.
+ */
+const platformAgnosticPaths: PlatformAgnosticPaths = {
+  get resources() {
+    if (electron.app?.isPackaged) {
+      return path.join(process.resourcesPath, &#39;resources&#39;);
+    }
+    // In `yarn dev`, `process.resourcesPath` is
+    // `.../Electron.app/Contents/Resources` (and other similar paths on other
+    // platforms); we need to use the project directory instead.
+    return path.join(process.cwd(), &#39;resources&#39;);
+  },</code></pre>
+    <p>The round-1 I3 fix makes the packaged branch (line 144) call <code>path.join(process.resourcesPath, &#39;resources&#39;)</code>. The unit test &quot;should return undefined if resources is missing in production&quot; (<code>paths.spec.ts:155-157</code>) sets <code>isPackaged = true</code> and <code>resourcesPath = undefined</code>, then expects <code>resources</code> to be <code>undefined</code> at <code>paths.spec.ts:163</code>. Accessing the getter now runs <code>path.join(undefined, …)</code>, which throws <code>TypeError: The &quot;path&quot; argument must be of type string</code>. The CI <code>test</code> job is red on exactly this (run 26654913584). The author rewired the test&#39;s setup but not the getter&#39;s missing-path handling.</p>
+    <p>Fix: guard the join so the documented &quot;missing in production&quot; contract still holds.</p>
+      <pre><code class="language-diff">-    return path.join(process.resourcesPath, &#39;resources&#39;);
++    return process.resourcesPath &amp;&amp; path.join(process.resourcesPath, &#39;resources&#39;);</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I2">
+        <span class="finding-num">I2.</span> <code>steve</code> child process is never stopped on app quit (orphaned process) <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#I2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/background.ts#L191-L220">background.ts</a></div>
+      <pre data-start="191" data-line="196-215"><code class="language-ts">    gone = true;
+    Electron.app.quit();
+  }
+}
+
+Electron.app.on(&#39;before-quit&#39;, (event) =&gt; {
+  if (gone) {
+    mainEvents.emit(&#39;quit&#39;);
+
+    return;
+  }
+  event.preventDefault();
+
+  try {
+    console.log(`2: Child exited cleanly.`);
+  } catch (ex: any) {
+    console.log(`2: Child exited with code ${ ex.errCode ?? &#39;&lt;unknown&gt;&#39; }`);
+    handleFailure(ex);
+  } finally {
+    gone = true;
+    setImmediate(() =&gt; {
+      Electron.app.quit();
+    });
+  }
+});
+
+Electron.app.on(&#39;window-all-closed&#39;, () =&gt; {
+  // On macOS, hide the dock icon.
+  Electron.app.dock?.hide();
+});</code></pre>
+    <p>Steve is started/stopped only from the <code>backend/app-status-changed</code> handler (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/background.ts#L250-L259"><code>background.ts:250-259</code></a>), which stops it solely when <code>KubernetesReady</code> flips false. The <code>before-quit</code> path does not call <code>stop()</code>, and the child is spawned without <code>detached</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/backend/steve.ts#L84"><code>steve.ts:84</code></a>), so on macOS/Linux it is not reaped when the Electron parent exits. Quitting (or crashing) while Kubernetes is ready leaks a <code>steve</code> holding its port; the next launch spawns a fresh one. Nothing listens on <code>mainEvents &#39;quit&#39;</code> to clean it up.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/background.ts#L245-L264">background.ts</a></div>
+      <pre data-start="245" data-line="250-259"><code class="language-typescript">ipcMainProxy.on(&#39;dialog/close&#39;, (_event, args) =&gt; {
+  window.getWindow(args.dialog)?.webContents.send(&#39;dialog/close&#39;, args);
+});
+
+// Start and stop Steve as needed
+ipcMainProxy.on(&#39;backend/app-status-changed&#39;, (_event, statusConditions) =&gt; {
+  const [status] = statusConditions.KubernetesReady ?? [];
+
+  if (status) {
+    Steve.getInstance().start().catch((err) =&gt; {
+      console.error(&#39;Failed to start Steve:&#39;, err);
+    });
+  } else {
+    Steve.getInstance().stop();
+  }
+});
+
+ipcMainProxy.handle(&#39;versions/macOs&#39;, () =&gt; {
+  return getMacOsVersion();
+});</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/backend/steve.ts#L79-L89">pkg/rancher-desktop/backend/steve.ts</a></div>
+      <pre data-start="79" data-line="84"><code class="language-typescript">      this.stop();
+    }
+
+    const osSpecificName = /^win/i.test(os.platform()) ? &#39;steve.exe&#39; : &#39;steve&#39;;
+    const stevePath = path.join(paths.resources, os.platform(), &#39;internal&#39;, osSpecificName);
+    const childProcess = spawn(stevePath, [&#39;--context&#39;, &#39;rancher-desktop-2&#39;],
+      { stdio: [&#39;ignore&#39;, &#39;pipe&#39;, &#39;pipe&#39;], windowsHide: true });
+    this.process = childProcess;
+
+    const { stdout, stderr } = childProcess;
+    let portBuffer = &#39;&#39;;</code></pre>
+    <p>Fix: stop Steve during shutdown, e.g. <code>mainEvents.on(&#39;quit&#39;, () =&gt; Steve.getInstance().stop())</code>, or call it in <code>before-quit</code>.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I3">
+        <span class="finding-num">I3.</span> Dashboard window keeps a stale port after steve stops or restarts <span class="pill pill-gemini">Gemini</span><a href="#I3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/window/dashboard.ts#L6-L34">pkg/rancher-desktop/window/dashboard.ts</a></div>
+      <pre data-start="6" data-line="11-29"><code class="language-ts">
+const getDashboardWindow = () =&gt; (&#39;dashboard&#39; in windowMapping) ? BrowserWindow.fromId(windowMapping[&#39;dashboard&#39;]) : null;
+
+export function openDashboard() {
+  let window = getDashboardWindow();
+
+  if (restoreWindow(window)) {
+    return window;
+  }
+
+  const { port } = Steve.getInstance();
+
+  if (!port) {
+    return;
+  }
+
+  window = new BrowserWindow({
+    title:  &#39;Rancher Dashboard&#39;,
+    width:  800,
+    height: 600,
+    show:   false,
+  });
+
+  window.loadURL(`http://127.0.0.1:${ port }/c/local/explorer`);
+
+  windowMapping[&#39;dashboard&#39;] = window.id;
+
+  window.once(&#39;ready-to-show&#39;, () =&gt; {
+    window?.show();</code></pre>
+    <p><code>openDashboard()</code> loads <code>http://127.0.0.1:${port}/…</code> once at window creation. If steve later stops (K8s <code>NotReady</code>) or restarts on a new ephemeral port (K8s flap), nothing reloads or closes the existing window — <code>restoreWindow</code> just focuses it. Reopening the dashboard returns the stale window still pointing at the dead port, so the dashboard is broken until the window is manually closed and reopened.</p>
+    <p>Fix: when the steve port changes (or steve stops), reload the dashboard window&#39;s URL or close it so the next open recreates it at the live port.</p>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> <code>activeTab</code> defaults to the now-commented-out <code>&#39;tab-info&#39;</code> <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L155-L165">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+      <pre data-start="155" data-line="160"><code class="language-ts">const containerShell = ref&lt;InstanceType&lt;typeof ContainerShell&gt; | null&gt;(null);
+const searchInput = ref&lt;HTMLInputElement | null&gt;(null);
+
+// Reactive data
+const searchTerm = ref(&#39;&#39;);
+const activeTab = ref&lt;&#39;tab-info&#39; | &#39;tab-logs&#39; | &#39;tab-shell&#39;&gt;(&#39;tab-info&#39;);
+const shellEverActivated = ref(false);
+
+// Vuex integration
+const supportsNamespaces = computed(() =&gt; store.getters[&#39;container-engine/supportsNamespaces&#39;]);
+const namespace = computed(() =&gt; store.getters[&#39;container-engine/currentNamespace&#39;]);</code></pre>
+    <p>The disable commit comments out the Info <code>&lt;tab&gt;</code> but leaves <code>activeTab</code> defaulting to <code>&#39;tab-info&#39;</code>, a tab that no longer renders. The page does <strong>not</strong> stay blank: <code>Tabbed</code>&#39;s <code>sortedTabs</code> watcher selects the only live tab (Logs) and <code>Tab.vue</code> emits <code>@active</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/components/Tabbed/index.vue#L104-L125"><code>components/Tabbed/index.vue:104-125</code></a>, <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/components/Tabbed/Tab.vue#L78-L83"><code>Tabbed/Tab.vue:78-83</code></a>), resetting <code>activeTab</code> to <code>&#39;tab-logs&#39;</code> on mount. Gemini rated this a critical blank-page bug; the watcher self-heals it (possible one-tick flash). The <code>&#39;tab-info&#39;</code> default and union member are misleading leftovers.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/components/Tabbed/index.vue#L99-L130">pkg/rancher-desktop/components/Tabbed/index.vue</a></div>
+      <pre data-start="99" data-line="104-125"><code class="language-markup">      return this.hideSingleTab &amp;&amp; this.sortedTabs.length === 1;
+    },
+  },
+
+  watch: {
+    sortedTabs: {
+      handler(tabs) {
+        const {
+          defaultTab,
+          useHash,
+        } = this;
+        const activeTab = tabs.find((t) =&gt; t.active);
+
+        const hash = useHash ? this.$route.hash : undefined;
+        const windowHash = useHash ? hash.slice(1) : undefined;
+        const windowHashTabMatch = tabs.find((t) =&gt; t.name === windowHash &amp;&amp; !t.active);
+        const firstTab = head(tabs) || null;
+
+        if (!activeTab) {
+          if (useHash &amp;&amp; windowHashTabMatch) {
+            this.select(windowHashTabMatch.name);
+          } else if (defaultTab &amp;&amp; tabs.find((t) =&gt; t.name === defaultTab)) {
+            this.select(defaultTab);
+          } else if (firstTab?.name) {
+            this.select(firstTab.name);
+          }
+        }
+      },
+      deep: true,
+    },
+  },
+</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/components/Tabbed/Tab.vue#L73-L88">pkg/rancher-desktop/components/Tabbed/Tab.vue</a></div>
+      <pre data-start="73" data-line="78-83"><code class="language-markup">
+      return this.sideTabs || false;
+    },
+  },
+
+  watch: {
+    active(neu) {
+      if (neu) {
+        this.$emit(&#39;active&#39;);
+      }
+    },
+  },
+
+  mounted() {
+    this.addTab(this);
+  },</code></pre>
+    <p>Fix: default to <code>&#39;tab-logs&#39;</code> and drop <code>&#39;tab-info&#39;</code> from the union until <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/38" class="gh-ref" data-title="Restore feature: Container Features" data-state="open" data-type="issue">#38</a> re-enables the tab.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> Dead <code>ContainerInspect.vue</code> left as an active import after the feature was disabled <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L138-L148">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+      <pre data-start="138" data-line="143"><code class="language-ts">import { Banner } from &#39;@rancher/components&#39;;
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from &#39;vue&#39;;
+import { useRoute } from &#39;vue-router&#39;;
+import { useStore } from &#39;vuex&#39;;
+
+import ContainerInspect from &#39;@pkg/components/ContainerInspect.vue&#39;;
+import ContainerLogs from &#39;@pkg/components/ContainerLogs.vue&#39;;
+import ContainerShell from &#39;@pkg/components/ContainerShell.vue&#39;;
+import RdTabbed from &#39;@pkg/components/Tabbed/RdTabbed.vue&#39;;
+import Tab from &#39;@pkg/components/Tabbed/Tab.vue&#39;;
+</code></pre>
+    <p>The disable commented out the <code>&lt;container-inspect&gt;</code> usage but kept the import; <code>ContainerInspect.vue</code> still references store members that do not exist (<code>inspectData</code>, <code>fetchContainerInspect</code>, <code>ContainerInspectData</code>). This does <strong>not</strong> break CI: <code>package</code> and <code>lint</code> pass on all platforms (the ts-loader rule matches only <code>.ts</code>, so <code>.vue</code> script blocks are not type-checked, and <code>no-unused-vars</code> is <code>off</code> in the compatibility config). But it is dead, broken code that will silently rot until <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/38" class="gh-ref" data-title="Restore feature: Container Features" data-state="open" data-type="issue">#38</a>.</p>
+    <p>Fix: drop the import and the component file until <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/38" class="gh-ref" data-title="Restore feature: Container Features" data-state="open" data-type="issue">#38</a> re-adds the store backing.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> <code>features.md</code> marks &quot;Container Exploration&quot; complete while inspect/shell tabs are disabled <span class="pill pill-codex">Codex</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/docs/development/features.md#L116-L126">docs/development/features.md</a></div>
+      <pre data-start="116" data-line="121"><code class="language-md">
+:heavy_check_mark: Auto updates
+
+:heavy_check_mark: Cluster exploration - Rancher Dashboard (Preview)
+
+:heavy_check_mark: Container Exploration
+
+:sun_with_face: Configuration settings
+
+:sun_with_face: Start/Stop/Pause Containers
+</code></pre>
+    <p><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L105-L125"><code>ContainerInfo.vue:105-125</code></a> comments out both the inspect and shell tab implementations (TODOs → issue <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/38" class="gh-ref" data-title="Restore feature: Container Features" data-state="open" data-type="issue">#38</a>), and the Container Info e2e suite is <code>test.describe.fixme</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/e2e/containers.e2e.spec.ts#L421"><code>e2e/containers.e2e.spec.ts:421</code></a>). The doc now advertises a completed feature the UI intentionally keeps disabled.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L100-L130">pkg/rancher-desktop/pages/containers/ContainerInfo.vue</a></div>
+      <pre data-start="100" data-line="105-125"><code class="language-markup">            /&gt;
+          &lt;/button&gt;
+        &lt;/li&gt;
+      &lt;/template&gt;
+      &lt;div class=&quot;tab-content&quot;&gt;
+        &lt;!--
+        TODO: Re-enabling this feature is filed as
+        https://github.com/rancher-sandbox/rancher-desktop-app/issues/38
+        &lt;container-inspect
+          v-if=&quot;containerId &amp;&amp; activeTab === &#39;tab-info&#39;&quot;
+          :container-id=&quot;containerId&quot;
+          :namespace=&quot;namespace&quot;
+        /&gt;
+        --&gt;
+        &lt;container-logs
+          v-if=&quot;containerId &amp;&amp; activeTab === &#39;tab-logs&#39;&quot;
+          ref=&quot;containerLogs&quot;
+          :container-id=&quot;containerId&quot;
+          :is-running=&quot;isRunning&quot;
+        /&gt;
+        &lt;!--
+        TODO: Re-enabling this feature is filed as
+        https://github.com/rancher-sandbox/rancher-desktop-app/issues/38
+        &lt;container-shell
+          v-if=&quot;shellEverActivated &amp;&amp; containerId&quot;
+          v-show=&quot;activeTab === &#39;tab-shell&#39;&quot;
+          ref=&quot;containerShell&quot;
+          :container-id=&quot;containerId&quot;
+          :is-container-running=&quot;isRunning&quot;
+          :namespace=&quot;namespace&quot;
+        /&gt;</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/e2e/containers.e2e.spec.ts#L416-L426">e2e/containers.e2e.spec.ts</a></div>
+      <pre data-start="416" data-line="421"><code class="language-typescript">    await expect(shellPage.unsupportedBanner).toBeVisible({ timeout: 15_000 });
+    await expect(shellPage.terminal).not.toBeVisible();
+  });
+});
+
+test.describe.fixme(&#39;Container Info Tab&#39;, () =&gt; {
+  let electronApp: ElectronApplication;
+  let infoContainerId: string;
+
+  test.beforeAll(async({ colorScheme }, testInfo) =&gt; {
+    [electronApp, page] = await startSlowerDesktop(testInfo, {</code></pre>
+    <p>Fix: downgrade the entry to in-progress (<code>:sun_with_face:</code>) or split it into completed logs support versus pending inspect/shell.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S4">
+        <span class="finding-num">S4.</span> Stale dashboard cert-error allowlist after <code>DashboardServer</code> removal <span class="pill pill-claude">Claude</span><a href="#S4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/main/networking/verify-certificates.ts#L60-L72">pkg/rancher-desktop/main/networking/verify-certificates.ts</a></div>
+      <pre data-start="60" data-line="65-67"><code class="language-ts">  const allowedHostPorts: string[] = [];
+  // Plugins development URLs
+  if (process.env.NODE_ENV === &#39;development&#39; &amp;&amp; process.env.RD_ENV_PLUGINS_DEV) {
+    allowedHostPorts.push(&#39;localhost:8888&#39;);
+  }
+  // Dashboard URLs
+  if (&#39;dashboard&#39; in windowMapping) {
+    allowedHostPorts.push(&#39;127.0.0.1:9443&#39;, &#39;127.0.0.1:6120&#39;);
+  }
+
+  for (const hostPort of allowedHostPorts) {
+    if ([`https://${ hostPort }/`, `wss://${ hostPort }/`].some(x =&gt; url.startsWith(x))) {
+      event.preventDefault();</code></pre>
+    <p>This PR deletes the old <code>DashboardServer</code> (port 6120). The new dashboard loads over plain <code>http://127.0.0.1:${port}</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/window/dashboard.ts#L29"><code>window/dashboard.ts:29</code></a>), and <code>handleCertificateError</code> only matches <code>https://</code>/<code>wss://</code>, so the <code>6120</code>/<code>9443</code> entries are now dead. The file is pre-existing and outside the diff, but the change makes the references obsolete.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/window/dashboard.ts#L24-L34">pkg/rancher-desktop/window/dashboard.ts</a></div>
+      <pre data-start="24" data-line="29"><code class="language-typescript">    width:  800,
+    height: 600,
+    show:   false,
+  });
+
+  window.loadURL(`http://127.0.0.1:${ port }/c/local/explorer`);
+
+  windowMapping[&#39;dashboard&#39;] = window.id;
+
+  window.once(&#39;ready-to-show&#39;, () =&gt; {
+    window?.show();</code></pre>
+    <p>Fix: remove the dead push, or repoint it at the steve port if an HTTPS dashboard transport is planned.</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="concerns">Concerns <a href="#concerns" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Steve lifecycle is wired to one signal only</strong> <code>(in-scope)</code> <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span> — Start/stop hangs entirely off <code>KubernetesReady</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/background.ts#L250-L259"><code>background.ts:250-259</code></a>). Quit (I2) and dashboard-window staleness (I3) both stem from there being no second owner of the process/window lifecycle. Tying steve teardown to <code>mainEvents &#39;quit&#39;</code> and reacting to port changes in the dashboard window closes both gaps at the source rather than patching each path.</li>
+      <li><strong>Seccomp injection re-derives structure the parser already computed</strong> <code>(future)</code> <span class="pill pill-codex">Codex</span> — <code>injectSeccompOpt</code>/<code>seccompInjectionPos</code> run flat argv scans after <code>parse()</code> already separated nerdctl options from container args. Passing the parser&#39;s separator index in would remove the whole class of bypass (see Acknowledged Limitations) instead of adding string-matching exceptions. Deferred upstream per the author.</li>
+    </ul>
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Digest-pinned downloads</strong> <span class="pill pill-claude">Claude</span> — <code>scripts/lib/dependencies.ts</code>/<code>download.ts</code> hash the as-downloaded archive before codesign mutates it, drop the unsigned cache on codesign failure, and pin to immutable release tags.</li>
+      <li><strong>Updater hardening</strong> <span class="pill pill-claude">Claude</span> — <code>getSha512Sum</code> rejects non-128-hex bodies before <code>Buffer.from(…,&#39;hex&#39;)</code> truncates, and <code>triggerUpdateCheck</code> rearms after transient errors; both tested.</li>
+      <li><strong>Steve readiness probe</strong> <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span> — <code>steve.ts</code> waits on <code>/v1/namespaces</code> (404-until-schemas) rather than treating an open port as ready, and the port flows to the renderer over IPC, decoupling the UI from process management.</li>
+      <li><em></em><code>paths.resources</code> realignment<em></em> <span class="pill pill-codex">Codex</span> — joining <code>resources/</code> in the packaged branch fixes not just steve but the whole class of packaged-asset consumers (icons, <code>preload.js</code>, bin paths) that resolved one directory too high; <code>getRDDPath</code> joins independently, so there is no double-<code>resources</code>. (Completeness gap: the missing-path case, I1.)</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ol>
+      <li><em></em><code>paths.spec.ts</code> is failing in CI now (I1).<em></em> The getter change was shipped without reconciling the &quot;missing in production&quot; case; the red <code>test</code> job is the only signal that caught the overshoot.</li>
+      <li><strong>Embedded-dashboard happy path has no active e2e coverage.</strong> <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/e2e/dashboard.e2e.spec.ts#L6"><code>e2e/dashboard.e2e.spec.ts:6</code></a> is <code>test.describe.fixme</code>, so the headline feature (resolves <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/27" class="gh-ref" data-title="Restore feature: Dashboard" data-state="open" data-type="issue">#27</a>) ships without an executed end-to-end test; steve start/stop and <code>dashboardReady</code> gating are untested.</li>
+      <li><strong>No unit coverage for the steve lifecycle (I2, I3).</strong> Neither the quit-teardown path nor the dashboard port-refresh path is exercised; <code>steve.ts</code> has no tests for port parsing, the bad-state restart, or <code>waitForReady</code> exit-before-ready.</li>
+      <li><em></em>Container Info e2e suite is <code>fixme</code><em></em> (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/e2e/containers.e2e.spec.ts#L421"><code>e2e/containers.e2e.spec.ts:421</code></a>), consistent with the <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/38" class="gh-ref" data-title="Restore feature: Container Features" data-state="open" data-type="issue">#38</a> deferral, but it means the dead <code>ContainerInspect.vue</code> (S2) has zero exercised coverage.</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p><code>docs/development/features.md</code> overstates Container Exploration as complete (S3). The <code>ContainerInfo.vue</code> TODOs correctly reference issue <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/38" class="gh-ref" data-title="Restore feature: Container Features" data-state="open" data-type="issue">#38</a>. <code>verify-certificates.ts</code>&#39;s &quot;Dashboard URLs&quot; comment is now stale (S4). The new dependency-manifest and updater code remain unusually well-commented.</p>
+    </div>
+    <hr>
+    <h2 id="commit-structure">Commit Structure <a href="#commit-structure" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>The tip carries <code>5284e1a8d &quot;Address AI reviews&quot;</code> and <code>104aba371 &quot;Fix merge errors&quot;</code> on top of the upstream merge. Both are fixup commits; per repo convention they should be folded into the merge-resolution commits before final merge (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/104aba371"><code>104aba371</code></a> in particular patches the merge itself and belongs squashed into <a href="https://github.com/rancher-sandbox/rancher-desktop-app/commit/7b9d1cdde"><code>7b9d1cdde</code></a>). Acceptable to keep separate during active review iteration. The broad scope is intentional for an upstream sync.</p>
+    </div>
+    <hr>
+    <h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>The author responded to every round-1 finding (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/pull/59#issuecomment">comment</a>, 2026-05-29). Items dismissed or deferred:</p>
+    <ul>
+      <li><strong>Container Info / Shell tabs deferred to <a href="https://github.com/rancher-sandbox/rancher-desktop-app/issues/38" class="gh-ref" data-title="Restore feature: Container Features" data-state="open" data-type="issue">#38</a></strong> — <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/pkg/rancher-desktop/pages/containers/ContainerInfo.vue#L105-L125"><code>ContainerInfo.vue:105-125</code></a> TODOs; the tabs and <code>&lt;container-inspect&gt;</code> usage are commented out and the e2e suite is <code>.fixme</code>. (Round-1 C1 / S1 resolved by this disable; see S1/S2 for the residual leftovers.)</li>
+      <li><em></em><code>downloadTarGZ</code>/<code>downloadZip</code> overwrite the destination unconditionally<em></em> — author: &quot;That&#39;s merged in from the rancher-desktop side.&quot; The <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/scripts/lib/download.ts#L218-L223"><code>download.ts:218-223</code></a> comment already documents the EBUSY/ETXTBSY held-binary risk; deferred to upstream. (Round-1 I2.)</li>
+      <li><strong>Seccomp injection is bypassable</strong> — author: &quot;That&#39;s a thing to look in the rancher-desktop repo, not here.&quot; Three independent bypass vectors are now known in this vendored code: interspersed global flags / bunched short options (round-1 I4), a caller-supplied <code>--security-opt=seccomp=</code> after the parser&#39;s <code>--</code> separator (<a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/src/go/nerdctl-stub/seccomp.go#L23-L29"><code>seccomp.go:23-29</code></a>, Codex), and <code>nerdctl compose</code> containers that are never matched as <code>run</code>/<code>create</code> (Gemini). All deferred upstream; the injected profile silently does not apply in these forms.</li>
+      <li><strong>Extension-supplied URL scheme is unvalidated</strong> — author: &quot;We don&#39;t have extensions right now.&quot; <code>installed.vue</code> is present but the feature is inaccessible. (Round-1 S2.)</li>
+      <li><em></em>Electron manifest version lags <code>package.json</code><em></em> — author: &quot;That&#39;s done via rddepman updates (we just happened to pick a commit between the bump and the hash update).&quot; <a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/scripts/dependencies/electron.ts#L26-L31"><code>electron.ts:26-31</code></a> documents the dependabot window. (Round-1 S3.)</li>
+      <li><em></em><a href="https://github.com/rancher-sandbox/rancher-desktop-app/blob/5284e1a8da7da1f86aebfb1fd6375245a6647e0b/src/go/networking/cmd/host/switch_windows.go#L146"><code>switch_windows.go:146</code></a><em></em> — a comment notes a nonce exchange would be the more direct fix; the host-only workaround is deliberate. (Pre-existing, outside the changed set.)</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="unresolved-feedback">Unresolved Feedback <a href="#unresolved-feedback" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>None. The author&#39;s round-1 responses cover every prior finding; the live items above are reclassified as Acknowledged Limitations or carried as this round&#39;s findings (I1–I3, S1–S4).</p>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p><strong>[Claude]</strong> — Found the orphaned-steve gap (shared) and was alone on the stale dashboard cert-error allowlist (S4) and the dead-import framing (S2). Its only critical — that the disabled <code>ContainerInspect.vue</code> breaks the production type-check and trips <code>no-unused-vars</code> — was refuted by ground truth: the <code>package</code> and <code>lint</code> CI jobs pass on all platforms, because <code>.vue</code> script blocks are not routed through a type-checking loader and <code>no-unused-vars</code> is globally disabled. It asserted a build-break without confirming which toolchain step processes <code>.vue</code> files. Its <code>activeTab</code> analysis, by contrast, correctly traced the <code>Tabbed</code> self-heal where Gemini did not. No fabricated citations.</p>
+    <p><strong>[Codex]</strong> — Sharpest this round. It uniquely reasoned out the <code>paths.spec.ts</code> contract break (I1) without running Jest — the one finding the red CI <code>test</code> job confirms as the live blocker — and also caught the <code>features.md</code> overstatement (S3) and a third seccomp bypass vector. Evidence-led throughout, with concrete multi-file traces, no false positives, and no severity inflation. It missed the stale-dashboard-port gap.</p>
+    <p><strong>[Gemini]</strong> — Contributed the round&#39;s best unique catch: the stale dashboard window port across steve restarts (I3), a real lifecycle hole the other two missed, plus the orphaned-steve gap (shared). But it over-rated the <code>activeTab</code> leftover as a critical blank-page crash without tracing the <code>Tabbed</code> watcher that self-corrects it, and its <code>fetchInspect</code> race targeted the now-disabled component. Thinnest coverage — it marked <code>paths.spec.ts</code> clean, missing the CI failure Codex caught.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.8</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>21m 38s</td><td>12m 48s</td><td>10m 00s</td></tr>
+        <tr><td>Findings</td><td>1I 3S</td><td>2I 1S</td><td>2I 1S</td></tr>
+        <tr><td>Tool calls</td><td>67 (Bash 41, Read 26)</td><td>96 (shell 95, stdin 1)</td><td>—</td></tr>
+        <tr><td>Design observations</td><td>4</td><td>2</td><td>0</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>2</td><td>3</td><td>2</td></tr>
+        <tr><td>Files reviewed</td><td>109</td><td>109</td><td>109</td></tr>
+        <tr><td>Coverage misses</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>1I 3S</strong></td><td><strong>2I 1S</strong></td><td><strong>2I 1S</strong></td></tr>
+        <tr><td>Downgraded</td><td>1 (I→S)</td><td>0</td><td>1 (I→S)</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>1</td></tr>
+      </tbody>
+    </table>
+    <p>Codex carried the most weight: it owned the single merge-blocking finding (I1) and produced no noise. Gemini&#39;s I3 was the highest-value unique catch beyond it. Claude&#39;s strengths analysis and the verify-certificates cleanup were useful, but its lone critical was a calibration miss. All three converged on the orphaned-steve gap (I2), which is the strongest signal in the set.</p>
+    <p>Reconciliation: Claude <code>ContainerInspect</code> critical → suggestion S2 (CI <code>package</code> + <code>lint</code> pass; <code>.vue</code> scripts are not type-checked and <code>no-unused-vars</code> is off). Gemini blank-page critical → suggestion S1 (<code>Tabbed</code> watcher self-heals the <code>activeTab</code> default). Codex seccomp-after-<code>--</code> important → Acknowledged Limitation (author deferred seccomp upstream). Gemini compose-seccomp important → Acknowledged Limitation (same deferral). Gemini <code>fetchInspect</code> suggestion → dropped (moot; the component is disabled).</p>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="skill-improvements">Skill improvements <a href="#skill-improvements" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li>When a finding claims a change breaks the build, type-check, or lint, confirm which toolchain step actually processes the cited file type before classifying it. A type error or unused import inside a <code>.vue</code>, <code>.jsx</code>, or other embedded-script file is build-breaking only if the bundler routes that block through a type-checking loader (e.g. <code>ts-loader</code> with <code>appendTsSuffixTo</code>, or a separate <code>vue-tsc</code>/<code>fork-ts-checker</code> step) and the relevant lint rule is enabled under the project&#39;s <code>--max-warnings</code> gate. Verify the loader <code>test</code> patterns and the rule&#39;s effective severity; an unverified build-break is a high-severity false positive. Where CI results for the reviewed SHA are available, cross-check a claimed CI-breaking error against the actual job status — a &quot;breaks the build&quot; finding on a SHA whose build job is green is refuted by definition.</li>
+    </ul>
+    <h3 id="repo-context-updates">Repo context updates <a href="#repo-context-updates" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li>[repo] In this repo the production webpack build type-checks only <code>.ts</code> files: the <code>ts-loader</code> rule in <code>scripts/lib/build-utils.ts</code> matches <code>/\.ts$/</code> with no <code>appendTsSuffixTo</code>, so <code>.vue</code> <code>&lt;script lang=&quot;ts&quot;&gt;</code> blocks are compiled by <code>vue-loader</code> without type-checking, and there is no separate <code>vue-tsc</code> step in CI. Separately, <code>@typescript-eslint/no-unused-vars</code> is set to <code>off</code> for the whole tree by the <code>rancher-desktop-compatibility</code> block in <code>eslint.config.mts</code> (despite a <code>warn</code> default and <code>--max-warnings=0</code>). Do not flag a type error or an unused import inside a <code>.vue</code> file as a build or lint blocker; the <code>package</code> and <code>lint</code> CI jobs will pass regardless. Such issues are at most dead-code suggestions.</li>
+    </ul>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
