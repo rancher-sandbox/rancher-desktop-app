@@ -53,6 +53,7 @@ const vmDependencies: Dependency[] = [];
 
 // Dependencies that are specific to hosts.
 const hostDependencies = [
+  new tools.RDD(),
   new tools.Steve(),
   new Electron(),
 ];

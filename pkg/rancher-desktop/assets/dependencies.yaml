@@ -59,6 +59,14 @@ dockerCompose:
 golangci-lint:
   version: 2.12.2
   checksums: {}
+rdd:
+  version: 0.0.1
+  checksums:
+    rdd-darwin-amd64: sha256:56db858b4650b13b625b7006919325ce5345f3b33853298531455e2f2b65b529
+    rdd-darwin-arm64: sha256:33b0fc356b1ba6d57480cdb43a5f2662f0cf1b377d110ada32d07b9b53f60562
+    rdd-linux-amd64: sha256:244c635ba5a5342a54c8e5b40f7dfcfd11745c57c4f1d9663cd90ab4d8beff55
+    rdd-linux-arm64: sha256:b0f661b9248fa9ba6d377149b7a1044f035581819f7ad1fa86e974285493fb3d
+    rdd-windows-amd64.exe: sha256:439c25b7976f4cc02a56fb25812727b324314acea9258d220be4dfcb8232488c
 steve:
   version: 0.1.0-beta9.2
   checksums:

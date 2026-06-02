@@ -44,6 +44,7 @@ export interface DependencyVersions {
   electron:                        string;
   'golangci-lint':                 string;
   helm:                            string;
+  rdd:                             string;
   steve:                           string;
   wix:                             string;
 }

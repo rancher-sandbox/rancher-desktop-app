@@ -195,6 +195,43 @@ export class CheckSpelling extends GlobalDependency(GitHubDependency) {
   }
 }
 
+export class RDD extends GlobalDependency(GitHubDependency) {
+  readonly name = 'rdd';
+  readonly githubOwner = 'mook-as';
+  readonly githubRepo = 'rancher-desktop-daemon';
+  readonly releaseFilter = 'published-pre';
+
+  async download(context: DownloadContext): Promise<void> {
+    const base = `https://github.com/${ this.githubOwner }/${ this.githubRepo }/releases/download/v${ context.dependencies.rdd.version }`;
+    const arch = context.isM1 ? 'arm64' : 'amd64';
+    const baseName = exeName(context, `rdd-${ context.goPlatform }-${ arch }`);
+    const destPath = path.join(context.binDir, exeName(context, 'rdd'));
+
+    await download(`${ base }/${ baseName }`, destPath, {
+      expectedChecksum: lookupChecksum(context, this.name, baseName),
+    });
+  }
+
+  async getChecksums(version: string): Promise<Record<string, Sha256Checksum>> {
+    const base = `https://github.com/${ this.githubOwner }/${ this.githubRepo }/releases/download/v${ version }`;
+    const upstream = await fetchUpstreamChecksums(`${ base }/rdd.sha512sum`, 'sha512');
+    const archiveMatch = /^rdd-(linux|darwin|windows)-(amd64|arm64)(\.exe)?$/;
+
+    return Object.fromEntries((await Promise.all(Object.keys(upstream).map(async(archiveName) => {
+      if (!archiveMatch.test(archiveName)) {
+        return;
+      }
+
+      const url = `${ base }/${ archiveName }`;
+      const checksum = await downloadAndHash(url, {
+        verify: { algorithm: 'sha512', expected: upstream[archiveName] },
+      });
+
+      return [archiveName, checksum] as const;
+    }))).filter(defined));
+  }
+}
+
 export class Steve extends GlobalDependency(GitHubDependency) {
   readonly name = 'steve';
   readonly githubOwner = 'rancher-sandbox';
